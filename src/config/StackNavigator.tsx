@@ -16,7 +16,12 @@ const Stack = createStackNavigator<RootStackParamList>();
 const AppNavigator: React.FC = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="ServiceCategoryList">
+      <Stack.Navigator
+        initialRouteName="ServiceCategoryList"
+        screenOptions={{
+        headerShown: false, // This will apply to all screens within this navigator
+        }}
+        >
         <Stack.Screen name="ServiceCategoryList" component={ServiceCategoryList} />
         <Stack.Screen name="ServiceList" component={ServiceList} />
       </Stack.Navigator>
