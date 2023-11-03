@@ -4,23 +4,34 @@ import React, { useEffect, useState } from 'react';
 import { View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { fetchServices } from '../services/serviceService';
 import { Service } from '../config/types';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../config/StackNavigator'; // Adjust the import path as necessary
+
+type ServiceListRouteProp = RouteProp<RootStackParamList, 'ServiceList'>;
 
 const ServiceList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
+  const route = useRoute<ServiceListRouteProp>(); // Use the useRoute hook with the appropriate type
+
+  // Retrieve the categoryCode from the route parameters
+  const categoryCode = route.params?.categoryCode;
 
   useEffect(() => {
     const loadServices = async () => {
-      try {
-        const data = await fetchServices();
-        setServices(data);
-      } catch (error) {
-        console.error("Failed to load services:", error);
+      if (categoryCode) {
+        try {
+          // Pass the categoryCode to the fetchServices function
+          const data = await fetchServices(categoryCode);
+          setServices(data);
+        } catch (error) {
+          console.error("Failed to load services:", error);
+        }
       }
     };
 
     loadServices();
-  }, []);
+  }, [categoryCode]); // Add categoryCode as a dependency to the useEffect hook
 
   const margin = mainSectionWidth / 12;
   const gap = mainSectionWidth ? mainSectionWidth / 24 : 0;

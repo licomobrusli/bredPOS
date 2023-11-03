@@ -1,11 +1,11 @@
 // serviceService.ts
 
 import api from './api';
-import { Service } from '../config/types'; // Make sure to define this type
+import { Service } from '../config/types';
 
-export const fetchServices = async (): Promise<Service[]> => {
+export const fetchServices = async (categoryCode: string): Promise<Service[]> => {
   try {
-    const response = await api.get<Service[]>('services/');
+    const response = await api.get<Service[]>(`/services/?categoryCode=${categoryCode}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching services:", error);
