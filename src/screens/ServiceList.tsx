@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { fetchServices } from '../services/serviceService';
-import { Service } from '../services/types';
+import { Service } from '../config/types';
 
 const ServiceList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);

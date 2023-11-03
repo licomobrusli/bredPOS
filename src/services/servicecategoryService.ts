@@ -1,7 +1,7 @@
 // servicecategoryService.ts
 
 import api from './api';
-import { ServiceCategory } from './types';
+import { ServiceCategory } from '../config/types';
 
 export const fetchServiceCategories = async (): Promise<ServiceCategory[]> => {
   try {

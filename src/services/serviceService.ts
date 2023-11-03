@@ -1,7 +1,7 @@
 // serviceService.ts
 
 import api from './api';
-import { Service } from './types'; // Make sure to define this type
+import { Service } from '../config/types'; // Make sure to define this type
 
 export const fetchServices = async (): Promise<Service[]> => {
   try {

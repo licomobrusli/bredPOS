@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { fetchServiceCategories } from '../services/servicecategoryService';
-import { ServiceCategory } from '../services/types';
+import { ServiceCategory } from '../config/types';
 
 const ServiceCategoryList: React.FC = () => {
   const [categories, setCategories] = useState<ServiceCategory[]>([]);
