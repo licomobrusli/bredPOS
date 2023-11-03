@@ -2,10 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { fetchServiceCategories } from '../services/servicecategoryService';
 import { ServiceCategory } from '../config/types';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../config/StackNavigator'; // Adjust the import path as necessary
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type ServiceCategoryListNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'ServiceCategoryList'
+>;
 
 const ServiceCategoryList: React.FC = () => {
   const [categories, setCategories] = useState<ServiceCategory[]>([]);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
+  const navigation = useNavigation<ServiceCategoryListNavigationProp>();
 
   useEffect(() => {
     const loadServiceCategories = async () => {
@@ -28,8 +37,8 @@ const ServiceCategoryList: React.FC = () => {
   const imageHeight = imageWidth;
 
   const onImagePress = (category: ServiceCategory) => {
-    // Handle the image press event
-    console.log('Image pressed!', category);
+    // Navigate to the ServiceList screen with the category code
+    navigation.navigate('ServiceList', { categoryCode: category.code });
   };
 
   return (
