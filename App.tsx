@@ -1,14 +1,13 @@
+// App.tsx
 import React from 'react';
 import MainScreen from './src/components/MainScreen';
-import ServiceCategoryList from './src/screens/ServiceCategoryList';
+import AppNavigator from './src/config/StackNavigator'; // Make sure this path is correct
+import 'react-native-gesture-handler';
 
-function App(): JSX.Element {
+const App: React.FC = () => {
   return (
-    <MainScreen
-      MainContent={<ServiceCategoryList />}
-      // ... other props for side menu, branding ribbon, and cart summary
-    />
+    <MainScreen MainContent={<AppNavigator />} />
   );
-}
+};
 
 export default App;
