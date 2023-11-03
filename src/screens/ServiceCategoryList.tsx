@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Image } from 'react-native';
+import { View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { fetchServiceCategories } from '../services/servicecategoryService';
 import { ServiceCategory } from '../services/types';
 
@@ -27,6 +27,11 @@ const ServiceCategoryList: React.FC = () => {
   const imageWidth = (mainSectionWidth - 2 * margin - gap) / 2; // This considers two images and a single gap
   const imageHeight = imageWidth;
 
+  const onImagePress = (category: ServiceCategory) => {
+    // Handle the image press event
+    console.log('Image pressed!', category);
+  };
+
   return (
     <View 
       style={{ flex: 1, backgroundColor: 'lightgreen', paddingBottom: margin }}
@@ -38,7 +43,8 @@ const ServiceCategoryList: React.FC = () => {
       <FlatList 
         data={categories}
         renderItem={({ item, index }) => (
-          <View 
+          <TouchableOpacity
+            onPress={() => onImagePress(item)}
             style={{ 
               width: imageWidth, 
               height: imageHeight, 
@@ -48,7 +54,7 @@ const ServiceCategoryList: React.FC = () => {
             }}
           >
             <Image source={{ uri: 'https://placekitten.com/200/200' }} style={{ width: '100%', height: '100%' }} />
-          </View>
+          </TouchableOpacity>
         )}
         keyExtractor={item => item.code}  
         numColumns={2}
