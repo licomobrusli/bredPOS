@@ -6,16 +6,22 @@ import MleftSection from './MleftSection';
 import MListSection from './MListSection';
 
 interface McentralSectionProps {
-  children: JSX.Element;
+  //headerChildren?: JSX.Element;
+  //leftChildren?: JSX.Element;
+  listChildren: JSX.Element;
 }
 
-const McentralSection: React.FC<McentralSectionProps> = ({ children }) => {
+const McentralSection: React.FC<McentralSectionProps> = ({
+  //headerChildren,
+  //leftChildren,
+  listChildren,
+}) => {
   return (
     <View style={{ flex: 1 }}>
-      <McentralHeaderSection />
+      <McentralHeaderSection/>
       <View style={{ flexDirection: 'row', flex: 1 }}>
-        <MleftSection />
-        <MListSection>{children}</MListSection>
+        <MleftSection/>
+        <MListSection>{listChildren}</MListSection>
       </View>
     </View>
   );

@@ -1,5 +1,4 @@
 // servicecategoryService.ts
-
 import api from './api';
 import { ServiceCategory } from '../config/types';
 

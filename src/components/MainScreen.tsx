@@ -13,7 +13,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ MainContent }) => {
   return (
     <View style={{ flex: 1 }}>
       <MtopSection />
-      <McentralSection>{MainContent}</McentralSection>
+      <McentralSection listChildren={MainContent} /> // Pass MainContent as listChildren
       <MbottomSection />
     </View>
   );
