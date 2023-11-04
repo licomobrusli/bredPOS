@@ -13,7 +13,7 @@ export type RootStackParamList = {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const AppNavigator: React.FC = () => {
+const StackNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -29,4 +29,4 @@ const AppNavigator: React.FC = () => {
   );
 };
 
-export default AppNavigator;
+export default StackNavigator;
