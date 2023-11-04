@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 const MleftSection: React.FC = () => {
   return (
-    <View style={{ flex: 1/6, backgroundColor: 'lightcoral' }}>
+    <View style={{ width: '20%', backgroundColor: 'lightcoral' }}>
       <Text>Left Section</Text>
     </View>
   );

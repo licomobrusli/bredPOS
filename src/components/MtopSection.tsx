@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 const MtopSection: React.FC = () => {
   return (
-    <View style={{ flex: 1/5, backgroundColor: 'lightblue' }}>
+    <View style={{ height: 100, backgroundColor: 'lightblue' }}>
       <Text>Top Section</Text>
     </View>
   );
