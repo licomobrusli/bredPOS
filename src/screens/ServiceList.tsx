@@ -1,11 +1,11 @@
 // ServiceList.tsx
-
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { fetchServices } from '../services/serviceService';
 import { Service } from '../config/types';
 import { useRoute, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../config/StackNavigator'; // Adjust the import path as necessary
+import { RootStackParamList } from '../config/StackNavigator';
+import BackButton from './BackButton'; // Adjust the import path as necessary
 
 type ServiceListRouteProp = RouteProp<RootStackParamList, 'ServiceList'>;
 
@@ -33,14 +33,14 @@ const ServiceList: React.FC = () => {
     loadServices();
   }, [categoryCode]); // Add categoryCode as a dependency to the useEffect hook
 
+  const onImagePress = (service: Service) => {
+    console.log('Service pressed!', service);
+  };
+
   const margin = mainSectionWidth / 12;
   const gap = mainSectionWidth ? mainSectionWidth / 24 : 0;
   const imageWidth = (mainSectionWidth - 2 * margin - gap) / 2;
   const imageHeight = imageWidth;
-
-  const onImagePress = (service: Service) => {
-    console.log('Service pressed!', service);
-  };
 
   return (
     <View 
@@ -50,6 +50,12 @@ const ServiceList: React.FC = () => {
         setMainSectionWidth(width);
       }}
     >
+      {/* Back Button Component */}
+      <View style={styles.backButtonContainer}>
+        <BackButton />
+      </View>
+
+      {/* Service List Grid */}
       <FlatList 
         data={services}
         renderItem={({ item, index }) => (
@@ -63,16 +69,26 @@ const ServiceList: React.FC = () => {
               backgroundColor: 'red' // You might want to change this
             }}
           >
-            <Image source={{ uri: 'https://placekitten.com/200/200' }} style={{ width: '100%', height: '100%' }} />
+            <Image 
+              source={{ uri: 'https://placekitten.com/200/200' }} 
+              style={{ width: '100%', height: '100%' }} 
+            />
           </TouchableOpacity>
         )}
         keyExtractor={item => item.code}  
         numColumns={2}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
-        style={{ marginTop: margin, marginLeft: 0, marginRight: margin }}
+        style={{ marginTop: margin, marginLeft: margin, marginRight: margin }}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  backButtonContainer: {
+    paddingHorizontal: 10,
+    paddingTop: 10,
+  },
+});
 
 export default ServiceList;
