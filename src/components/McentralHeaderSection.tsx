@@ -1,38 +1,23 @@
-// McentralHeaderSection.tsx
-import React, { useState } from 'react';
-import { View, Image, TouchableOpacity, LayoutChangeEvent } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 
-const McentralHeaderSection: React.FC = () => {
-  const [padding, setPadding] = useState<number>(0);
+interface McentralHeaderProps {
+  children: JSX.Element | JSX.Element[];
+}
 
-  const onLayout = (event: LayoutChangeEvent) => {
-    const { height } = event.nativeEvent.layout;
-    setPadding(height / 12);
-  };
-
+const McentralHeader: React.FC<McentralHeaderProps> = ({ children }) => {
   return (
     <View
-      onLayout={onLayout}
       style={{
         height: 60,
         backgroundColor: 'lightsalmon',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: padding,
-        alignItems: 'center'
+        alignItems: 'flex-end',
+        padding: 5,
       }}>
-      <Image
-        source={{ uri: 'https://placekitten.com/320/50' }}
-        style={{ width: 320, height: 50 }} // Adjust the size as needed
-      />
-      <TouchableOpacity style={{ alignSelf: 'flex-end' }}>
-        <Image
-          source={{ uri: 'https://placekitten.com/40/20' }}
-          style={{ width: 40, height: 20 }} // Adjust the size as needed
-        />
-      </TouchableOpacity>
+      {children}
     </View>
   );
 };
 
-export default McentralHeaderSection;
+export default McentralHeader;
