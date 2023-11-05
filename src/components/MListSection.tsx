@@ -1,11 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 
-interface McentralSectionProps {
+interface MlistSectionProps {
   children: JSX.Element;
 }
 
-const McentralSection: React.FC<McentralSectionProps> = ({ children }) => {
+const MlistSection: React.FC<MlistSectionProps> = ({ children }) => {
   return (
     <View style={{ flex: 1, backgroundColor: 'lightgreen' }}>
       {children}
@@ -13,4 +13,4 @@ const McentralSection: React.FC<McentralSectionProps> = ({ children }) => {
   );
 };
 
-export default McentralSection;
+export default MlistSection;
