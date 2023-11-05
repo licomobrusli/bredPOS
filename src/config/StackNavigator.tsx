@@ -3,12 +3,12 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import ServiceCategoryList from '../screens/ServiceCategoryList';
-import ServiceList from '../screens/ServiceList';
+import CategoryList from '../content/CategoryList';
+import ServiceList from '../content/ServiceList';
 
 // If you are using TypeScript, you can define the types for your navigation parameters
 export type RootStackParamList = {
-  ServiceCategoryList: undefined;
+  CategoryList: undefined;
   ServiceList: { categoryCode: string };
 };
 
@@ -23,7 +23,7 @@ const StackNavigator: React.FC = () => {
         headerShown: false, // This will apply to all screens within this navigator
         }}
         >
-        <Stack.Screen name="ServiceCategoryList" component={ServiceCategoryList} />
+        <Stack.Screen name="CategoryList" component={CategoryList} />
         <Stack.Screen name="ServiceList" component={ServiceList} />
       </Stack.Navigator>
     </NavigationContainer>

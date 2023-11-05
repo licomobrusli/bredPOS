@@ -1,16 +1,10 @@
-// MlistSection.tsx
-
 import React from 'react';
 import { View } from 'react-native';
 
-interface MlistSectionProps {
-  children: JSX.Element;
-}
-
-const MlistSection: React.FC<MlistSectionProps> = ({ children }) => {
+const MlistSection: React.FC = () => {
   return (
     <View style={{ flex: 1, backgroundColor: 'lightgreen' }}>
-      {children}
+      {/* Content goes here, if any */}
     </View>
   );
 };

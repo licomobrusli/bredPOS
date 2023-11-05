@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Image, TouchableOpacity } from 'react-native';
-import { fetchServiceCategories } from '../services/servicecategoryService';
-import { ServiceCategory } from '../config/types';
+import { fetchCategories } from '../services/CategoryService';
+import { Category } from '../config/types';
 
-const ServiceCategoryList: React.FC = () => {
-  const [categories, setCategories] = useState<ServiceCategory[]>([]);
+const CategoryList: React.FC = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
 
   useEffect(() => {
-    const loadServiceCategories = async () => {
+    const loadCategories = async () => {
       try {
-        const data = await fetchServiceCategories();
+        const data = await fetchCategories();
         setCategories(data);
       } catch (error) {
         console.error("Failed to load service categories:", error);
       }
     };
 
-    loadServiceCategories();
+    loadCategories();
   }, []);
 
   const margin = mainSectionWidth / 12;  
@@ -25,7 +25,7 @@ const ServiceCategoryList: React.FC = () => {
   const imageWidth = (mainSectionWidth - 2 * margin - gap) / 2; // This considers two images and a single gap
   const imageHeight = imageWidth;
 
-  const onImagePress = (service: ServiceCategory) => {
+  const onImagePress = (service: Category) => {
     console.log('Category pressed!', service);
   };
 
@@ -65,4 +65,4 @@ const ServiceCategoryList: React.FC = () => {
   );
 };
 
-export default ServiceCategoryList;
+export default CategoryList;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import BackButton from '../screens/BackButton';
-import HeaderImage from '../screens/HeaderImage';
+import BackButton from '../content/BackButton';
+import HeaderImage from '../content/HeaderImage';
 
 const McentralHeader: React.FC = () => {
   return (
