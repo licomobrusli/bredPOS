@@ -2,19 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { fetchServiceCategories } from '../services/servicecategoryService';
 import { ServiceCategory } from '../config/types';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../config/StackNavigator'; // Adjust the import path as necessary
-import { StackNavigationProp } from '@react-navigation/stack';
-
-type ServiceCategoryListNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'ServiceCategoryList'
->;
 
 const ServiceCategoryList: React.FC = () => {
   const [categories, setCategories] = useState<ServiceCategory[]>([]);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
-  const navigation = useNavigation<ServiceCategoryListNavigationProp>();
 
   useEffect(() => {
     const loadServiceCategories = async () => {
@@ -29,16 +20,13 @@ const ServiceCategoryList: React.FC = () => {
     loadServiceCategories();
   }, []);
 
-  const margin = mainSectionWidth / 12;
-  
+  const margin = mainSectionWidth / 12;  
   const gap = mainSectionWidth ? mainSectionWidth / 24 : 0; // This is the gap value you can adjust
-  
   const imageWidth = (mainSectionWidth - 2 * margin - gap) / 2; // This considers two images and a single gap
   const imageHeight = imageWidth;
 
-  const onImagePress = (category: ServiceCategory) => {
-    // Navigate to the ServiceList screen with the category code
-    navigation.navigate('ServiceList', { categoryCode: category.code });
+  const onImagePress = (service: ServiceCategory) => {
+    console.log('Category pressed!', service);
   };
 
   return (
@@ -62,7 +50,10 @@ const ServiceCategoryList: React.FC = () => {
               backgroundColor: 'red' 
             }}
           >
-            <Image source={{ uri: 'https://placekitten.com/200/200' }} style={{ width: '100%', height: '100%' }} />
+            <Image
+              source={{ uri: 'https://placekitten.com/200/200' }}
+              style={{ width: '100%', height: '100%' }}
+            />
           </TouchableOpacity>
         )}
         keyExtractor={item => item.code}  

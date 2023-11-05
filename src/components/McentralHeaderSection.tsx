@@ -1,11 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
+import BackButton from '../screens/BackButton';
+import HeaderImage from '../screens/HeaderImage';
 
-interface McentralHeaderProps {
-  children: JSX.Element | JSX.Element[];
-}
-
-const McentralHeader: React.FC<McentralHeaderProps> = ({ children }) => {
+const McentralHeader: React.FC = () => {
   return (
     <View
       style={{
@@ -14,8 +12,10 @@ const McentralHeader: React.FC<McentralHeaderProps> = ({ children }) => {
         flexDirection: 'row',
         alignItems: 'flex-end',
         padding: 5,
+        justifyContent: 'space-between', // Assuming you want them on opposite ends
       }}>
-      {children}
+      <HeaderImage />
+      <BackButton />
     </View>
   );
 };

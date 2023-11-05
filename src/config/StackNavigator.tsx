@@ -18,7 +18,7 @@ const StackNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="ServiceCategoryList"
+        initialRouteName="ServiceList"
         screenOptions={{
         headerShown: false, // This will apply to all screens within this navigator
         }}

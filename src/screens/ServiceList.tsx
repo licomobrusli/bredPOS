@@ -1,37 +1,28 @@
-// ServiceList.tsx
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { fetchServices } from '../services/serviceService';
 import { Service } from '../config/types';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../config/StackNavigator';
-import BackButton from './BackButton'; // Adjust the import path as necessary
-
-type ServiceListRouteProp = RouteProp<RootStackParamList, 'ServiceList'>;
 
 const ServiceList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
-  const route = useRoute<ServiceListRouteProp>(); // Use the useRoute hook with the appropriate type
 
-  // Retrieve the categoryCode from the route parameters
-  const categoryCode = route.params?.categoryCode;
+  // Define a static categoryCode or retrieve it from some state management
+  const categoryCode = 'CRT'; // Replace with your actual category code
 
   useEffect(() => {
     const loadServices = async () => {
-      if (categoryCode) {
-        try {
-          // Pass the categoryCode to the fetchServices function
-          const data = await fetchServices(categoryCode);
-          setServices(data);
-        } catch (error) {
-          console.error("Failed to load services:", error);
-        }
+      try {
+        // Pass the categoryCode to the fetchServices function
+        const data = await fetchServices(categoryCode);
+        setServices(data);
+      } catch (error) {
+        console.error("Failed to load services:", error);
       }
     };
 
     loadServices();
-  }, [categoryCode]); // Add categoryCode as a dependency to the useEffect hook
+  }, [categoryCode]); // Depend on categoryCode to re-run the effect if it changes
 
   const onImagePress = (service: Service) => {
     console.log('Service pressed!', service);
@@ -50,12 +41,6 @@ const ServiceList: React.FC = () => {
         setMainSectionWidth(width);
       }}
     >
-      {/* Back Button Component */}
-      <View style={styles.backButtonContainer}>
-        <BackButton />
-      </View>
-
-      {/* Service List Grid */}
       <FlatList 
         data={services}
         renderItem={({ item, index }) => (
@@ -78,17 +63,10 @@ const ServiceList: React.FC = () => {
         keyExtractor={item => item.code}  
         numColumns={2}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
-        style={{ marginTop: margin, marginLeft: margin, marginRight: margin }}
+        style={{ marginTop: margin, marginLeft: 0, marginRight: margin }}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  backButtonContainer: {
-    paddingHorizontal: 10,
-    paddingTop: 10,
-  },
-});
 
 export default ServiceList;
