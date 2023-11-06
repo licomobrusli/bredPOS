@@ -1,3 +1,4 @@
+// CategoryList.tsx
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Image, TouchableOpacity, Text } from 'react-native';
 import api from '../services/api'; // Adjust the import path according to your project structure

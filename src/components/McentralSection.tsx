@@ -1,3 +1,4 @@
+// McentralSection.tsx
 import React from 'react';
 import { View } from 'react-native';
 import McentralHeaderSection from './McentralHeaderSection';
@@ -10,7 +11,6 @@ const McentralSection: React.FC = () => {
       <McentralHeaderSection />
       <View style={{ flexDirection: 'row', flex: 1 }}>
         <MleftSection />
-        {/* MListSection can be used here directly if it does not require dynamic content */}
         <MListSection />
       </View>
     </View>

@@ -1,3 +1,4 @@
+//MainScreen
 import React from 'react';
 import { View } from 'react-native';
 import MtopSection from './MtopSection';
