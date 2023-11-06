@@ -1,66 +1,80 @@
-import React, { useEffect, useState } from 'react';
-import { View, FlatList, Image, TouchableOpacity } from 'react-native';
-import { fetchCategories } from '../services/CategoryService';
-import { Category } from '../config/types';
+import React, { useState, useEffect } from 'react';
+import { View, FlatList, Image, TouchableOpacity, Text } from 'react-native';
+import api from '../services/api'; // Adjust the import path according to your project structure
+import { Category } from '../config/types'; // Adjust the import path according to your project structure
 
-const CategoryList: React.FC = () => {
+const CategoryList = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
 
   useEffect(() => {
-    const loadCategories = async () => {
+    const fetchCategories = async () => {
       try {
-        const data = await fetchCategories();
-        setCategories(data);
-      } catch (error) {
-        console.error("Failed to load service categories:", error);
+        const response = await api.get('/service_categories/'); // Adjust endpoint if necessary
+        setCategories(response.data);
+      } catch (err) {
+        setError('Failed to fetch categories');
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    loadCategories();
+    fetchCategories();
   }, []);
 
-  const margin = mainSectionWidth / 12;  
-  const gap = mainSectionWidth ? mainSectionWidth / 24 : 0; // This is the gap value you can adjust
-  const imageWidth = (mainSectionWidth - 2 * margin - gap) / 2; // This considers two images and a single gap
+  const onCategoryPress = (category: Category) => {
+    console.log('Category pressed!', category);
+  };
+
+  const margin = mainSectionWidth / 12;
+  const gap = mainSectionWidth ? mainSectionWidth / 24 : 0;
+  const imageWidth = (mainSectionWidth - 2 * margin - gap) / 2;
   const imageHeight = imageWidth;
 
-  const onImagePress = (service: Category) => {
-    console.log('Category pressed!', service);
+  const renderItem = ({ item, index }: { item: Category; index: number }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => onCategoryPress(item)}
+        style={{
+          width: imageWidth,
+          height: imageHeight,
+          marginLeft: (index % 2 === 0) ? margin : gap,
+          marginBottom: gap,
+        }}
+      >
+        <Image
+          source={{ uri: 'https://placekitten.com/200/200' }}
+          style={{ width: '100%', height: '100%' }}
+        />
+      </TouchableOpacity>
+    );
   };
 
   return (
-    <View 
-      style={{ flex: 1, backgroundColor: 'lightgreen', paddingBottom: margin }}
+    <View
+      style={{ flex: 1, paddingBottom: margin }}
       onLayout={event => {
         const width = event.nativeEvent.layout.width;
         setMainSectionWidth(width);
       }}
     >
-      <FlatList 
-        data={categories}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            onPress={() => onImagePress(item)}
-            style={{ 
-              width: imageWidth, 
-              height: imageHeight, 
-              marginLeft: (index % 2 === 0) ? margin : gap,
-              marginBottom: gap, 
-              backgroundColor: 'red' 
-            }}
-          >
-            <Image
-              source={{ uri: 'https://placekitten.com/200/200' }}
-              style={{ width: '100%', height: '100%' }}
-            />
-          </TouchableOpacity>
-        )}
-        keyExtractor={item => item.code}  
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: 'space-between' }}
-        style={{ marginTop: margin, marginLeft: 0, marginRight: margin }}
-      />
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : error ? (
+        <Text>{error}</Text>
+      ) : (
+        <FlatList
+          data={categories}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          style={{ marginTop: margin, marginLeft: 0, marginRight: margin }}
+        />
+      )}
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { fetchServices } from '../services/serviceService';
 import { Service } from '../config/types';
 
@@ -7,7 +7,6 @@ const ServiceList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
 
-  // Define a static categoryCode or retrieve it from some state management
   const categoryCode = 'CRT'; // Replace with your actual category code
 
   useEffect(() => {
