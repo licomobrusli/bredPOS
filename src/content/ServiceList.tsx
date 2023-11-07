@@ -1,3 +1,4 @@
+// ServiceList.tsx
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { fetchServices } from '../services/serviceService';

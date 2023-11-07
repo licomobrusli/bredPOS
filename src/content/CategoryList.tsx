@@ -1,8 +1,8 @@
 // CategoryList.tsx
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Image, TouchableOpacity, Text } from 'react-native';
-import api from '../services/api'; // Adjust the import path according to your project structure
-import { Category } from '../config/types'; // Adjust the import path according to your project structure
+import api from '../services/api';
+import { Category } from '../config/types';
 
 const CategoryList = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -13,7 +13,7 @@ const CategoryList = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await api.get('/service_categories/'); // Adjust endpoint if necessary
+        const response = await api.get('/service_categories/');
         setCategories(response.data);
       } catch (err) {
         setError('Failed to fetch categories');
