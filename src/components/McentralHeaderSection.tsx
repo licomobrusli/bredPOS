@@ -13,7 +13,7 @@ const McentralHeader: React.FC = () => {
         flexDirection: 'row',
         alignItems: 'flex-end',
         padding: 5,
-        justifyContent: 'space-between', // Assuming you want them on opposite ends
+        justifyContent: 'space-between',
       }}>
       <HeaderImage />
       <BackButton />

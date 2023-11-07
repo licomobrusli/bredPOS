@@ -1,9 +1,12 @@
 import React from 'react';
 import { TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const BackButton: React.FC = () => {
+  const navigation = useNavigation();
+
   const handlePress = () => {
-    console.log('Back button pressed!');
+    navigation.goBack();
   };
 
   return (
