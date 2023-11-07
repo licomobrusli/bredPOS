@@ -10,6 +10,7 @@ export interface Category {
 }
 
 export interface Service {
+  imageUrl: string;
   id: number;
   code: string;
   name: string;

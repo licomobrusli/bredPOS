@@ -1,15 +1,18 @@
+// ServiceList.tsx
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { fetchServices } from '../services/serviceService';
 import { Service } from '../config/types';
 import { useRoute, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../config/StackNavigator'; // Update the import path
+import { RootStackParamList } from '../config/StackNavigator';
+import CutModal from './CutModal'; // Import CutModal
 
 const ServiceList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
+  const [modalVisible, setModalVisible] = useState<boolean>(false); // State for modal visibility
   const route = useRoute<RouteProp<RootStackParamList, 'ServiceScreen'>>();
-  const categoryCode = route.params?.categoryCode || 'DefaultCode'; // Replace 'DefaultCode' with a default value
+  const categoryCode = route.params?.categoryCode || 'DefaultCode';
 
   useEffect(() => {
     const loadServices = async () => {
@@ -26,6 +29,7 @@ const ServiceList: React.FC = () => {
 
   const onImagePress = (service: Service) => {
     console.log('Service pressed!', service);
+    setModalVisible(true); // Toggle modal visibility
   };
 
   const margin = mainSectionWidth / 12;
@@ -41,6 +45,11 @@ const ServiceList: React.FC = () => {
         setMainSectionWidth(width);
       }}
     >
+      <CutModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
+
       <FlatList 
         data={services}
         renderItem={({ item, index }) => (
@@ -55,7 +64,7 @@ const ServiceList: React.FC = () => {
             }}
           >
             <Image 
-              source={{ uri: 'https://placekitten.com/200/200' }} 
+              source={{ uri: item.imageUrl || 'https://placekitten.com/200/200' }} // Assuming each service has an imageUrl
               style={{ width: '100%', height: '100%' }} 
             />
           </TouchableOpacity>
