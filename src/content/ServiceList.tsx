@@ -1,19 +1,19 @@
-// ServiceList.tsx
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { fetchServices } from '../services/serviceService';
 import { Service } from '../config/types';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../config/StackNavigator'; // Update the import path
 
 const ServiceList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
-
-  const categoryCode = 'CRT'; // Replace with your actual category code
+  const route = useRoute<RouteProp<RootStackParamList, 'ServiceScreen'>>();
+  const categoryCode = route.params?.categoryCode || 'DefaultCode'; // Replace 'DefaultCode' with a default value
 
   useEffect(() => {
     const loadServices = async () => {
       try {
-        // Pass the categoryCode to the fetchServices function
         const data = await fetchServices(categoryCode);
         setServices(data);
       } catch (error) {
@@ -22,7 +22,7 @@ const ServiceList: React.FC = () => {
     };
 
     loadServices();
-  }, [categoryCode]); // Depend on categoryCode to re-run the effect if it changes
+  }, [categoryCode]);
 
   const onImagePress = (service: Service) => {
     console.log('Service pressed!', service);

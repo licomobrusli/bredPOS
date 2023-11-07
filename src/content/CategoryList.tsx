@@ -1,19 +1,23 @@
 // CategoryList.tsx
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Image, TouchableOpacity, Text } from 'react-native';
-import api from '../services/api';
-import { Category } from '../config/types';
+import api from '../services/api'; // Adjust the import path according to your project structure
+import { Category } from '../config/types'; // Adjust the import path according to your project structure
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../config/StackNavigator'; // Update the import path
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const CategoryList = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'CategoryScreen'>>();
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await api.get('/service_categories/');
+        const response = await api.get('/service_categories/'); // Adjust endpoint if necessary
         setCategories(response.data);
       } catch (err) {
         setError('Failed to fetch categories');
@@ -27,6 +31,7 @@ const CategoryList = () => {
   }, []);
 
   const onCategoryPress = (category: Category) => {
+    navigation.navigate('ServiceScreen', { categoryCode: category.code });
     console.log('Category pressed!', category);
   };
 
