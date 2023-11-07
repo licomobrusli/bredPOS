@@ -3,7 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 import McentralHeaderSection from './McentralHeaderSection';
 import MleftSection from './MleftSection';
-import MListSection from './MListSection';
+import MlistSection from './MlistSection';
 
 const McentralSection: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const McentralSection: React.FC = () => {
       <McentralHeaderSection />
       <View style={{ flexDirection: 'row', flex: 1 }}>
         <MleftSection />
-        <MListSection />
+        <MlistSection />
       </View>
     </View>
   );

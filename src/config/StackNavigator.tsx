@@ -19,7 +19,7 @@ const StackNavigator: React.FC = () => {
       <Stack.Navigator
         initialRouteName="CategoryScreen"
         screenOptions={{
-        headerShown: false, // This will apply to all screens within this navigator
+        headerShown: true,
         }}
         >
         <Stack.Screen name="CategoryScreen" component={CategoryScreen} />
