@@ -1,0 +1,109 @@
+commit 135572f901b22964677d3291dce1ecb545b26352
+Author: kowalski <leejhwalker@gmail.com>
+Date:   Tue Nov 7 08:59:17 2023 +0100
+
+    Added basic modal 'cutModal' launches on press of any service in any category.  Next consider the required modals
+
+diff --git a/src/config/types.ts b/src/config/types.ts
+index 9ce03ae..d25b219 100644
+--- a/src/config/types.ts
++++ b/src/config/types.ts
+@@ -10,6 +10,7 @@ export interface Category {
+ }
+ 
+ export interface Service {
++  imageUrl: string;
+   id: number;
+   code: string;
+   name: string;
+diff --git a/src/content/CutModal.tsx b/src/content/CutModal.tsx
+new file mode 100644
+index 0000000..03cbfa2
+--- /dev/null
++++ b/src/content/CutModal.tsx
+@@ -0,0 +1,31 @@
++// CutModal.tsx
++import React from 'react';
++import { Modal, View, Text, TouchableOpacity } from 'react-native';
++
++interface CutModalProps {
++  visible: boolean;
++  onClose: () => void;
++}
++
++const CutModal: React.FC<CutModalProps> = ({ visible, onClose }) => {
++  return (
++    <Modal
++      animationType="slide"
++      transparent={false}
++      visible={visible}
++      onRequestClose={onClose}
++    >
++      <View style={{ marginTop: 22 }}>
++        <Text>CutModal</Text>
++        <TouchableOpacity
++          onPress={onClose}
++          style={{ backgroundColor: 'blue', padding: 10 }}
++        >
++          <Text style={{ color: 'white' }}>Hide Modal</Text>
++        </TouchableOpacity>
++      </View>
++    </Modal>
++  );
++};
++
++export default CutModal;
+diff --git a/src/content/ServiceList.tsx b/src/content/ServiceList.tsx
+index cbbd3fb..e95227d 100644
+--- a/src/content/ServiceList.tsx
++++ b/src/content/ServiceList.tsx
+@@ -1,15 +1,18 @@
++// ServiceList.tsx
+ import React, { useEffect, useState } from 'react';
+ import { View, FlatList, Image, TouchableOpacity } from 'react-native';
+ import { fetchServices } from '../services/serviceService';
+ import { Service } from '../config/types';
+ import { useRoute, RouteProp } from '@react-navigation/native';
+-import { RootStackParamList } from '../config/StackNavigator'; // Update the import path
++import { RootStackParamList } from '../config/StackNavigator';
++import CutModal from './CutModal'; // Import CutModal
+ 
+ const ServiceList: React.FC = () => {
+   const [services, setServices] = useState<Service[]>([]);
+   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
++  const [modalVisible, setModalVisible] = useState<boolean>(false); // State for modal visibility
+   const route = useRoute<RouteProp<RootStackParamList, 'ServiceScreen'>>();
+-  const categoryCode = route.params?.categoryCode || 'DefaultCode'; // Replace 'DefaultCode' with a default value
++  const categoryCode = route.params?.categoryCode || 'DefaultCode';
+ 
+   useEffect(() => {
+     const loadServices = async () => {
+@@ -26,6 +29,7 @@ const ServiceList: React.FC = () => {
+ 
+   const onImagePress = (service: Service) => {
+     console.log('Service pressed!', service);
++    setModalVisible(true); // Toggle modal visibility
+   };
+ 
+   const margin = mainSectionWidth / 12;
+@@ -41,6 +45,11 @@ const ServiceList: React.FC = () => {
+         setMainSectionWidth(width);
+       }}
+     >
++      <CutModal
++        visible={modalVisible}
++        onClose={() => setModalVisible(false)}
++      />
++
+       <FlatList 
+         data={services}
+         renderItem={({ item, index }) => (
+@@ -55,7 +64,7 @@ const ServiceList: React.FC = () => {
+             }}
+           >
+             <Image 
+-              source={{ uri: 'https://placekitten.com/200/200' }} 
++              source={{ uri: item.imageUrl || 'https://placekitten.com/200/200' }} // Assuming each service has an imageUrl
+               style={{ width: '100%', height: '100%' }} 
+             />
+           </TouchableOpacity>
