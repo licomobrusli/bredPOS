@@ -1,22 +1,22 @@
 // ServiceList.tsx
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Image, TouchableOpacity } from 'react-native';
-import { fetchServices } from '../services/serviceService';
-import { Service } from '../config/types';
+import { View, FlatList, Image, TouchableOpacity, Text } from 'react-native';
+import { fetchServices } from '../services/serviceService'; // Adjust the import path according to your project structure
+import { Service } from '../config/types'; // Adjust the import path according to your project structure
 import { useRoute, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../config/StackNavigator';
-import CutModal from './CutModal'; // Import CutModal
+import { RootStackParamList } from '../config/StackNavigator'; // Update the import path
+import CutModal from './CutModal';
+import ListCard from '../components/ListCard';
 
 const ServiceList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
-  const [modalVisible, setModalVisible] = useState<boolean>(false); // State for modal visibility
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const route = useRoute<RouteProp<RootStackParamList, 'ServiceScreen'>>();
-
-  // Hardcoded default value
-  const hardcodedDefault = ''; // Set your default value here
-
-  // hardcodedDefault if set.use, if ''.all if null.filterbyServiceCategory 
+  const servicesWithPlaceholder = services.length % 2 !== 0 ? [...services, null] : services;
+  const hardcodedDefault = '';
   const categoryCode = hardcodedDefault !== null ? hardcodedDefault : (route.params?.categoryCode || 'DefaultCode');
 
   useEffect(() => {
@@ -25,7 +25,10 @@ const ServiceList: React.FC = () => {
         const data = await fetchServices(categoryCode);
         setServices(data);
       } catch (error) {
+        setError('Failed to load services');
         console.error("Failed to load services:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -34,7 +37,7 @@ const ServiceList: React.FC = () => {
 
   const onImagePress = (service: Service) => {
     console.log('Service pressed!', service);
-    setModalVisible(true); // Toggle modal visibility
+    setModalVisible(true);
   };
 
   const margin = mainSectionWidth / 12;
@@ -42,8 +45,36 @@ const ServiceList: React.FC = () => {
   const imageWidth = (mainSectionWidth - 2 * margin - gap) / 2;
   const imageHeight = imageWidth;
 
+  const renderItem = ({ item, index }: { item: Service | null; index: number }) => {
+    const isPlaceholder = item === null;
+    const isFirstColumn = index % 2 === 0;
+    const marginLeft = isFirstColumn ? margin : gap;
+  
+    if (isPlaceholder) {
+      return <View style={{ width: imageWidth, height: imageHeight, marginLeft, marginBottom: gap }} />;
+    }
+  
+    return (
+      <ListCard
+        style={{
+          width: imageWidth,
+          height: imageHeight,
+          marginLeft: marginLeft,
+          marginBottom: gap,
+        }}
+        imageUrl={item.imageUrl || 'https://placekitten.com/200/200'}
+        onPress={() => onImagePress(item)}
+      />
+    );
+  };
+  
+  const keyExtractor = (item: Service | null, index: number) => {
+    // If item is null (i.e., the placeholder), return a unique key
+    return item ? item.code.toString() : `placeholder-${index}`;
+  };
+
   return (
-    <View 
+    <View
       style={{ flex: 1, backgroundColor: 'lightgreen', paddingBottom: margin }}
       onLayout={event => {
         const width = event.nativeEvent.layout.width;
@@ -55,30 +86,20 @@ const ServiceList: React.FC = () => {
         onClose={() => setModalVisible(false)}
       />
 
-      <FlatList 
-        data={services}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            onPress={() => onImagePress(item)}
-            style={{ 
-              width: imageWidth, 
-              height: imageHeight, 
-              marginLeft: (index % 2 === 0) ? margin : gap,
-              marginBottom: gap, 
-              backgroundColor: 'red' // You might want to change this
-            }}
-          >
-            <Image 
-              source={{ uri: item.imageUrl || 'https://placekitten.com/200/200' }} // Assuming each service has an imageUrl
-              style={{ width: '100%', height: '100%' }} 
-            />
-          </TouchableOpacity>
-        )}
-        keyExtractor={item => item.code}  
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: 'space-between' }}
-        style={{ marginTop: margin, marginLeft: 0, marginRight: margin }}
-      />
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : error ? (
+        <Text>{error}</Text>
+      ) : (
+        <FlatList
+          data={servicesWithPlaceholder}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          style={{ marginTop: margin, marginLeft: 0, marginRight: margin }}
+        />
+      )}
     </View>
   );
 };
