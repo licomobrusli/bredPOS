@@ -16,8 +16,8 @@ const ServiceList: React.FC = () => {
   // Hardcoded default value
   const hardcodedDefault = ''; // Set your default value here
 
-  // Use hardcodedDefault if it's set, otherwise use route parameter
-  const categoryCode = hardcodedDefault || route.params?.categoryCode || 'DefaultCode';
+  // hardcodedDefault if set.use, if ''.all if null.filterbyServiceCategory 
+  const categoryCode = hardcodedDefault !== null ? hardcodedDefault : (route.params?.categoryCode || 'DefaultCode');
 
   useEffect(() => {
     const loadServices = async () => {
