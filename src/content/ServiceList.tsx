@@ -12,7 +12,12 @@ const ServiceList: React.FC = () => {
   const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false); // State for modal visibility
   const route = useRoute<RouteProp<RootStackParamList, 'ServiceScreen'>>();
-  const categoryCode = route.params?.categoryCode || 'DefaultCode';
+
+  // Hardcoded default value
+  const hardcodedDefault = ''; // Set your default value here
+
+  // Use hardcodedDefault if it's set, otherwise use route parameter
+  const categoryCode = hardcodedDefault || route.params?.categoryCode || 'DefaultCode';
 
   useEffect(() => {
     const loadServices = async () => {

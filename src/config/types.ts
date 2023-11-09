@@ -18,6 +18,6 @@ export interface Service {
   price: number;
   total_duration: number;
   image_path: string;
-  service_category: number; // This should match the type of the service_category field in your database, assuming it's a foreign key to Category
+  service_category: string; // This should match the type of the service_category field in your database, assuming it's a foreign key to Category
   date_created: string;
 }
