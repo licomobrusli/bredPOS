@@ -1,6 +1,7 @@
 // types.ts
 
 export interface Category {
+  imageUrl: string;
   id: number;
   code: string;
   name: string;
