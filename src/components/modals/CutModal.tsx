@@ -1,6 +1,10 @@
-// CutModal.tsx
 import React from 'react';
-import { Modal, View, Text, TouchableOpacity } from 'react-native';
+import { Modal, View } from 'react-native';
+import ModalHeader from './ModalHeader';
+import SideSelect from './SideSelector';
+import CutSelect from './CutSelector';
+import ToolSelect from './ToolSelector';
+import ModalFooter from './ModalFooter';
 
 interface CutModalProps {
   visible: boolean;
@@ -16,13 +20,11 @@ const CutModal: React.FC<CutModalProps> = ({ visible, onClose }) => {
       onRequestClose={onClose}
     >
       <View style={{ marginTop: 22 }}>
-        <Text>CutModal</Text>
-        <TouchableOpacity
-          onPress={onClose}
-          style={{ backgroundColor: 'blue', padding: 10 }}
-        >
-          <Text style={{ color: 'white' }}>Hide Modal</Text>
-        </TouchableOpacity>
+        <ModalHeader />
+        <SideSelect />
+        <CutSelect />
+        <ToolSelect />
+        <ModalFooter onClose={onClose} />
       </View>
     </Modal>
   );

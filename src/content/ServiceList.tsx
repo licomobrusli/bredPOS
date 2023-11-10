@@ -5,7 +5,7 @@ import { fetchServices } from '../services/serviceService'; // Adjust the import
 import { Service } from '../config/types'; // Adjust the import path according to your project structure
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../config/StackNavigator'; // Update the import path
-import CutModal from './CutModal';
+import CutModal from '../components/modals/CutModal';
 import ListCard from '../components/ListCard';
 
 const ServiceList: React.FC = () => {
