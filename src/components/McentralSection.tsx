@@ -8,9 +8,7 @@ import MlistSection from './MlistSection';
 const McentralSection: React.FC = () => {
   return (
     <View style={{ flex: 1 }}>
-      <McentralHeaderSection />
       <View style={{ flexDirection: 'row', flex: 1 }}>
-        <MleftSection />
         <MlistSection />
       </View>
     </View>

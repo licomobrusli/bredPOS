@@ -1,18 +1,18 @@
 // ServiceList.tsx
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Image, TouchableOpacity, Text } from 'react-native';
-import { fetchServices } from '../services/serviceService'; // Adjust the import path according to your project structure
-import { Service } from '../config/types'; // Adjust the import path according to your project structure
+import { View, FlatList, Text } from 'react-native';
+import { fetchServices } from '../services/serviceService'; // Adjust the import path
+import { Service } from '../config/types'; // Adjust the import path
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../config/StackNavigator'; // Update the import path
 import CutModal from '../components/modals/CutModal';
 import ListCard from '../components/ListCard';
+import { gridStyles } from '../config/gridStyle'; // Update the import path
 
 const ServiceList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [mainSectionWidth, setMainSectionWidth] = useState<number>(0);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const route = useRoute<RouteProp<RootStackParamList, 'ServiceScreen'>>();
   const servicesWithPlaceholder = services.length % 2 !== 0 ? [...services, null] : services;
@@ -40,27 +40,22 @@ const ServiceList: React.FC = () => {
     setModalVisible(true);
   };
 
-  const margin = mainSectionWidth / 12;
-  const gap = mainSectionWidth ? mainSectionWidth / 24 : 0;
-  const imageWidth = (mainSectionWidth - 2 * margin - gap) / 2;
-  const imageHeight = imageWidth;
-
   const renderItem = ({ item, index }: { item: Service | null; index: number }) => {
     const isPlaceholder = item === null;
     const isFirstColumn = index % 2 === 0;
-    const marginLeft = isFirstColumn ? margin : gap;
+    const marginLeft = isFirstColumn ? gridStyles.margin : gridStyles.gap;
   
     if (isPlaceholder) {
-      return <View style={{ width: imageWidth, height: imageHeight, marginLeft, marginBottom: gap }} />;
+      return <View style={{ width: gridStyles.imageWidth, height: gridStyles.imageHeight, marginLeft, marginBottom: gridStyles.gap }} />;
     }
   
     return (
       <ListCard
         style={{
-          width: imageWidth,
-          height: imageHeight,
-          marginLeft: marginLeft,
-          marginBottom: gap,
+          width: gridStyles.imageWidth,
+          height: gridStyles.imageHeight,
+          marginLeft,
+          marginBottom: gridStyles.gap,
         }}
         imageUrl={item.imageUrl || 'https://placekitten.com/200/200'}
         onPress={() => onImagePress(item)}
@@ -68,19 +63,10 @@ const ServiceList: React.FC = () => {
     );
   };
   
-  const keyExtractor = (item: Service | null, index: number) => {
-    // If item is null (i.e., the placeholder), return a unique key
-    return item ? item.code.toString() : `placeholder-${index}`;
-  };
+  const keyExtractor = (item: Service | null, index: number) => item ? item.code.toString() : `placeholder-${index}`;
 
   return (
-    <View
-      style={{ flex: 1, backgroundColor: 'lightgreen', paddingBottom: margin }}
-      onLayout={event => {
-        const width = event.nativeEvent.layout.width;
-        setMainSectionWidth(width);
-      }}
-    >
+    <View style={{ flex: 1, backgroundColor: 'lightgreen', paddingBottom: gridStyles.margin }}>
       <CutModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -97,7 +83,7 @@ const ServiceList: React.FC = () => {
           keyExtractor={keyExtractor}
           numColumns={2}
           columnWrapperStyle={{ justifyContent: 'space-between' }}
-          style={{ marginTop: margin, marginLeft: 0, marginRight: margin }}
+          style={{ marginTop: gridStyles.margin, marginLeft: 0, marginRight: gridStyles.margin }}
         />
       )}
     </View>
