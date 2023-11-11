@@ -9,7 +9,7 @@ const MlistSection: React.FC = () => {
   const route = useRoute();
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'lightgreen' }}>
+    <View style={{ flex: 1, backgroundColor: 'black' }}>
       {route.name === 'CategoryScreen' ? <CategoryList /> : <ServiceList />}
     </View>
   );

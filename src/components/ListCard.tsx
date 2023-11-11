@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: 'white',
     borderRadius: 5,
     overflow: 'hidden',
     backgroundColor: 'transparent',
