@@ -7,15 +7,15 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
         letterSpacing: 6,
         fontWeight: 'bold',
-        fontSize: 80,
+        fontSize: 260,
         color: 'white',
     },
         txtSubBrandBanner: {
         textAlign: 'center',
         textAlignVertical: 'center',
-        letterSpacing: 6,
+        letterSpacing: 12,
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 60,
         color: 'white',
     },
     txtProductCard: {
