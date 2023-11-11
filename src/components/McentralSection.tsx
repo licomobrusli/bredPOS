@@ -7,7 +7,10 @@ import MlistSection from './MlistSection';
 
 const McentralSection: React.FC = () => {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{
+        flex: 1,
+        backgroundColor: 'black',
+        }}>
       <View style={{ flexDirection: 'row', flex: 1 }}>
         <MlistSection />
       </View>

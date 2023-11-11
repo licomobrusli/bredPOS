@@ -1,4 +1,4 @@
-
+// CategoryList.tsx
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text } from 'react-native';
 import api from '../services/api';
@@ -10,9 +10,9 @@ import ListCard from '../components/ListCard';
 import { gridStyles } from '../config/gridStyle';
 
 // Importing images
-import HEDImage from '../defaults/images/HED.jpg';
-import FCEImage from '../defaults/images/FCE.jpg';
-import BRDImage from '../defaults/images/BRD.jpg';
+import HEDImage from '../main/assets/images/HED.jpg';
+import FCEImage from '../main/assets/images/FCE.jpg';
+import BRDImage from '../main/assets/images/BRD.jpg';
 
 const CategoryList = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -66,25 +66,26 @@ const CategoryList = () => {
   const renderItem = ({ item, index }: { item: Category | null; index: number }) => {
     const isPlaceholder = item === null;
     const marginLeft = index % 2 === 0 ? gridStyles.margin : gridStyles.gap;
-
+  
     if (isPlaceholder) {
       return <View style={{ width: gridStyles.imageWidth, height: gridStyles.imageHeight, marginLeft, marginBottom: gridStyles.gap }} />;
     }
-
+  
     return (
       <ListCard
         style={{
           width: gridStyles.imageWidth,
-          height: gridStyles.imageHeight,
+          height: gridStyles.imageHeight * 1.5,
           marginLeft,
           marginBottom: gridStyles.gap,
         }}
-        imageUrl={item.imageUrl} // Use the updated imageUrl
+        imageUrl={item.imageUrl}
+        categoryName={item.name} // Pass the category name here
         onPress={() => onCategoryPress(item)}
       />
     );
   };
-
+  
   const keyExtractor = (item: Category | null, index: number) => item ? item.id.toString() : `placeholder-${index}`;
 
   return (
@@ -96,7 +97,7 @@ const CategoryList = () => {
           keyExtractor={keyExtractor}
           numColumns={3}
           columnWrapperStyle={{ justifyContent: 'space-between' }}
-          style={{ marginTop: gridStyles.margin, marginLeft: 0, marginRight: gridStyles.margin }}
+          style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin *2 }}
         />
       )}
     </View>

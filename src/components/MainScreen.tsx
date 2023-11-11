@@ -7,7 +7,10 @@ import MbottomSection from './MbottomSection';
 
 const MainScreen: React.FC = () => {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{
+        flex: 1,
+        backgroundColor: 'black',
+        }}>
       <MtopSection />
       <StackNavigator />
       <MbottomSection />

@@ -9,6 +9,11 @@ import CutModal from '../components/modals/CutModal';
 import ListCard from '../components/ListCard';
 import { gridStyles } from '../config/gridStyle'; // Update the import path
 
+// Importing images
+import CUTImage from '../main/assets/images/CUT.jpg';
+import COLImage from '../main/assets/images/COL.jpg';
+import DSNImage from '../main/assets/images/DSN.jpg';
+
 const ServiceList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,7 +28,26 @@ const ServiceList: React.FC = () => {
     const loadServices = async () => {
       try {
         const data = await fetchServices(categoryCode);
-        setServices(data);
+        const servicesWithImages = data.map((service: Service) => {
+          let imagePath;
+          switch (service.code) { // Assuming 'code' is the unique identifier for services
+            case 'CUT':
+              imagePath = CUTImage;
+              break;
+            case 'COL':
+              imagePath = COLImage;
+              break;
+            case 'DSN':
+              imagePath = DSNImage;
+              break;
+            default:
+              imagePath = 'https://placekitten.com/200/200'; // Default image
+          }
+
+          return { ...service, imageUrl: imagePath };
+        });
+
+        setServices(servicesWithImages);
       } catch (error) {
         setError('Failed to load services');
         console.error("Failed to load services:", error);
@@ -53,20 +77,21 @@ const ServiceList: React.FC = () => {
       <ListCard
         style={{
           width: gridStyles.imageWidth,
-          height: gridStyles.imageHeight,
+          height: gridStyles.imageHeight * 1.5,
           marginLeft,
           marginBottom: gridStyles.gap,
         }}
-        imageUrl={item.imageUrl || 'https://placekitten.com/200/200'}
+        imageUrl={item.imageUrl} // Use the imageUrl that includes the mapped image
+        serviceName={item.name}
         onPress={() => onImagePress(item)}
       />
     );
   };
-  
+    
   const keyExtractor = (item: Service | null, index: number) => item ? item.code.toString() : `placeholder-${index}`;
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'lightgreen', paddingBottom: gridStyles.margin }}>
+    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin }}>
       <CutModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -83,7 +108,7 @@ const ServiceList: React.FC = () => {
           keyExtractor={keyExtractor}
           numColumns={3}
           columnWrapperStyle={{ justifyContent: 'space-between' }}
-          style={{ marginTop: gridStyles.margin, marginLeft: 0, marginRight: gridStyles.margin }}
+          style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin *2 }}
         />
       )}
     </View>
