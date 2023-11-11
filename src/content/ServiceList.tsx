@@ -81,7 +81,7 @@ const ServiceList: React.FC = () => {
           data={servicesWithPlaceholder}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
-          numColumns={2}
+          numColumns={3}
           columnWrapperStyle={{ justifyContent: 'space-between' }}
           style={{ marginTop: gridStyles.margin, marginLeft: 0, marginRight: gridStyles.margin }}
         />

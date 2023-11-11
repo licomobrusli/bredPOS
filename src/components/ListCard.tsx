@@ -1,18 +1,20 @@
-// ListCard.tsx
 import React from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle, TouchableOpacity, Image } from 'react-native';
 
 interface ListCardProps {
   style?: StyleProp<ViewStyle>;
-  imageUrl: string;
+  imageUrl: any; // Accept both string and image module
   onPress: () => void;
 }
 
 const ListCard: React.FC<ListCardProps> = ({ style, imageUrl, onPress }) => {
+  // Determine if the imageUrl is a local image or a remote URL
+  const imageSource = typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl;
+
   return (
     <TouchableOpacity onPress={onPress} style={[styles.card, style]}>
       <Image
-        source={{ uri: imageUrl }}
+        source={imageSource}
         style={styles.image}
       />
     </TouchableOpacity>
