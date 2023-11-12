@@ -1,10 +1,13 @@
 // MadvertSection.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, ViewStyle, Image, TouchableOpacity } from 'react-native';
+import SubsModal from '../components/modals/SubsModal'; // Adjust the import path as necessary
 
 const Madvert: React.FC<{ style?: ViewStyle }> = ({ style }) => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
   const handlePress = () => {
-    console.log('Image Clicked');
+    setModalVisible(true);
   };
 
   return (
@@ -15,6 +18,11 @@ const Madvert: React.FC<{ style?: ViewStyle }> = ({ style }) => {
           style={styles.image}
         />
       </TouchableOpacity>
+
+      <SubsModal 
+        isVisible={isModalVisible} 
+        onClose={() => setModalVisible(false)} 
+      />
     </View>
   );
 };
@@ -26,7 +34,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   image: {
-    height: '100%',
+    height: '80%',
     resizeMode: 'contain',
     borderColor: 'white',
     borderWidth: 1,
