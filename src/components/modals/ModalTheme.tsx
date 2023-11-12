@@ -1,9 +1,16 @@
+// ModalTheme.tsx
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Image } from 'react-native';
 
-const ModalTheme = () => (
-  <View style={{ backgroundColor: 'lightgreen', padding: 10 }}>
-    <Text>Side Selector</Text>
+interface ModalThemeProps {
+  categoryImage: string;
+  serviceImage: string;
+}
+
+const ModalTheme: React.FC<ModalThemeProps> = ({ categoryImage, serviceImage }) => (
+  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+    <Image source={{ uri: "https://placekitten.com/200/200" }} style={{ width: '45%', height: '100%' }} />
+    <Image source={{ uri: "https://placekitten.com/200/200" }} style={{ width: '45%', height: '100%' }} />
   </View>
 );
 

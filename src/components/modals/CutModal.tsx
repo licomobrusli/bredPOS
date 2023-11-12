@@ -1,18 +1,19 @@
 // CutModal.tsx
 import React from 'react';
 import { Modal, View } from 'react-native';
+
 import ModalHeader from './ModalHeader';
 import ModalTheme from './ModalTheme';
-import CutSelect from './CutSelector';
-import ToolSelect from './ToolSelector';
 import ModalFooter from './ModalFooter';
 
 interface CutModalProps {
   visible: boolean;
   onClose: () => void;
+  selectedCategoryImage: string;
+  selectedServiceImage: string;
 }
 
-const CutModal: React.FC<CutModalProps> = ({ visible, onClose }) => {
+const CutModal: React.FC<CutModalProps> = ({ visible, onClose, selectedCategoryImage, selectedServiceImage }) => {
   return (
     <Modal
       animationType="fade"
@@ -20,9 +21,9 @@ const CutModal: React.FC<CutModalProps> = ({ visible, onClose }) => {
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={{ marginTop: 22 }}>
+      <View style={{ flex: 1, justifyContent: 'space-between' }}>
         <ModalHeader />
-        <ModalTheme />
+        <ModalTheme categoryImage={selectedCategoryImage} serviceImage={selectedServiceImage} />
         <ModalFooter onClose={onClose} />
       </View>
     </Modal>

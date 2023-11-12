@@ -94,8 +94,7 @@ const ServiceList: React.FC = () => {
     <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin }}>
       <CutModal
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-      />
+        onClose={() => setModalVisible(false)} selectedCategoryImage={''} selectedServiceImage={''}      />
 
       {loading ? (
         <Text>Loading...</Text>

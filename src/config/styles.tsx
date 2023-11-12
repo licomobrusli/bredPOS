@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         fontSize: 220,
         color: 'white',
     },
-        txtSubBrandBanner: {
+    txtSubBrandBanner: {
         textAlign: 'center',
         textAlignVertical: 'center',
         fontFamily: 'OilvareBase-Regular',
