@@ -1,19 +1,14 @@
 // McentralSection.tsx
 import React from 'react';
 import { View } from 'react-native';
-import McentralHeaderSection from './McentralHeaderSection';
-import MleftSection from './MleftSection';
 import MlistSection from './MlistSection';
+import McentralControlsSection from './McentralControlsSection';
 
 const McentralSection: React.FC = () => {
   return (
-    <View style={{
-        flex: 1,
-        backgroundColor: 'black',
-        }}>
-      <View style={{ flexDirection: 'row', flex: 1 }}>
-        <MlistSection />
-      </View>
+    <View style={{ height: 950, backgroundColor: 'black', flexDirection: 'column' }}>
+      <MlistSection />
+      <McentralControlsSection />
     </View>
   );
 };

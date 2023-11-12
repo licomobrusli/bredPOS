@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         txtSubBrandBanner: {
         textAlign: 'center',
         textAlignVertical: 'center',
-        fontFamily: "OilvareBase-Regular",
+        fontFamily: 'OilvareBase-Regular',
         letterSpacing: 18,
         fontSize: 60,
         color: 'white',
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     txtProductCard: {
         textAlign: 'center',
         textAlignVertical: 'center',
-        fontFamily: "OilvareBase-Regular",
+        fontFamily: 'OilvareBase-Regular',
         letterSpacing: 10,
         fontSize: 50,
         color: 'white',
@@ -29,8 +29,9 @@ const styles = StyleSheet.create({
     txtNavButton: {
         textAlign: 'center',
         textAlignVertical: 'center',
+        fontFamily: 'Poppins',
         fontSize: 12,
-        color: 'black',
+        color: 'white',
     },
   });
   

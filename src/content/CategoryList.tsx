@@ -36,9 +36,11 @@ const CategoryList = () => {
             case 'BRD':
               imagePath = BRDImage;
               break;
-            default:
+            {/*
+              default:
               // Provide a default image path or handle the absence of an image
               imagePath = 'https://placekitten.com/820/500'; // Replace with actual default image path
+          */}
           }
 
           return { ...category, imageUrl: imagePath };
@@ -89,7 +91,7 @@ const CategoryList = () => {
   const keyExtractor = (item: Category | null, index: number) => item ? item.id.toString() : `placeholder-${index}`;
 
   return (
-    <View style={{ flex: 1, paddingBottom: gridStyles.margin }}>
+    <View style={{ flex: 1, paddingBottom: gridStyles.margin, backgroundColor: 'black' }}>
       {loading ? <Text>Loading...</Text> : error ? <Text>{error}</Text> : (
         <FlatList
           data={categories}

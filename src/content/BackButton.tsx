@@ -19,7 +19,7 @@ const BackButton: React.FC = () => {
       <TouchableOpacity onPress={handlePress}>
         <Image
           source={{ uri: 'https://placekitten.com/40/20' }}
-          style={{ width: 40, height: 20 }} // Adjust the size as needed
+          style={{ width: 400, height: 100 }} // Adjust the size as needed
         />
       </TouchableOpacity>
     )
