@@ -23,8 +23,6 @@ const CutModal: React.FC<CutModalProps> = ({ visible, onClose }) => {
       <View style={{ marginTop: 22 }}>
         <ModalHeader />
         <ModalTheme />
-        <CutSelect />
-        <ToolSelect />
         <ModalFooter onClose={onClose} />
       </View>
     </Modal>
