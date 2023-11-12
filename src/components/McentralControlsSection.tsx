@@ -1,14 +1,15 @@
-// McentralControlsSection.tsx
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import BackButton from '../content/BackButton';
-import HeaderImage from '../content/HeaderImage';
+import HelpButton from '../content/HelpButton';
 
 const McentralControls: React.FC<{ style?: ViewStyle }> = ({ style }) => {
+  const route = useRoute();
+
   return (
-    <View
-      style={[styles.container, style]}>
-      <BackButton />
+    <View style={[styles.container, style]}>
+      {route.name === 'CategoryScreen' ? <HelpButton /> : <BackButton />}
     </View>
   );
 };

@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
         fontFamily: 'Poppins',
-        fontSize: 12,
+        fontSize: 50,
         color: 'white',
     },
   });

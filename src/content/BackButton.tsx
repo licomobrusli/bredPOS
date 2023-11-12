@@ -1,7 +1,8 @@
 // BackButton.tsx
 import React from 'react';
-import { TouchableOpacity, Image } from 'react-native';
+import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
+import customStyles from '../config/styles'; // Ensure this is the correct path to your styles
 
 const BackButton: React.FC = () => {
   const navigation = useNavigation();
@@ -11,19 +12,34 @@ const BackButton: React.FC = () => {
     navigation.goBack();
   };
 
-  // Check if the current stack length is greater than 1
   const isBackButtonVisible = state.routes.length > 1;
 
   return (
     isBackButtonVisible && (
-      <TouchableOpacity onPress={handlePress}>
-        <Image
-          source={{ uri: 'https://placekitten.com/40/20' }}
-          style={{ width: 400, height: 100 }} // Adjust the size as needed
-        />
+      <TouchableOpacity onPress={handlePress} style={styles.backButton}>
+        <View style={styles.transparentCard}>
+          <Text style={customStyles.txtNavButton}>Ir atras</Text>
+        </View>
       </TouchableOpacity>
     )
   );
 };
+
+const styles = StyleSheet.create({
+  backButton: {
+    width: 300, // Adjust the size as needed
+    height: 100, // Adjust the size as needed
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 5,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  transparentCard: {
+    backgroundColor: 'transparent',
+    borderRadius: 5,
+  },
+});
 
 export default BackButton;
