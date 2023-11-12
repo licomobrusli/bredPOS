@@ -17,11 +17,11 @@ const CutModal: React.FC<CutModalProps> = ({ visible, onClose, selectedCategoryI
   return (
     <Modal
       animationType="fade"
-      transparent={false}
+      transparent={true}
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={{ flex: 1, justifyContent: 'space-between' }}>
+      <View style={{ flex: 1, justifyContent: 'space-between', marginTop: 600 }}>
         <ModalHeader />
         <ModalTheme categoryImage={selectedCategoryImage} serviceImage={selectedServiceImage} />
         <ModalFooter onClose={onClose} />
