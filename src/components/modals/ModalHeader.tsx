@@ -5,7 +5,7 @@ import styles from '../../config/styles'; // Make sure this path is correct
 
 const ModalHeader = () => (
   <View style={{ flex: 1, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
-    <Text style={styles.txtSubBrandBanner}>AÑADIR AL CARRITO</Text>
+    <Text style={styles.txtNavButton}>AÑADIR AL CARRITO</Text>
   </View>
 );
 

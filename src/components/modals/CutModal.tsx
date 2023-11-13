@@ -20,10 +20,16 @@ const CutModal: React.FC<CutModalProps> = ({ visible, onClose, selectedCategoryI
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={{ flex: 1, justifyContent: 'space-between', marginTop: 600, marginBottom: 380 }}>
-        <ModalHeader />
-        <ModalTheme />
-        <ModalFooter onClose={onClose} />
+      <View style={{ flex: 1, justifyContent: 'space-between', marginTop: 535, marginBottom: 380 }}>
+        <View style={{ flex: 0.3 }}>
+          <ModalHeader />
+        </View>
+        <View style={{ flex: 5 }}>
+          <ModalTheme />
+        </View>
+        <View style={{ flex: 1 }}>
+          <ModalFooter onClose={onClose} />
+        </View>
       </View>
     </Modal>
   );
