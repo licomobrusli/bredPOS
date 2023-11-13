@@ -9,11 +9,11 @@ interface ModalFooterProps {
 
 const ModalFooter: React.FC<ModalFooterProps> = ({ onClose }) => (
   <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: 'black' }}>
-    <TouchableOpacity onPress={onClose} style={{ padding: 10, borderWidth: 1, borderColor: 'black', borderRadius: 5 }}>
-      <Text style={styles.txtSubBrandBanner}>Cancelar</Text>
+    <TouchableOpacity onPress={onClose} style={{ padding: 10, borderWidth: 1, borderColor: 'white', borderRadius: 5 }}>
+      <Text style={styles.txtNavButton}>Cancelar</Text>
     </TouchableOpacity>
-    <TouchableOpacity style={{ padding: 10, borderWidth: 1, borderColor: 'black', borderRadius: 5 }}>
-      <Text style={styles.txtSubBrandBanner}>Agregar</Text>
+    <TouchableOpacity style={{ padding: 10, borderWidth: 1, borderColor: 'white', borderRadius: 5 }}>
+      <Text style={styles.txtNavButton}>Agregar</Text>
     </TouchableOpacity>
   </View>
 );

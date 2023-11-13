@@ -1,7 +1,6 @@
 // CutModal.tsx
 import React from 'react';
 import { Modal, View } from 'react-native';
-
 import ModalHeader from './ModalHeader';
 import ModalTheme from './ModalTheme';
 import ModalFooter from './ModalFooter';
@@ -21,9 +20,9 @@ const CutModal: React.FC<CutModalProps> = ({ visible, onClose, selectedCategoryI
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={{ flex: 1, justifyContent: 'space-between', marginTop: 600 }}>
+      <View style={{ flex: 1, justifyContent: 'space-between', marginTop: 600, marginBottom: 380 }}>
         <ModalHeader />
-        <ModalTheme categoryImage={selectedCategoryImage} serviceImage={selectedServiceImage} />
+        <ModalTheme />
         <ModalFooter onClose={onClose} />
       </View>
     </Modal>
