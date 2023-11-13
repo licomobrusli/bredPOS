@@ -70,7 +70,7 @@ const ServiceList: React.FC = () => {
     const marginLeft = isFirstColumn ? gridStyles.margin : gridStyles.gap;
   
     if (isPlaceholder) {
-      return <View style={{ width: gridStyles.imageWidth, height: gridStyles.imageHeight, marginLeft, marginBottom: gridStyles.gap }} />;
+      return <View style={{ backgroundColor: 'black', width: gridStyles.imageWidth, height: gridStyles.imageHeight, marginLeft, marginBottom: gridStyles.gap }} />;
     }
   
     return (
@@ -106,7 +106,7 @@ const ServiceList: React.FC = () => {
           renderItem={renderItem}
           keyExtractor={keyExtractor}
           numColumns={3}
-          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          columnWrapperStyle={{ justifyContent: 'center' }}
           style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin *2 }}
         />
       )}

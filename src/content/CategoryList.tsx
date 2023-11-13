@@ -70,7 +70,7 @@ const CategoryList = () => {
     const marginLeft = index % 2 === 0 ? gridStyles.margin : gridStyles.gap;
   
     if (isPlaceholder) {
-      return <View style={{ width: gridStyles.imageWidth, height: gridStyles.imageHeight, marginLeft, marginBottom: gridStyles.gap }} />;
+      return <View style={{ backgroundColor: 'black', width: gridStyles.imageWidth, height: gridStyles.imageHeight, marginLeft, marginBottom: gridStyles.gap }} />;
     }
   
     return (
@@ -91,14 +91,14 @@ const CategoryList = () => {
   const keyExtractor = (item: Category | null, index: number) => item ? item.id.toString() : `placeholder-${index}`;
 
   return (
-    <View style={{ flex: 1, paddingBottom: gridStyles.margin, backgroundColor: 'black' }}>
+    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin}}>
       {loading ? <Text>Loading...</Text> : error ? <Text>{error}</Text> : (
         <FlatList
           data={categories}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
           numColumns={3}
-          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          columnWrapperStyle={{ justifyContent: 'center' }}
           style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin *2 }}
         />
       )}
