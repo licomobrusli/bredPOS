@@ -25,11 +25,11 @@ const CutModal: React.FC<CutModalProps> = ({
       onRequestClose={onClose}
     >
       <View style={{ flex: 1, justifyContent: 'space-between', marginTop: 535, marginBottom: 380 }}>
+        <View style={{ flex: 1.3 }}>
+          <ModalTheme categoryCode={categoryCode} selectedServiceCode={selectedServiceCode} />
+        </View>
         <View style={{ flex: 0.3 }}>
           <ModalHeader />
-        </View>
-        <View style={{ flex: 5 }}>
-          <ModalTheme categoryCode={categoryCode} selectedServiceCode={selectedServiceCode} />
         </View>
         <View style={{ flex: 1 }}>
           <ModalFooter onClose={onClose} />

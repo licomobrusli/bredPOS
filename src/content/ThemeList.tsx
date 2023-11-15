@@ -1,6 +1,6 @@
 // ThemeList.tsx
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, Text, Dimensions } from 'react-native';
 import api from '../services/api'; // Import your API utility
 import { gridStyles } from '../config/gridStyle';
 import ThemeCard from '../components/ThemeCard';
@@ -91,26 +91,30 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
     const marginLeft = index % 3 === 0 ? gridStyles.margin : gridStyles.gap;
 
     return (
-      <ThemeCard
-        style={{
-          width: gridStyles.imageWidth,
-          height: gridStyles.imageHeight * 1.5,
-          marginLeft,
-          marginBottom: gridStyles.gap,
-        }}
-        imageUrl={item.imageUrl}
-        onPress={() => console.log(`Pressed theme ${item.id}`)}
-      />
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <ThemeCard
+          style={{
+            width: gridStyles.imageWidth,
+            height: gridStyles.imageHeight * 1.5,
+            marginLeft,
+            marginBottom: gridStyles.gap,
+          }}
+          imageUrl={item.imageUrl}
+          onPress={() => console.log(`Pressed theme ${item.id}`)}
+        />
+      </View>
     );
   };
 
+  <Text style={[styles.txtSubBrandBanner, { backgroundColor: 'red' }]}>
+  {selectedServiceCode} de {categoryCode}
+</Text>
+
   const keyExtractor = (item: Theme) => item.id;
+  const screenWidth = Dimensions.get('window').width;
 
   return (
     <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin }}>
-      <Text style={[styles.txtSubBrandBanner, { backgroundColor: 'red' }]}>
-        {selectedServiceCode} de {categoryCode}
-      </Text>
       <FlatList
         data={combinedData}
         renderItem={renderItem}
@@ -119,6 +123,14 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
         columnWrapperStyle={{ justifyContent: 'center' }}
         style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin * 2 }}
       />
+      <Text style={[styles.txtSubBrandBanner,
+        { width: screenWidth * 0.55,
+        backgroundColor: 'red',
+        alignSelf: 'center',
+        borderColor: 'red',
+        borderWidth: 1 }]}>
+        {selectedServiceCode} de {categoryCode}
+      </Text>
     </View>
   );
 };

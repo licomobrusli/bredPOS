@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: '66%', // Changed to 100% to fill the card
+    height: '100%', // Changed to 100% to fill the card
     resizeMode: 'contain',
     alignSelf: 'center',
     marginTop: 33,
