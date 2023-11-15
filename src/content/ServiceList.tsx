@@ -22,12 +22,15 @@ const ServiceList: React.FC = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'ServiceScreen'>>();
   const servicesWithPlaceholder = services.length % 2 !== 0 ? [...services, null] : services;
   const hardcodedDefault = '';
-  const categoryCode = hardcodedDefault !== null ? hardcodedDefault : (route.params?.categoryCode || 'DefaultCode');
+  const categoryCode = route.params?.categoryCode || 'DefaultCode'; // Preserve categoryCode from navigation route
+  // apiFilterCode is set to hardcodedDefault if it's not empty, otherwise use categoryCode
+  const apiFilterCode = hardcodedDefault !== null ? hardcodedDefault : (route.params?.categoryCode || 'DefaultCode');  
+
 
   useEffect(() => {
     const loadServices = async () => {
       try {
-        const data = await fetchServices(categoryCode);
+        const data = await fetchServices(apiFilterCode); // Use apiFilterCode here for API call
         const servicesWithImages = data.map((service: Service) => {
           let imagePath;
           switch (service.code) { // Assuming 'code' is the unique identifier for services
@@ -57,7 +60,7 @@ const ServiceList: React.FC = () => {
     };
 
     loadServices();
-  }, [categoryCode]);
+  }, [apiFilterCode]);
 
   const onImagePress = (service: Service) => {
     console.log('Service pressed!', service);
@@ -94,7 +97,11 @@ const ServiceList: React.FC = () => {
     <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin }}>
       <CutModal
         visible={modalVisible}
-        onClose={() => setModalVisible(false)} selectedCategoryImage={''} selectedServiceImage={''}      />
+        onClose={() => setModalVisible(false)}
+        selectedCategoryImage={''}
+        selectedServiceImage={''}
+        categoryCode={categoryCode} // Passing the original categoryCode to the modal
+      />
 
       {loading ? (
         <Text>Loading...</Text>

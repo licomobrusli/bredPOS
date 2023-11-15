@@ -3,11 +3,10 @@ import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
 import ThemeList from '../../content/ThemeList'; ;
 
-const ModalTheme: React.FC<{ style?: ViewStyle }> = ({ style }) => {
-
+const ModalTheme: React.FC<{ style?: ViewStyle, categoryCode: string }> = ({ style, categoryCode }) => {
   return (
     <View style={[styles.container, style]}>
-      <ThemeList />
+      <ThemeList categoryCode={categoryCode} />
     </View>
   );
 };
