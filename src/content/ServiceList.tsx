@@ -25,7 +25,7 @@ const ServiceList: React.FC = () => {
   const categoryCode = route.params?.categoryCode || 'DefaultCode'; // Preserve categoryCode from navigation route
   // apiFilterCode is set to hardcodedDefault if it's not empty, otherwise use categoryCode
   const apiFilterCode = hardcodedDefault !== null ? hardcodedDefault : (route.params?.categoryCode || 'DefaultCode');  
-
+  const [selectedServiceCode, setSelectedServiceCode] = useState<string>('');
 
   useEffect(() => {
     const loadServices = async () => {
@@ -64,6 +64,7 @@ const ServiceList: React.FC = () => {
 
   const onImagePress = (service: Service) => {
     console.log('Service pressed!', service);
+    setSelectedServiceCode(service.code); // Set the selected service code
     setModalVisible(true);
   };
 
@@ -100,7 +101,8 @@ const ServiceList: React.FC = () => {
         onClose={() => setModalVisible(false)}
         selectedCategoryImage={''}
         selectedServiceImage={''}
-        categoryCode={categoryCode} // Passing the original categoryCode to the modal
+        categoryCode={categoryCode}
+        selectedServiceCode={selectedServiceCode} // Pass the selected service code
       />
 
       {loading ? (

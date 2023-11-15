@@ -18,9 +18,10 @@ let themes: Theme[] = [
 
 interface ThemeListProps {
   categoryCode: string; // Add prop type
+  selectedServiceCode: string;
 }
 
-const ThemeList: React.FC<ThemeListProps> = ({ categoryCode }) => {
+const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode }) => {
     const renderItem = ({ item, index }: { item: Theme; index: number }) => {
     const marginLeft = index % 3 === 0 ? gridStyles.margin : gridStyles.gap;
 
@@ -43,7 +44,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode }) => {
   return (
     <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin }}>
       <Text style={[styles.txtSubBrandBanner, { backgroundColor: 'red' }]}>
-        Wank //{categoryCode}
+        {selectedServiceCode} de {categoryCode}
       </Text>
       <FlatList
         data={themes}

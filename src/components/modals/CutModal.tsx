@@ -11,9 +11,12 @@ interface CutModalProps {
   selectedCategoryImage: string;
   selectedServiceImage: string;
   categoryCode: string; // Add categoryCode to the props
+  selectedServiceCode: string;
 }
 
-const CutModal: React.FC<CutModalProps> = ({ visible, onClose, selectedCategoryImage, selectedServiceImage, categoryCode }) => {
+const CutModal: React.FC<CutModalProps> = ({
+  visible, onClose, selectedCategoryImage, selectedServiceImage, categoryCode, selectedServiceCode
+  }) => {
   return (
     <Modal
       animationType="fade"
@@ -26,7 +29,7 @@ const CutModal: React.FC<CutModalProps> = ({ visible, onClose, selectedCategoryI
           <ModalHeader />
         </View>
         <View style={{ flex: 5 }}>
-          <ModalTheme categoryCode={categoryCode} />
+          <ModalTheme categoryCode={categoryCode} selectedServiceCode={selectedServiceCode} />
         </View>
         <View style={{ flex: 1 }}>
           <ModalFooter onClose={onClose} />
