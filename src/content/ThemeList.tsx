@@ -17,6 +17,8 @@ import DSNImage from '../main/assets/images/DSN.jpg';
 interface Theme {
   id: string;
   imageUrl: string;
+  code: string;
+  name: string; // Name field added
 }
 
 interface ThemeListProps {
@@ -47,7 +49,9 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
             default:
               imagePath = 'https://placekitten.com/200/200'; // Default image
           }
-          return { id: category.id.toString(), imageUrl: imagePath };
+          const categoryObject = { id: category.id.toString(), code: category.code, imageUrl: imagePath, name: category.name };
+        console.log("Category Object:", categoryObject);  // Log each constructed object
+        return categoryObject;
         });
         setThemes(loadedCategories);
       } catch (error) {
@@ -73,7 +77,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
             default:
               imagePath = 'https://placekitten.com/200/200'; // Default image
           }
-          return { id: service.id.toString(), imageUrl: imagePath };
+          return { id: service.id.toString(), code: service.code, imageUrl: imagePath, name: service.name };
         });
         setServices(loadedServices);
       } catch (error) {
@@ -83,9 +87,11 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
 
     fetchCategories();
     fetchServices();
+    console.log("Fetched Categories:", themes);
+    console.log("Fetched Services:", services);
   }, [categoryCode, selectedServiceCode]);
 
-  const combinedData = [...services, ...themes]; // Combine services and categories
+  const combinedData = [...services, ...themes];
 
   const renderItem = ({ item, index }: { item: Theme; index: number }) => {
     const marginLeft = index % 3 === 0 ? gridStyles.margin : gridStyles.gap;
@@ -95,7 +101,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
         <ThemeCard
           style={{
             width: gridStyles.imageWidth,
-            height: gridStyles.imageHeight * 1.5,
+            height: gridStyles.imageHeight * 1.2,
             marginLeft,
             marginBottom: gridStyles.gap,
           }}
@@ -105,10 +111,6 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
       </View>
     );
   };
-
-  <Text style={[styles.txtSubBrandBanner, { backgroundColor: 'red' }]}>
-  {selectedServiceCode} de {categoryCode}
-</Text>
 
   const keyExtractor = (item: Theme) => item.id;
   const screenWidth = Dimensions.get('window').width;
@@ -123,13 +125,14 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
         columnWrapperStyle={{ justifyContent: 'center' }}
         style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin * 2 }}
       />
-      <Text style={[styles.txtSubBrandBanner,
+      <Text style={[styles.txtProductCard,
         { width: screenWidth * 0.55,
-        backgroundColor: 'red',
-        alignSelf: 'center',
-        borderColor: 'red',
-        borderWidth: 1 }]}>
-        {selectedServiceCode} de {categoryCode}
+          textAlign: 'center',
+          backgroundColor: 'red',
+          alignSelf: 'center',
+          borderColor: 'red',
+          borderWidth: 1 }]}>
+          {services.find(service => service.code === selectedServiceCode)?.name.toUpperCase()}  de  {themes.find(theme => theme.code === categoryCode)?.name.toUpperCase()}
       </Text>
     </View>
   );

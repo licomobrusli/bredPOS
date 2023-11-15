@@ -32,8 +32,11 @@ const styles = StyleSheet.create({
     height: '100%', // Changed to 100% to fill the card
     resizeMode: 'contain',
     alignSelf: 'center',
-    marginTop: 33,
-    marginBottom: 33,
+    
+  },
+  categoryText: {
+    textAlign: 'justify',
+    fontWeight: 'bold',
   },
 });
 

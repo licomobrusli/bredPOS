@@ -24,8 +24,8 @@ const CutModal: React.FC<CutModalProps> = ({
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={{ flex: 1, justifyContent: 'space-between', marginTop: 535, marginBottom: 380 }}>
-        <View style={{ flex: 1.3 }}>
+      <View style={{ flex: 1, justifyContent: 'space-between', marginTop: 600, marginBottom: 380 }}>
+        <View style={{ flex: 0.9 }}>
           <ModalTheme categoryCode={categoryCode} selectedServiceCode={selectedServiceCode} />
         </View>
         <View style={{ flex: 0.3 }}>
