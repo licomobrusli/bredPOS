@@ -11,7 +11,7 @@ const MbottomSection: React.FC = () => {
       alignItems: 'center',
       justifyContent: 'flex-start',
     }}>
-      <Image source={SHP} style={{ width: 300, height: 300 }} />
+      <Image source={SHP} style={{ width: 250, height: 250 }} />
     </View>
   );
 };
