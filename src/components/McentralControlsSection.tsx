@@ -1,3 +1,4 @@
+//McentralControlsSection.tsx
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
 import { useRoute } from '@react-navigation/native';

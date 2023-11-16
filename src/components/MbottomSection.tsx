@@ -1,13 +1,17 @@
+// MbottomSection.tsx
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
+import SHP from './../main/assets/images/SHP.jpg';
 
 const MbottomSection: React.FC = () => {
   return (
     <View style={{
       height: 380,
       backgroundColor: 'black',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
     }}>
-      <Text>Bottom Section</Text>
+      <Image source={SHP} style={{ width: 300, height: 300 }} />
     </View>
   );
 };
