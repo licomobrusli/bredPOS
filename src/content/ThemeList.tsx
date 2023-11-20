@@ -148,20 +148,36 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
         style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin * 2 }}
       />
       {modalCounts.map(modalCount => (
+      <View key={modalCount.id} style={{ 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        backgroundColor: 'red', 
+        alignSelf: 'center', 
+        width: screenWidth * 0.55, 
+        marginVertical: 5, 
+        borderColor: 'red', 
+        borderWidth: 1 
+      }}>
         <Text
-          key={modalCount.id}
-          style={[styles.txtProductCard, {
-            width: screenWidth * 0.55,
-            textAlign: 'center',
-            backgroundColor: 'red',
-            alignSelf: 'center',
-            borderColor: 'red',
-            borderWidth: 1
+          style={[styles.txtModalCounts, {
+            flex: 4.2, // Increased flex for name
+            textAlign: 'left',
+            paddingLeft: 10, // Padding for text alignment
           }]}>
-          {`${modalCount.name.toUpperCase()} ${Math.floor(modalCount.price)}€`}
+          {modalCount.name.toUpperCase()}
         </Text>
-      ))}
-    </View>
+        <Text
+          style={[styles.txtModalCounts, {
+            flex: 0.8, // Flex for price
+            textAlign: 'right',
+            paddingRight: 10, // Padding for text alignment
+          }]}>
+          {`${Math.floor(modalCount.price)}€`}
+        </Text>
+      </View>
+    ))}
+  </View>
   );
 };
 

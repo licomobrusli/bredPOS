@@ -26,6 +26,14 @@ const styles = StyleSheet.create({
         fontSize: 50,
         color: 'white',
     },
+    txtModalCounts: {
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        fontFamily: 'OilvareBase-Regular',
+        letterSpacing: 10,
+        fontSize: 40,
+        color: 'white',
+    },
     txtNavButton: {
         textAlign: 'center',
         textAlignVertical: 'center',
