@@ -35,7 +35,7 @@ interface ThemeListProps {
 const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode }) => {
   const [themes, setThemes] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
-  const [modalCount, setModalCount] = useState<ModalCount | null>(null);
+  const [modalCounts, setModalCounts] = useState<ModalCount[]>([]); // Updated to array
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -96,17 +96,17 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
           params: { categoryCode, serviceCode: selectedServiceCode }
         });
         if (response.data.length > 0) {
-          const modalCountData = response.data[0];
-          setModalCount({
-            ...modalCountData,
-            price: Number(modalCountData.price) // Convert to number if it's a string
-          });
+          const modalCountData = response.data.map((item: any) => ({
+            ...item,
+            price: Number(item.price) // Convert each price to number
+          }));
+          setModalCounts(modalCountData);
         } else {
-          setModalCount(null);
+          setModalCounts([]);
         }
       } catch (error) {
         console.error('Error fetching modal counts:', error);
-        setModalCount(null); // Handle error by setting modalCount to null
+        setModalCounts([]); // Handle error by setting modalCounts to an empty array
       }
     };
 
@@ -147,18 +147,21 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
         columnWrapperStyle={{ justifyContent: 'center' }}
         style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin * 2 }}
       />
-       <Text style={[styles.txtProductCard,
-      { width: screenWidth * 0.55,
-        textAlign: 'center',
-        backgroundColor: 'red',
-        alignSelf: 'center',
-        borderColor: 'red',
-        borderWidth: 1 }]}>
-        {modalCount && typeof modalCount.price === 'number' 
-          ? `${modalCount.name.toUpperCase()} ${Math.floor(modalCount.price)}€`
-          : 'Loading...'}
-    </Text>
-  </View>
+      {modalCounts.map(modalCount => (
+        <Text
+          key={modalCount.id}
+          style={[styles.txtProductCard, {
+            width: screenWidth * 0.55,
+            textAlign: 'center',
+            backgroundColor: 'red',
+            alignSelf: 'center',
+            borderColor: 'red',
+            borderWidth: 1
+          }]}>
+          {`${modalCount.name.toUpperCase()} ${Math.floor(modalCount.price)}€`}
+        </Text>
+      ))}
+    </View>
   );
 };
 
