@@ -21,6 +21,12 @@ interface Theme {
   name: string; // Name field added
 }
 
+interface ModalCount {
+  id: string;
+  name: string;
+  price: number;
+}
+
 interface ThemeListProps {
   categoryCode: string;
   selectedServiceCode: string;
@@ -29,6 +35,7 @@ interface ThemeListProps {
 const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode }) => {
   const [themes, setThemes] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
+  const [modalCount, setModalCount] = useState<ModalCount | null>(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -49,9 +56,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
             default:
               imagePath = 'https://placekitten.com/200/200'; // Default image
           }
-          const categoryObject = { id: category.id.toString(), code: category.code, imageUrl: imagePath, name: category.name };
-        console.log("Category Object:", categoryObject);  // Log each constructed object
-        return categoryObject;
+          return { id: category.id.toString(), code: category.code, imageUrl: imagePath, name: category.name };
         });
         setThemes(loadedCategories);
       } catch (error) {
@@ -85,13 +90,30 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
       }
     };
 
+    const fetchModalCount = async () => {
+      try {
+        const response = await api.get('/modal_counts/', { 
+          params: { categoryCode, serviceCode: selectedServiceCode }
+        });
+        if (response.data.length > 0) {
+          const modalCountData = response.data[0];
+          setModalCount({
+            ...modalCountData,
+            price: Number(modalCountData.price) // Convert to number if it's a string
+          });
+        } else {
+          setModalCount(null);
+        }
+      } catch (error) {
+        console.error('Error fetching modal counts:', error);
+        setModalCount(null); // Handle error by setting modalCount to null
+      }
+    };
+
     fetchCategories();
     fetchServices();
-    console.log("Fetched Categories:", themes);
-    console.log("Fetched Services:", services);
+    fetchModalCount();
   }, [categoryCode, selectedServiceCode]);
-
-  const combinedData = [...services, ...themes];
 
   const renderItem = ({ item, index }: { item: Theme; index: number }) => {
     const marginLeft = index % 3 === 0 ? gridStyles.margin : gridStyles.gap;
@@ -118,23 +140,25 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   return (
     <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin }}>
       <FlatList
-        data={combinedData}
+        data={[...services, ...themes]}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         numColumns={3}
         columnWrapperStyle={{ justifyContent: 'center' }}
         style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin * 2 }}
       />
-      <Text style={[styles.txtProductCard,
-        { width: screenWidth * 0.55,
-          textAlign: 'center',
-          backgroundColor: 'red',
-          alignSelf: 'center',
-          borderColor: 'red',
-          borderWidth: 1 }]}>
-          {services.find(service => service.code === selectedServiceCode)?.name.toUpperCase()}  de  {themes.find(theme => theme.code === categoryCode)?.name.toUpperCase()}
-      </Text>
-    </View>
+       <Text style={[styles.txtProductCard,
+      { width: screenWidth * 0.55,
+        textAlign: 'center',
+        backgroundColor: 'red',
+        alignSelf: 'center',
+        borderColor: 'red',
+        borderWidth: 1 }]}>
+        {modalCount && typeof modalCount.price === 'number' 
+          ? `${modalCount.name.toUpperCase()} ${Math.floor(modalCount.price)}€`
+          : 'Loading...'}
+    </Text>
+  </View>
   );
 };
 
