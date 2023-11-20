@@ -1,7 +1,7 @@
 // CutModal.tsx
 import React from 'react';
 import { Modal, View } from 'react-native';
-import ModalHeader from './ModalHeader';
+import ModalHeader from './ModalControls';
 import ModalTheme from './ModalTheme';
 import ModalFooter from './ModalFooter';
 
