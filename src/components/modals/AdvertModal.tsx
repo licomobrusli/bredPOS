@@ -1,16 +1,16 @@
-// SubsModal.tsx
+// AdvertModal.tsx
 import React from 'react';
 import { Modal, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 // Import the image directly
 import PRCImage from '../../main/assets/images/STR.jpg';
 
-interface SubsModalProps {
+interface AdvertModalProps {
   isVisible: boolean;
   onClose: () => void;
 }
 
-const SubsModal: React.FC<SubsModalProps> = ({ isVisible, onClose }) => {
+const AdvertModal: React.FC<AdvertModalProps> = ({ isVisible, onClose }) => {
   return (
     <Modal
       visible={isVisible}
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SubsModal;
+export default AdvertModal;

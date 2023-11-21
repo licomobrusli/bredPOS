@@ -1,7 +1,7 @@
 // MadvertSection.tsx
 import React, { useState } from 'react';
 import { View, StyleSheet, ViewStyle, Image, TouchableOpacity } from 'react-native';
-import SubsModal from '../components/modals/SubsModal'; // Adjust the import path as necessary
+import SubsModal from './modals/AdvertModal'; // Adjust the import path as necessary
 
 const Madvert: React.FC<{ style?: ViewStyle }> = ({ style }) => {
   const [isModalVisible, setModalVisible] = useState(false);

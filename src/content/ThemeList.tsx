@@ -5,21 +5,7 @@ import { fetchCategories, fetchServices, fetchModalCounts } from '../config/apiC
 import { gridStyles } from '../config/gridStyle';
 import ThemeCard from '../components/ThemeCard';
 import styles from '../config/styles';
-
-interface Theme {
-  id: string;
-  imageUrl: string;
-  code: string;
-  name: string;
-}
-
-interface ModalCount {
-  id: string;
-  name: string;
-  price: number;
-  max_quantity: number;
-  logic: string;
-}
+import { Theme, ModalCount } from '../config/types';
 
 interface ThemeListProps {
   categoryCode: string;
@@ -30,37 +16,53 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   const [themes, setThemes] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
-  const [selectedModalCountId, setSelectedModalCountId] = useState<string | null>(null);
+  const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
       try {
         const categories = await fetchCategories(categoryCode);
         setThemes(categories);
-  
+
         const services = await fetchServices(selectedServiceCode);
         setServices(services);
-  
+
         const modalCountsData = await fetchModalCounts({ categoryCode, serviceCode: selectedServiceCode });
         setModalCounts(modalCountsData);
+
+        // Select the first 'NOT' modal count by default, if applicable
+        if (modalCountsData.some((mc: { logic: string; }) => mc.logic === 'NOT')) {
+          setSelectedModalCounts([modalCountsData.find((mc: { logic: string; }) => mc.logic === 'NOT')?.id || '']);
+        }
       } catch (error) {
         console.error('Error:', error);
-        // Handle errors as needed, for example, by setting state variables to show an error message
       }
     };
-  
+
     loadData();
   }, [categoryCode, selectedServiceCode]);
 
- // Select the first modal count by default
- useEffect(() => {
-  if (modalCounts.length > 0 && selectedModalCountId === null) {
-    setSelectedModalCountId(modalCounts[0].id);
-    }
-  }, [modalCounts]);
+  const handleModalCountPress = (id: string, logic: string) => {
+    setSelectedModalCounts(prevSelected => {
+      let newSelected = [...prevSelected];
+
+      if (logic === 'OR' && !newSelected.includes(id)) {
+        newSelected.push(id);
+      } else if (logic === 'NOT') {
+        // If currently selected, deselect it. Otherwise, select it and deselect others
+        newSelected = newSelected.includes(id) ? [] : [id];
+      }
+
+      return newSelected;
+    });
+  };
+
+  const isModalCountSelected = (id: string) => {
+    return selectedModalCounts.includes(id);
+  };
 
   const renderItem = ({ item, index }: { item: Theme; index: number }) => {
-  const marginLeft = index % 3 === 0 ? gridStyles.margin : gridStyles.gap;
+    const marginLeft = index % 3 === 0 ? gridStyles.margin : gridStyles.gap;
 
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -81,10 +83,6 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   const keyExtractor = (item: Theme) => item.id;
   const screenWidth = Dimensions.get('window').width;
 
-  const handleModalCountPress = (id: string) => {
-    setSelectedModalCountId(id);
-  };
-
   return (
     <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin }}>
       <FlatList
@@ -96,35 +94,35 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
         style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin * 2 }}
       />
       {modalCounts.map(modalCount => (
-        <TouchableOpacity key={modalCount.id} onPress={() => handleModalCountPress(modalCount.id)}>
+        <TouchableOpacity key={modalCount.id} onPress={() => handleModalCountPress(modalCount.id, modalCount.logic)}>
           <View style={{ 
             flexDirection: 'row', 
             justifyContent: 'space-between', 
             alignItems: 'center', 
-            backgroundColor: modalCount.id === selectedModalCountId ? 'red' : 'black', 
+            backgroundColor: isModalCountSelected(modalCount.id) ? 'red' : 'black', 
             alignSelf: 'center', 
             width: screenWidth * 0.55, 
             marginVertical: 5, 
             borderColor: 'red', 
             borderWidth: 1 
           }}>
-        <Text
-          style={[styles.txtModalCounts, {
-            flex: 4.2, // Increased flex for name
-            textAlign: 'left',
-            paddingLeft: 10, // Padding for text alignment
-          }]}>
-          {modalCount.name.toUpperCase()}
-        </Text>
-        <Text
-          style={[styles.txtModalCounts, {
-            flex: 0.8, // Flex for price
-            textAlign: 'right',
-            paddingRight: 10, // Padding for text alignment
-          }]}>
-          {`${Math.floor(modalCount.price)}€`}
-        </Text>
-        </View>
+            <Text
+              style={[styles.txtModalCounts, {
+                flex: 4.2,
+                textAlign: 'left',
+                paddingLeft: 10,
+              }]}>
+              {modalCount.name.toUpperCase()}
+            </Text>
+            <Text
+              style={[styles.txtModalCounts, {
+                flex: 0.8,
+                textAlign: 'right',
+                paddingRight: 10,
+              }]}>
+              {`${Math.floor(modalCount.price)}€`}
+            </Text>
+          </View>
         </TouchableOpacity>
       ))}
     </View>
