@@ -5,10 +5,9 @@ import { HEDImage, FCEImage, BRDImage, CUTImage, COLImage, DSNImage } from '../m
 
 // Fetch Categories (used in both ThemeList and CategoryList)
 export const fetchCategories = async (categoryCode?: string) => {
-  const endpoint = categoryCode ? '/service_categories/' : `/service_categories/?categoryCode=${categoryCode}`;
-  try {
-    const response = await api.get(endpoint);
-    return response.data.map((category: any) => {
+    try {
+      const endpoint = categoryCode ? `/service_categories/?categoryCode=${categoryCode}` : '/service_categories/';
+      const response = await api.get(endpoint);    return response.data.map((category: any) => {
       let imagePath;
       switch (category.code) {
         case 'HED':

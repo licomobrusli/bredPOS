@@ -1,18 +1,10 @@
 // ThemeList.tsx
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text, Dimensions } from 'react-native';
-import api from '../services/api'; // Import your API utility
+import { fetchCategories, fetchServices, fetchModalCounts } from '../config/apiCalls'; // Import your API calls
 import { gridStyles } from '../config/gridStyle';
 import ThemeCard from '../components/ThemeCard';
 import styles from '../config/styles';
-
-// Import local images
-import HEDImage from '../main/assets/images/HED.jpg';
-import FCEImage from '../main/assets/images/FCE.jpg';
-import BRDImage from '../main/assets/images/BRD.jpg';
-import CUTImage from '../main/assets/images/CUT.jpg';
-import COLImage from '../main/assets/images/COL.jpg';
-import DSNImage from '../main/assets/images/DSN.jpg';
 
 interface Theme {
   id: string;
@@ -38,83 +30,24 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]); // Updated to array
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const loadData = async () => {
       try {
-        const response = await api.get('/service_categories/', { params: { categoryCode } });
-        const loadedCategories = response.data.map((category: any) => {
-          let imagePath;
-          switch (category.code) {
-            case 'HED':
-              imagePath = HEDImage;
-              break;
-            case 'FCE':
-              imagePath = FCEImage;
-              break;
-            case 'BRD':
-              imagePath = BRDImage;
-              break;
-            default:
-              imagePath = 'https://placekitten.com/200/200'; // Default image
-          }
-          return { id: category.id.toString(), code: category.code, imageUrl: imagePath, name: category.name };
-        });
-        setThemes(loadedCategories);
+        const categories = await fetchCategories(categoryCode);
+        setThemes(categories);
+  
+        const services = await fetchServices(selectedServiceCode);
+        setServices(services);
+  
+        const modalCountsData = await fetchModalCounts({ categoryCode, serviceCode: selectedServiceCode });
+        setModalCounts(modalCountsData);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error('Error:', error);
+        // Handle errors as needed, for example, by setting state variables to show an error message
       }
     };
-
-    const fetchServices = async () => {
-      try {
-        const response = await api.get('/services/', { params: { serviceCode: selectedServiceCode } });
-        const loadedServices = response.data.map((service: any) => {
-          let imagePath;
-          switch (service.code) {
-            case 'CUT':
-              imagePath = CUTImage;
-              break;
-            case 'COL':
-              imagePath = COLImage;
-              break;
-            case 'DSN':
-              imagePath = DSNImage;
-              break;
-            default:
-              imagePath = 'https://placekitten.com/200/200'; // Default image
-          }
-          return { id: service.id.toString(), code: service.code, imageUrl: imagePath, name: service.name };
-        });
-        setServices(loadedServices);
-      } catch (error) {
-        console.error('Error fetching services:', error);
-      }
-    };
-
-    const fetchModalCount = async () => {
-      try {
-        const response = await api.get('/modal_counts/', { 
-          params: { categoryCode, serviceCode: selectedServiceCode }
-        });
-        if (response.data.length > 0) {
-          const modalCountData = response.data.map((item: any) => ({
-            ...item,
-            price: Number(item.price) // Convert each price to number
-          }));
-          setModalCounts(modalCountData);
-        } else {
-          setModalCounts([]);
-        }
-      } catch (error) {
-        console.error('Error fetching modal counts:', error);
-        setModalCounts([]); // Handle error by setting modalCounts to an empty array
-      }
-    };
-
-    fetchCategories();
-    fetchServices();
-    fetchModalCount();
+  
+    loadData();
   }, [categoryCode, selectedServiceCode]);
-
   const renderItem = ({ item, index }: { item: Theme; index: number }) => {
     const marginLeft = index % 3 === 0 ? gridStyles.margin : gridStyles.gap;
 
