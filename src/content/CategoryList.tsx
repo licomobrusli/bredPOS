@@ -1,7 +1,7 @@
 // CategoryList.tsx
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text } from 'react-native';
-import api from '../services/api';
+import { fetchCategories } from '../config/apiCalls'; // Import your API calls
 import { Category } from '../config/types';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../config/StackNavigator';
@@ -21,34 +21,12 @@ const CategoryList = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'CategoryScreen'>>();
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const loadCategories = async () => {
+      setLoading(true);
       try {
-        const response = await api.get('/service_categories/');
-        const loadedCategories = response.data.map((category: Category) => {
-          let imagePath;
-          switch (category.code) {
-            case 'HED':
-              imagePath = HEDImage;
-              break;
-            case 'FCE':
-              imagePath = FCEImage;
-              break;
-            case 'BRD':
-              imagePath = BRDImage;
-              break;
-            {/*
-              default:
-              // Provide a default image path or handle the absence of an image
-              imagePath = 'https://placekitten.com/820/500'; // Replace with actual default image path
-          */}
-          }
-
-          return { ...category, imageUrl: imagePath };
-        });
-
-        console.log('Loaded categories with images:', loadedCategories);
-
-        setCategories(loadedCategories);
+        const loadedCategories = await fetchCategories(); // Fetch all categories
+        setCategories(loadedCategories); // Directly use the fetched categories
+        setError(null);
       } catch (err) {
         setError('Failed to fetch categories');
         console.error(err);
@@ -56,10 +34,10 @@ const CategoryList = () => {
         setLoading(false);
       }
     };
-
-    fetchCategories();
+  
+    loadCategories();
   }, []);
-
+  
   const onCategoryPress = (category: Category) => {
     navigation.navigate('ServiceScreen', { categoryCode: category.code });
     console.log('Category pressed!', category);

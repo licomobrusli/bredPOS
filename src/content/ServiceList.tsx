@@ -1,13 +1,13 @@
 // ServiceList.tsx
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text } from 'react-native';
-import { fetchServices } from '../services/serviceService'; // Adjust the import path
 import { Service } from '../config/types'; // Adjust the import path
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../config/StackNavigator'; // Update the import path
 import CutModal from '../components/modals/CutModal';
 import ListCard from '../components/ListCard';
 import { gridStyles } from '../config/gridStyle'; // Update the import path
+import { fetchServices } from '../config/apiCalls'; // Import your API calls
 
 // Importing images
 import CUTImage from '../main/assets/images/CUT.jpg';
@@ -29,28 +29,11 @@ const ServiceList: React.FC = () => {
 
   useEffect(() => {
     const loadServices = async () => {
+      setLoading(true);
       try {
-        const data = await fetchServices(apiFilterCode); // Use apiFilterCode here for API call
-        const servicesWithImages = data.map((service: Service) => {
-          let imagePath;
-          switch (service.code) { // Assuming 'code' is the unique identifier for services
-            case 'CUT':
-              imagePath = CUTImage;
-              break;
-            case 'COL':
-              imagePath = COLImage;
-              break;
-            case 'DSN':
-              imagePath = DSNImage;
-              break;
-            default:
-              imagePath = 'https://placekitten.com/200/200'; // Default image
-          }
-
-          return { ...service, imageUrl: imagePath };
-        });
-
-        setServices(servicesWithImages);
+        const loadedServices = await fetchServices(apiFilterCode); // Fetch services based on the filter code
+        setServices(loadedServices); // Use the services as they are returned
+        setError(null);
       } catch (error) {
         setError('Failed to load services');
         console.error("Failed to load services:", error);
@@ -58,9 +41,10 @@ const ServiceList: React.FC = () => {
         setLoading(false);
       }
     };
-
+  
     loadServices();
   }, [apiFilterCode]);
+  
 
   const onImagePress = (service: Service) => {
     console.log('Service pressed!', service);
