@@ -1,7 +1,7 @@
 // ThemeList.tsx
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Text, Dimensions } from 'react-native';
-import { fetchCategories, fetchServices, fetchModalCounts } from '../config/apiCalls'; // Import your API calls
+import { View, FlatList, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { fetchCategories, fetchServices, fetchModalCounts } from '../config/apiCalls';
 import { gridStyles } from '../config/gridStyle';
 import ThemeCard from '../components/ThemeCard';
 import styles from '../config/styles';
@@ -10,7 +10,7 @@ interface Theme {
   id: string;
   imageUrl: string;
   code: string;
-  name: string; // Name field added
+  name: string;
 }
 
 interface ModalCount {
@@ -29,7 +29,8 @@ interface ThemeListProps {
 const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode }) => {
   const [themes, setThemes] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
-  const [modalCounts, setModalCounts] = useState<ModalCount[]>([]); // Updated to array
+  const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
+  const [selectedModalCountId, setSelectedModalCountId] = useState<string | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -50,8 +51,16 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   
     loadData();
   }, [categoryCode, selectedServiceCode]);
+
+ // Select the first modal count by default
+ useEffect(() => {
+  if (modalCounts.length > 0 && selectedModalCountId === null) {
+    setSelectedModalCountId(modalCounts[0].id);
+    }
+  }, [modalCounts]);
+
   const renderItem = ({ item, index }: { item: Theme; index: number }) => {
-    const marginLeft = index % 3 === 0 ? gridStyles.margin : gridStyles.gap;
+  const marginLeft = index % 3 === 0 ? gridStyles.margin : gridStyles.gap;
 
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -72,6 +81,10 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   const keyExtractor = (item: Theme) => item.id;
   const screenWidth = Dimensions.get('window').width;
 
+  const handleModalCountPress = (id: string) => {
+    setSelectedModalCountId(id);
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin }}>
       <FlatList
@@ -83,17 +96,18 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
         style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin * 2 }}
       />
       {modalCounts.map(modalCount => (
-      <View key={modalCount.id} style={{ 
-        flexDirection: 'row', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        backgroundColor: 'red', 
-        alignSelf: 'center', 
-        width: screenWidth * 0.55, 
-        marginVertical: 5, 
-        borderColor: 'red', 
-        borderWidth: 1 
-      }}>
+        <TouchableOpacity key={modalCount.id} onPress={() => handleModalCountPress(modalCount.id)}>
+          <View style={{ 
+            flexDirection: 'row', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            backgroundColor: modalCount.id === selectedModalCountId ? 'red' : 'black', 
+            alignSelf: 'center', 
+            width: screenWidth * 0.55, 
+            marginVertical: 5, 
+            borderColor: 'red', 
+            borderWidth: 1 
+          }}>
         <Text
           style={[styles.txtModalCounts, {
             flex: 4.2, // Increased flex for name
@@ -110,9 +124,10 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
           }]}>
           {`${Math.floor(modalCount.price)}€`}
         </Text>
-      </View>
-    ))}
-  </View>
+        </View>
+        </TouchableOpacity>
+      ))}
+    </View>
   );
 };
 
