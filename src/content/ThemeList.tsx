@@ -1,4 +1,4 @@
-// ThemeList.tsx
+// ThemeList.tsx:
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { fetchCategories, fetchServices, fetchModalCounts } from '../config/apiCalls';
@@ -6,6 +6,7 @@ import { gridStyles } from '../config/gridStyle';
 import ThemeCard from '../components/ThemeCard';
 import styles from '../config/styles';
 import { Theme, ModalCount } from '../config/types';
+import SubModal from '../components/modals/SubModal';
 
 interface ThemeListProps {
   categoryCode: string;
@@ -17,6 +18,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   const [services, setServices] = useState<Theme[]>([]);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
+  const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -42,21 +44,26 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
     loadData();
   }, [categoryCode, selectedServiceCode]);
 
-  const handleModalCountPress = (id: string, logic: string) => {
+  const handleModalCountPress = (id: string, logic: string, sub: number) => {
     setSelectedModalCounts(prevSelected => {
       let newSelected = [...prevSelected];
-
+  
       if (logic === 'OR' && !newSelected.includes(id)) {
         newSelected.push(id);
       } else if (logic === 'NOT') {
         // If currently selected, deselect it. Otherwise, select it and deselect others
         newSelected = newSelected.includes(id) ? [] : [id];
       }
-
+  
       return newSelected;
     });
+  
+    // Open SubModal if sub > 0
+    if (sub > 0) {
+      setIsSubModalVisible(true);
+    }
   };
-
+  
   const isModalCountSelected = (id: string) => {
     return selectedModalCounts.includes(id);
   };
@@ -80,6 +87,10 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
     );
   };
 
+    const closeSubModal = () => {
+    setIsSubModalVisible(false);
+  };
+
   const keyExtractor = (item: Theme) => item.id;
   const screenWidth = Dimensions.get('window').width;
 
@@ -94,7 +105,10 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
         style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin * 2 }}
       />
       {modalCounts.map(modalCount => (
-        <TouchableOpacity key={modalCount.id} onPress={() => handleModalCountPress(modalCount.id, modalCount.logic)}>
+        <TouchableOpacity
+          key={modalCount.id}
+          onPress={() => handleModalCountPress(modalCount.id, modalCount.logic, modalCount.sub)}
+        >
           <View style={{ 
             flexDirection: 'row', 
             justifyContent: 'space-between', 
@@ -125,6 +139,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
           </View>
         </TouchableOpacity>
       ))}
+      <SubModal isVisible={isSubModalVisible} onClose={closeSubModal} />
     </View>
   );
 };

@@ -36,4 +36,5 @@ export interface ModalCount {
   price: number;
   max_quantity: number;
   logic: string;
+  sub: number
 }
