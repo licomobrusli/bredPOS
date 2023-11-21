@@ -17,6 +17,8 @@ interface ModalCount {
   id: string;
   name: string;
   price: number;
+  max_quantity: number;
+  logic: string;
 }
 
 interface ThemeListProps {
