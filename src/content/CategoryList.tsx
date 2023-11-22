@@ -9,10 +9,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import ListCard from '../components/ListCard';
 import { gridStyles } from '../config/gridStyle';
 
-// Importing images
-import HEDImage from '../main/assets/images/HED.jpg';
-import FCEImage from '../main/assets/images/FCE.jpg';
-import BRDImage from '../main/assets/images/BRD.jpg';
 
 const CategoryList = () => {
   const [categories, setCategories] = useState<Category[]>([]);

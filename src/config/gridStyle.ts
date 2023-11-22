@@ -1,11 +1,9 @@
 // gridStyle.ts
-import { Dimensions } from 'react-native';
+import * as Dims from './dimensions';
 
-const mainSectionWidth = Dimensions.get('window').width;
-
-const margin = mainSectionWidth / 33;
-const gap = mainSectionWidth / 33;
-const imageWidth = (mainSectionWidth - 4 * margin - gap) / 3.3;
+const margin = Dims.Width5p;
+const gap = Dims.Width5p;
+const imageWidth = (Dims.Width100p - 4 * margin - gap) / 3.3;
 const imageHeight = imageWidth;
 
 export const gridStyles = {
