@@ -11,9 +11,10 @@ import SubModal from '../components/modals/SubModal';
 interface ThemeListProps {
   categoryCode: string;
   selectedServiceCode: string;
+  onSelectColor: (colors: string[]) => void;
 }
 
-const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode }) => {
+const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode, onSelectColor }) => {
   const [themes, setThemes] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
@@ -21,11 +22,10 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
 
-  // Function to handle color selection
   const handleSelectColor = (colors: string[]) => {
     setSelectedColors(colors);
+    onSelectColor(colors);
   };
-
 
   useEffect(() => {
     const loadData = async () => {
@@ -39,7 +39,6 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
         const modalCountsData = await fetchModalCounts({ categoryCode, serviceCode: selectedServiceCode });
         setModalCounts(modalCountsData);
 
-        // Select the first 'NOT' modal count by default, if applicable
         if (modalCountsData.some((mc: { logic: string; }) => mc.logic === 'NOT')) {
           setSelectedModalCounts([modalCountsData.find((mc: { logic: string; }) => mc.logic === 'NOT')?.id || '']);
         }
@@ -153,7 +152,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
       <SubModal
         isVisible={isSubModalVisible}
         onClose={closeSubModal}
-        onSelectColor={handleSelectColor} // Pass the function here
+        onSelectColor={handleSelectColor}
         selectedColors={selectedColors}
       />
     </View>
