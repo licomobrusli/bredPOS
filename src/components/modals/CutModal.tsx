@@ -28,9 +28,9 @@ const CutModal: React.FC<CutModalProps> = ({
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: SDims.Height10p, alignItems: 'center' }}>
         <View style={{
-          height: SDims.Height80p,
+          height: SDims.Height70p,
           width: SDims.Width100p,
           justifyContent: 'space-between',
           backgroundColor: 'black',
