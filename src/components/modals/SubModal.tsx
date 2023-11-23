@@ -2,6 +2,7 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import SDims from '../../config/dimensions';
+import fonts from '../../config/fonts';
 
 interface SubModalProps {
     isVisible: boolean;
@@ -9,6 +10,9 @@ interface SubModalProps {
 }
 
 const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose }) => {
+
+    const colorsRowOne = ['red', 'green', 'blue', 'yellow', 'pink'];
+    const colorsRowTwo = ['purple', 'orange', 'brown', 'grey', 'cyan'];
 
     return (
         <Modal
@@ -26,8 +30,21 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose }) => {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
+                    <Text style={fonts.txtSubBrandBanner}>Seleccionar color</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
+                        {colorsRowOne.map(color => (
+                            <View key={color} style={{ height: 50, width: 50, backgroundColor: color }} />
+                        ))}
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
+                        {colorsRowTwo.map(color => (
+                            <View key={color} style={{ height: 50, width: 50, backgroundColor: color }} />
+                        ))}
+                    </View>
                     <TouchableOpacity onPress={onClose}>
-                        <Text style={{ color: 'white' }}>Close</Text>
+                        <View style={{}}>
+                            <Text style={fonts.txtNavButton}>Cerrar</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
             </View>
