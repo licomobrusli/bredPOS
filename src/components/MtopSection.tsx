@@ -5,7 +5,7 @@ import SDims from '../config/dimensions';
 
 const MtopSection: React.FC = () => {
   return (
-    <View style={{ height: SDims.Height20p, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ height: SDims.HeightTopSection, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
       <Text style={styles.txtBrandBanner}>MOGANS</Text>
       <Text style={styles.txtSubBrandBanner}>BARBER SHOP</Text>
     </View>

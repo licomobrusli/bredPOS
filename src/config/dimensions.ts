@@ -8,12 +8,12 @@ class SDims {
     
     Height5p: number;
     Height10p: number;
-    Height20p: number;
+    Height20p: number; HeightTopSection: number;
     Height30p: number;
     Height40p: number;
     Height50p: number;
     Height60p: number;
-    Height70p: number;
+    Height70p: number; HeightCentralSection: number;
     Height80p: number;
     Height90p: number;
     Height100p: number;
@@ -46,12 +46,12 @@ class SDims {
         // initialise all properties
         this.Height5p = this.screenHeight * 0.05;
         this.Height10p = this.screenHeight * 0.1;
-        this.Height20p = this.screenHeight * 0.2;
+        this.Height20p = this.screenHeight * 0.2; this.HeightTopSection = this.screenHeight * 0.2;
         this.Height30p = this.screenHeight * 0.3;
         this.Height40p = this.screenHeight * 0.4;
         this.Height50p = this.screenHeight * 0.5;
         this.Height60p = this.screenHeight * 0.6;
-        this.Height70p = this.screenHeight * 0.7;
+        this.Height70p = this.screenHeight * 0.7; this.HeightCentralSection = this.screenHeight * 0.7;
         this.Height80p = this.screenHeight * 0.8;
         this.Height90p = this.screenHeight * 0.9;
         this.Height100p = this.screenHeight * 1;

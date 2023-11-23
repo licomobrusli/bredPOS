@@ -16,11 +16,13 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose }) => {
             onRequestClose={onClose}
             transparent
         >
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: SDims.HeightTopSection, alignItems: 'center' }}>
                 <View style={{
-                    width: SDims.Width80p,
-                    height: SDims.Height50p,
-                    backgroundColor: 'red',
+                    height: SDims.HeightCentralSection * .75,
+                    width: SDims.Width90p,
+                    backgroundColor: 'black',
+                    borderColor: 'red',
+                    borderWidth: 1,
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>

@@ -30,18 +30,18 @@ const CutModal: React.FC<CutModalProps> = ({
     >
       <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: SDims.Height10p, alignItems: 'center' }}>
         <View style={{
-          height: SDims.Height70p,
+          height: SDims.HeightCentralSection,
           width: SDims.Width100p,
           justifyContent: 'space-between',
           backgroundColor: 'black',
         }}>
-          <View style={{ flex: 0.33 }}>
+          <View style={{ height: SDims.HeightCentralSection / 2 }}>
             <ModalTheme categoryCode={categoryCode} selectedServiceCode={selectedServiceCode} />
           </View>
-          <View style={{ flex: 0.33 }}>
+          <View style={{ height: SDims.HeightCentralSection / 4 }}>
             <ModalControls />
           </View>
-          <View style={{ flex: 0.33 }}>
+          <View style={{ height: SDims.HeightCentralSection / 4 }}>
             <ModalFooter onClose={onClose} />
           </View>
         </View>
