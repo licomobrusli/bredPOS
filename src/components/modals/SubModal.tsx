@@ -7,12 +7,18 @@ import fonts from '../../config/fonts';
 interface SubModalProps {
     isVisible: boolean;
     onClose: () => void;
+    onSelectColor: (color: string) => void;
 }
 
-const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose }) => {
+const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, onSelectColor }) => {
 
     const colorsRowOne = ['#1e57a4', '#00afaa', '#3aa935', '#e62d39', '#d40658'];
     const colorsRowTwo = ['#e594bf', '#f7eb63', '#ec6b1c', '#e8473e', '#452462'];
+    
+    const handleSelectColor = (color: string) => {
+        onSelectColor(color); // Use the selected color
+        onClose(); // Close the modal
+    };
 
     return (
         <Modal
@@ -32,29 +38,29 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose }) => {
                 }}>
                     <Text style={fonts.txtSubBrandBanner}>SELECIONAR COLOR</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-    {colorsRowOne.map(color => (
-        <View key={color} style={{ 
-            height: SDims.Height5p, 
-            width: SDims.Height5p, 
-            borderColor: 'white', 
-            borderWidth: 1, 
-            backgroundColor: color, 
-            margin: SDims.Height5p / 5
-        }} />
-    ))}
-</View>
-<View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-    {colorsRowTwo.map(color => (
-        <View key={color} style={{ 
-            height: SDims.Height5p, 
-            width: SDims.Height5p, 
-            borderColor: 'white', 
-            borderWidth: 1, 
-            backgroundColor: color, 
-            margin: SDims.Height5p / 5
-        }} />
-    ))}
-</View>
+                        {colorsRowOne.map(color => (
+                            <TouchableOpacity key={color} onPress={() => handleSelectColor(color)} style={{ 
+                                height: SDims.Height5p, 
+                                width: SDims.Height5p, 
+                                borderColor: 'white', 
+                                borderWidth: 1, 
+                                backgroundColor: color, 
+                                margin: SDims.Height5p / 5
+                            }} />
+                        ))}
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                        {colorsRowTwo.map(color => (
+                            <TouchableOpacity key={color} onPress={() => handleSelectColor(color)} style={{ 
+                                height: SDims.Height5p, 
+                                width: SDims.Height5p, 
+                                borderColor: 'white', 
+                                borderWidth: 1, 
+                                backgroundColor: color, 
+                                margin: SDims.Height5p / 5
+                            }} />
+                        ))}
+                    </View>
                     <TouchableOpacity onPress={onClose}>
                         <View style={{}}>
                             <Text style={fonts.txtNavButton}>Cerrar</Text>

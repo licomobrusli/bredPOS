@@ -19,6 +19,13 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
+  const [selectedColor, setSelectedColor] = useState<string>('');
+
+  // Function to handle color selection
+  const handleSelectColor = (color: string) => {
+    setSelectedColor(color); // Set the selected color in the state
+    closeSubModal(); // You already have this function to close the modal
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -143,7 +150,11 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
           </View>
         </TouchableOpacity>
       ))}
-      <SubModal isVisible={isSubModalVisible} onClose={closeSubModal} />
+      <SubModal
+        isVisible={isSubModalVisible}
+        onClose={closeSubModal}
+        onSelectColor={handleSelectColor} // Pass the function here
+      />
     </View>
   );
 };
