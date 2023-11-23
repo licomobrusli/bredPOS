@@ -2,7 +2,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
-import customStyles from '../config/styles'; // Ensure this is the correct path to your styles
+import customStyles from '../config/fonts'; // Ensure this is the correct path to your styles
 
 const BackButton: React.FC = () => {
   const navigation = useNavigation();

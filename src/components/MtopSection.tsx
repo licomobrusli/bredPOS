@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import styles from '../config/styles';
+import fonts from '../config/fonts';
 import SDims from '../config/dimensions';
 
 const MtopSection: React.FC = () => {
   return (
     <View style={{ height: SDims.HeightTopSection, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={styles.txtBrandBanner}>MOGANS</Text>
-      <Text style={styles.txtSubBrandBanner}>BARBER SHOP</Text>
+      <Text style={fonts.txtBrandBanner}>MOGANS</Text>
+      <Text style={fonts.txtSubBrandBanner}>BARBER SHOP</Text>
     </View>
   );
 };

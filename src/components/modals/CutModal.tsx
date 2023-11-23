@@ -6,9 +6,6 @@ import ModalTheme from './ModalTheme';
 import ModalFooter from './ModalFooter';
 import SDims from '../../config/dimensions';
 
-console.log('SDims Height80p:', SDims.Height80p);
-console.log('SDims Width100p:', SDims.Width100p);
-
 interface CutModalProps {
   visible: boolean;
   onClose: () => void;

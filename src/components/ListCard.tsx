@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, StyleProp, ViewStyle, TouchableOpacity, Image, Text } from 'react-native';
-import customStyles from '../config/styles';
+import customStyles from '../config/fonts';
 
 interface ListCardProps {
   style?: StyleProp<ViewStyle>;

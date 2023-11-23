@@ -4,7 +4,7 @@ import { View, FlatList, Text, Dimensions, TouchableOpacity } from 'react-native
 import { fetchCategories, fetchServices, fetchModalCounts } from '../config/apiCalls';
 import { gridStyles } from '../config/gridStyle';
 import ThemeCard from '../components/ThemeCard';
-import styles from '../config/styles';
+import styles from '../config/fonts';
 import { Theme, ModalCount } from '../config/types';
 import SubModal from '../components/modals/SubModal';
 

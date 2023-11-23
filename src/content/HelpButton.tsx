@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import { useNavigationState } from '@react-navigation/native';
-import customStyles from '../config/styles';
+import customStyles from '../config/fonts';
 import HelpModal from '../components/modals/HelpModal';
 
 const HelpButton: React.FC = () => {
