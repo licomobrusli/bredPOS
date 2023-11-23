@@ -3,6 +3,7 @@ import React from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import SDims from '../../config/dimensions';
 import fonts from '../../config/fonts';
+import SwatchGridStyle from '../../config/swatchGridStyle';
 
 interface SubModalProps {
     isVisible: boolean;
@@ -36,33 +37,11 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, onSelectColor }
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <Text style={fonts.txtSubBrandBanner}>SELECIONAR COLOR</Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                        {colorsRowOne.map(color => (
-                            <TouchableOpacity key={color} onPress={() => handleSelectColor(color)} style={{ 
-                                height: SDims.Height5p, 
-                                width: SDims.Height5p, 
-                                borderColor: 'white', 
-                                borderWidth: 1, 
-                                backgroundColor: color, 
-                                margin: SDims.Height5p / 5
-                            }} />
-                        ))}
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                        {colorsRowTwo.map(color => (
-                            <TouchableOpacity key={color} onPress={() => handleSelectColor(color)} style={{ 
-                                height: SDims.Height5p, 
-                                width: SDims.Height5p, 
-                                borderColor: 'white', 
-                                borderWidth: 1, 
-                                backgroundColor: color, 
-                                margin: SDims.Height5p / 5
-                            }} />
-                        ))}
-                    </View>
+                    <Text style={fonts.txtSubBrandBanner}>SELECCIONAR COLOR</Text>
+                    <SwatchGridStyle colors={colorsRowOne} onSelectColor={handleSelectColor} />
+                    <SwatchGridStyle colors={colorsRowTwo} onSelectColor={handleSelectColor} />
                     <TouchableOpacity onPress={onClose}>
-                        <View style={{}}>
+                        <View>
                             <Text style={fonts.txtNavButton}>Cerrar</Text>
                         </View>
                     </TouchableOpacity>
