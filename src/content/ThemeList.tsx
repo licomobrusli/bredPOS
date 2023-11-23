@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { fetchCategories, fetchServices, fetchModalCounts } from '../config/apiCalls';
-import { gridStyles } from '../config/gridStyle';
+import { cardGridStyle } from '../config/cardGridStyle';
 import ThemeCard from '../components/ThemeCard';
 import styles from '../config/fonts';
 import { Theme, ModalCount } from '../config/types';
@@ -73,16 +73,16 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   };
 
   const renderItem = ({ item, index }: { item: Theme; index: number }) => {
-    const marginLeft = index % 3 === 0 ? gridStyles.margin : gridStyles.gap;
+    const marginLeft = index % 3 === 0 ? cardGridStyle.margin : cardGridStyle.gap;
 
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <ThemeCard
           style={{
-            width: gridStyles.imageWidth,
-            height: gridStyles.imageHeight * 1.2,
+            width: cardGridStyle.imageWidth,
+            height: cardGridStyle.imageHeight * 1.2,
             marginLeft,
-            marginBottom: gridStyles.gap,
+            marginBottom: cardGridStyle.gap,
           }}
           imageUrl={item.imageUrl}
           onPress={() => console.log(`Pressed theme ${item.id}`)}
@@ -99,14 +99,14 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   const screenWidth = Dimensions.get('window').width;
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin }}>
+    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: cardGridStyle.margin }}>
       <FlatList
         data={[...services, ...themes]}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         numColumns={3}
         columnWrapperStyle={{ justifyContent: 'center' }}
-        style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin * 2 }}
+        style={{ marginTop: cardGridStyle.margin, marginLeft: cardGridStyle.margin, marginRight: cardGridStyle.margin * 2 }}
       />
       {modalCounts.map(modalCount => (
         <TouchableOpacity

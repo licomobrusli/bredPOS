@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../config/StackNavigator';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ListCard from '../components/ListCard';
-import { gridStyles } from '../config/gridStyle';
+import { cardGridStyle } from '../config/cardGridStyle';
 
 
 const CategoryList = () => {
@@ -41,19 +41,19 @@ const CategoryList = () => {
 
   const renderItem = ({ item, index }: { item: Category | null; index: number }) => {
     const isPlaceholder = item === null;
-    const marginLeft = index % 2 === 0 ? gridStyles.margin : gridStyles.gap;
+    const marginLeft = index % 2 === 0 ? cardGridStyle.margin : cardGridStyle.gap;
   
     if (isPlaceholder) {
-      return <View style={{ backgroundColor: 'black', width: gridStyles.imageWidth, height: gridStyles.imageHeight, marginLeft, marginBottom: gridStyles.gap }} />;
+      return <View style={{ backgroundColor: 'black', width: cardGridStyle.imageWidth, height: cardGridStyle.imageHeight, marginLeft, marginBottom: cardGridStyle.gap }} />;
     }
   
     return (
       <ListCard
         style={{
-          width: gridStyles.imageWidth,
-          height: gridStyles.imageHeight * 1.5,
+          width: cardGridStyle.imageWidth,
+          height: cardGridStyle.imageHeight * 1.5,
           marginLeft,
-          marginBottom: gridStyles.gap,
+          marginBottom: cardGridStyle.gap,
         }}
         imageUrl={item.imageUrl}
         categoryName={item.name} // Pass the category name here
@@ -65,7 +65,7 @@ const CategoryList = () => {
   const keyExtractor = (item: Category | null, index: number) => item ? item.id.toString() : `placeholder-${index}`;
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin}}>
+    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: cardGridStyle.margin}}>
       {loading ? <Text>Loading...</Text> : error ? <Text>{error}</Text> : (
         <FlatList
           data={categories}
@@ -73,7 +73,7 @@ const CategoryList = () => {
           keyExtractor={keyExtractor}
           numColumns={3}
           columnWrapperStyle={{ justifyContent: 'center' }}
-          style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin *2 }}
+          style={{ marginTop: cardGridStyle.margin, marginLeft: cardGridStyle.margin, marginRight: cardGridStyle.margin *2 }}
         />
       )}
     </View>

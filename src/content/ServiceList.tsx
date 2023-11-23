@@ -6,7 +6,7 @@ import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../config/StackNavigator'; // Update the import path
 import CutModal from '../components/modals/CutModal';
 import ListCard from '../components/ListCard';
-import { gridStyles } from '../config/gridStyle'; // Update the import path
+import { cardGridStyle } from '../config/cardGridStyle'; // Update the import path
 import { fetchServices } from '../config/apiCalls'; // Import your API calls
 
 // Importing images
@@ -55,19 +55,19 @@ const ServiceList: React.FC = () => {
   const renderItem = ({ item, index }: { item: Service | null; index: number }) => {
     const isPlaceholder = item === null;
     const isFirstColumn = index % 2 === 0;
-    const marginLeft = isFirstColumn ? gridStyles.margin : gridStyles.gap;
+    const marginLeft = isFirstColumn ? cardGridStyle.margin : cardGridStyle.gap;
   
     if (isPlaceholder) {
-      return <View style={{ backgroundColor: 'black', width: gridStyles.imageWidth, height: gridStyles.imageHeight, marginLeft, marginBottom: gridStyles.gap }} />;
+      return <View style={{ backgroundColor: 'black', width: cardGridStyle.imageWidth, height: cardGridStyle.imageHeight, marginLeft, marginBottom: cardGridStyle.gap }} />;
     }
   
     return (
       <ListCard
         style={{
-          width: gridStyles.imageWidth,
-          height: gridStyles.imageHeight * 1.5,
+          width: cardGridStyle.imageWidth,
+          height: cardGridStyle.imageHeight * 1.5,
           marginLeft,
-          marginBottom: gridStyles.gap,
+          marginBottom: cardGridStyle.gap,
         }}
         imageUrl={item.imageUrl} // Use the imageUrl that includes the mapped image
         serviceName={item.name}
@@ -79,7 +79,7 @@ const ServiceList: React.FC = () => {
   const keyExtractor = (item: Service | null, index: number) => item ? item.code.toString() : `placeholder-${index}`;
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: gridStyles.margin }}>
+    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: cardGridStyle.margin }}>
       <CutModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -100,7 +100,7 @@ const ServiceList: React.FC = () => {
           keyExtractor={keyExtractor}
           numColumns={3}
           columnWrapperStyle={{ justifyContent: 'center' }}
-          style={{ marginTop: gridStyles.margin, marginLeft: gridStyles.margin, marginRight: gridStyles.margin *2 }}
+          style={{ marginTop: cardGridStyle.margin, marginLeft: cardGridStyle.margin, marginRight: cardGridStyle.margin *2 }}
         />
       )}
     </View>

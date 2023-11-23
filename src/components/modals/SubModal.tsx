@@ -11,8 +11,8 @@ interface SubModalProps {
 
 const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose }) => {
 
-    const colorsRowOne = ['red', 'green', 'blue', 'yellow', 'pink'];
-    const colorsRowTwo = ['purple', 'orange', 'brown', 'grey', 'cyan'];
+    const colorsRowOne = ['#1e57a4', '#00afaa', '#3aa935', '#e62d39', '#d40658'];
+    const colorsRowTwo = ['#e594bf', '#f7eb63', '#ec6b1c', '#e8473e', '#452462'];
 
     return (
         <Modal
@@ -30,17 +30,31 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose }) => {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <Text style={fonts.txtSubBrandBanner}>Seleccionar color</Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
-                        {colorsRowOne.map(color => (
-                            <View key={color} style={{ height: 50, width: 50, backgroundColor: color }} />
-                        ))}
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
-                        {colorsRowTwo.map(color => (
-                            <View key={color} style={{ height: 50, width: 50, backgroundColor: color }} />
-                        ))}
-                    </View>
+                    <Text style={fonts.txtSubBrandBanner}>SELECIONAR COLOR</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+    {colorsRowOne.map(color => (
+        <View key={color} style={{ 
+            height: SDims.Height5p, 
+            width: SDims.Height5p, 
+            borderColor: 'white', 
+            borderWidth: 1, 
+            backgroundColor: color, 
+            margin: SDims.Height5p / 5
+        }} />
+    ))}
+</View>
+<View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+    {colorsRowTwo.map(color => (
+        <View key={color} style={{ 
+            height: SDims.Height5p, 
+            width: SDims.Height5p, 
+            borderColor: 'white', 
+            borderWidth: 1, 
+            backgroundColor: color, 
+            margin: SDims.Height5p / 5
+        }} />
+    ))}
+</View>
                     <TouchableOpacity onPress={onClose}>
                         <View style={{}}>
                             <Text style={fonts.txtNavButton}>Cerrar</Text>
