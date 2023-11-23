@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import SHP from './../main/assets/images/SHP.jpg';
 import CartModal from '../components/modals/CartModal';
+import SDims from '../config/dimensions';
 
 const MbottomSection: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -13,7 +14,7 @@ const MbottomSection: React.FC = () => {
 
   return (
     <View style={{
-      height: 380,
+      height: SDims.Height10p,
       backgroundColor: 'black',
       alignItems: 'center',
       justifyContent: 'flex-start',
