@@ -46,23 +46,27 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
 
   const handleModalCountPress = (id: string, logic: string, sub: number) => {
     setSelectedModalCounts(prevSelected => {
-      let newSelected = [...prevSelected];
+        let newSelected = [...prevSelected];
   
-      if (logic === 'OR' && !newSelected.includes(id)) {
-        newSelected.push(id);
-      } else if (logic === 'NOT') {
-        // If currently selected, deselect it. Otherwise, select it and deselect others
-        newSelected = newSelected.includes(id) ? [] : [id];
-      }
+        if (logic === 'OR') {
+            if (!newSelected.includes(id)) {
+                // Add to selection if not already selected
+                newSelected.push(id);
+            }
+            // If already selected, it remains in the array, thus maintaining its selection
+        } else if (logic === 'NOT') {
+            // If currently selected, keep it selected. Otherwise, select it and deselect others
+            newSelected = newSelected.includes(id) ? newSelected : [id];
+        }
   
-      return newSelected;
+        return newSelected;
     });
   
     // Open SubModal if sub > 0
     if (sub > 0) {
-      setIsSubModalVisible(true);
+        setIsSubModalVisible(true);
     }
-  };
+};
   
   const isModalCountSelected = (id: string) => {
     return selectedModalCounts.includes(id);
