@@ -1,9 +1,9 @@
 // gridStyle.ts
-import * as Dims from './dimensions';
+import SDims from './dimensions';
 
-const margin = Dims.Width5p;
-const gap = Dims.Width5p;
-const imageWidth = (Dims.Width100p - 4 * margin - gap) / 3.3;
+const margin = SDims.Width5p;
+const gap = SDims.Width5p;
+const imageWidth = (SDims.Width100p - 4 * margin - gap) / 3.3;
 const imageHeight = imageWidth;
 
 export const gridStyles = {

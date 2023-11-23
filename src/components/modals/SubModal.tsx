@@ -1,7 +1,7 @@
 // SubModal.tsx:
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
-import * as Dims from '../../config/dimensions';
+import SDims from '../../config/dimensions';
 
 interface SubModalProps {
     isVisible: boolean;
@@ -18,8 +18,8 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose }) => {
         >
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{
-                    width: Dims.Width80p,
-                    height: Dims.Height50p,
+                    width: SDims.Width80p,
+                    height: SDims.Height50p,
                     backgroundColor: 'red',
                     justifyContent: 'center',
                     alignItems: 'center'
