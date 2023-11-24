@@ -86,12 +86,13 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
         <ThemeCard
           style={{
             width: cardGridStyle.imageWidth,
-            height: cardGridStyle.imageHeight * 1.2,
+            height: cardGridStyle.imageHeight * 1.5,
             marginLeft,
             marginBottom: cardGridStyle.gap,
           }}
           imageUrl={item.imageUrl}
           onPress={() => console.log(`Pressed theme ${item.id}`)}
+          serviceName={item.name} // Assuming 'name' is the property for the service name
         />
       </View>
     );
@@ -140,7 +141,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
             </Text>
             <Text
               style={[styles.txtModalCounts, {
-                flex: 0.8,
+                flex: 1,
                 textAlign: 'right',
                 paddingRight: 10,
               }]}>
