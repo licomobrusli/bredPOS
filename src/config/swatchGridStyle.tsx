@@ -8,9 +8,10 @@ interface SwatchGridStyleProps {
     colors: string[];
     onSelectColor: (color: string) => void;
     selectedColors: string[];
+    selectedSwatchStyle?: { backgroundColor: string };
 }
 
-const SwatchGridStyle: React.FC<SwatchGridStyleProps> = ({ colors, onSelectColor, selectedColors }) => {
+const SwatchGridStyle: React.FC<SwatchGridStyleProps> = ({ colors, onSelectColor, selectedColors, selectedSwatchStyle }) => {
     // Determine the total space for a row
     const totalRowSpace = SDims.Height5p * 5 + (SDims.Height5p / 5 * 2) * 5;
 
@@ -27,7 +28,7 @@ const SwatchGridStyle: React.FC<SwatchGridStyleProps> = ({ colors, onSelectColor
                             width: SDims.Height5p,
                             borderColor: isSelected ? 'white' : 'white',
                             borderWidth: isSelected ? 5 : 0,
-                            backgroundColor: color,
+                            backgroundColor: isSelected && selectedSwatchStyle ? selectedSwatchStyle.backgroundColor : color,
                             margin: SDims.Height5p / 5
                         }}
                     />

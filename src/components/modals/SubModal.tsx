@@ -13,9 +13,9 @@ interface SubModalProps {
 }
 
 const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, onSelectColor, selectedColors }) => {
+    const selectedSwatchStyle = { backgroundColor: 'black' };
     const colorsRowOne = ['#1e57a4', '#00afaa', '#3aa935', '#e62d39', '#d40658'];
     const colorsRowTwo = ['#e594bf', '#f7eb63', '#ec6b1c', '#e8473e', '#452462'];
-    
     const handleSelectColor = (color: string) => {
         let updatedSelectedColors = [...selectedColors];
         const colorIndex = updatedSelectedColors.indexOf(color);
@@ -42,8 +42,18 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, onSelectColor, 
                     alignItems: 'center'
                 }}>
                     <Text style={fonts.txtSubBrandBanner}>SELECCIONAR COLORES</Text>
-                    <SwatchGridStyle colors={colorsRowOne} onSelectColor={handleSelectColor} selectedColors={selectedColors} />
-                    <SwatchGridStyle colors={colorsRowTwo} onSelectColor={handleSelectColor} selectedColors={selectedColors} />
+                    <SwatchGridStyle
+                        colors={colorsRowOne}
+                        onSelectColor={handleSelectColor}
+                        selectedColors={selectedColors}
+                        selectedSwatchStyle={selectedSwatchStyle} // Add this line
+                    />
+                    <SwatchGridStyle
+                        colors={colorsRowTwo}
+                        onSelectColor={handleSelectColor}
+                        selectedColors={selectedColors}
+                        selectedSwatchStyle={selectedSwatchStyle} // Add this line
+                    />
                     <TouchableOpacity onPress={onClose}>
                         <View>
                             <Text style={fonts.txtNavButton}>Cerrar</Text>
