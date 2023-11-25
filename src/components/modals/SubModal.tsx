@@ -13,7 +13,11 @@ interface SubModalProps {
 }
 
 const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, onSelectColor, selectedColors }) => {
-    const selectedSwatchStyle = { backgroundColor: 'black' };
+    const selectedSwatchStyle = { 
+        backgroundColor: 'black',
+        borderColor: 'white',
+        borderWidth: 5,
+    };
     const colorsRowOne = ['#1e57a4', '#00afaa', '#3aa935', '#e62d39', '#d40658'];
     const colorsRowTwo = ['#e594bf', '#f7eb63', '#ec6b1c', '#e8473e', '#452462'];
     const handleSelectColor = (color: string) => {
