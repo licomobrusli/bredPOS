@@ -38,7 +38,6 @@
                         <TouchableOpacity
                             key={color}
                             onPress={() => {
-                                console.log(`Pressed color: ${color}`);
                                 onSelectColor(color)
                             }}
                             style={{

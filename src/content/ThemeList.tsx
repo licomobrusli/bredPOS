@@ -12,7 +12,7 @@ interface ThemeListProps {
   onSelectColor: (colors: string[]) => void;
 }
 
-const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode, onSelectColor }) => {
+const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode }) => {
   const [services, setServices] = useState<ModalCount[]>([]);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
@@ -104,10 +104,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
       ))}
       <SubModal
         isVisible={isSubModalVisible}
-        onClose={closeSubModal}
-        onSelectColor={handleSelectColor} 
-        selectedColors={selectedColors}
-      />
+        onClose={closeSubModal} />
     </View>
   );
 };

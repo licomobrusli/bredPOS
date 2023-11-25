@@ -1,18 +1,19 @@
-// SubModal.tsx:
-import React from 'react';
+// SubModal.tsx
+import React, { useState } from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import SDims from '../../config/dimensions';
 import fonts from '../../config/fonts';
 import SwatchGridStyle from '../../config/swatchGridStyle';
+import ModalDetail from './ModalDetail';
 
 interface SubModalProps {
-    isVisible: boolean;
-    onClose: () => void;
-    onSelectColor: (colors: string[]) => void;
-    selectedColors: string[];
+  isVisible: boolean;
+  onClose: () => void;
 }
 
-const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, onSelectColor, selectedColors }) => {
+const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose }) => {
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);  // Manage selected colors independently
+      
     const selectedSwatchStyle = { 
         backgroundColor: 'black',
         borderColor: 'white',
@@ -29,46 +30,43 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, onSelectColor, 
         } else {
             updatedSelectedColors.push(color); // Add the color
         }
-    
-        console.log(`Updated selected colors: ${updatedSelectedColors}`);
 
-        onSelectColor(updatedSelectedColors); // Update with the new array
+        setSelectedColors(updatedSelectedColors); // Update with the new array
     };
     
     return (
-        <Modal visible={isVisible} onRequestClose={onClose} transparent>
-            <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: SDims.HeightTopSection, alignItems: 'center' }}>
-                <View style={{
-                    height: SDims.HeightCentralSection * .75,
-                    width: SDims.Width90p,
-                    backgroundColor: 'black',
-                    borderColor: 'red',
-                    borderWidth: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <Text style={fonts.txtSubBrandBanner}>SELECCIONAR COLORES</Text>
-                    <SwatchGridStyle
-                        colors={colorsRowOne}
-                        onSelectColor={handleSelectColor}
-                        selectedColors={selectedColors}
-                        selectedSwatchStyle={selectedSwatchStyle}
-                    />
-                    <SwatchGridStyle
-                        colors={colorsRowTwo}
-                        onSelectColor={handleSelectColor}
-                        selectedColors={selectedColors}
-                        selectedSwatchStyle={selectedSwatchStyle}
-                    />
-                    <TouchableOpacity onPress={onClose}>
-                        <View>
-                            <Text style={fonts.txtNavButton}>Cerrar</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+    <Modal visible={isVisible} onRequestClose={onClose} transparent>
+        <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: SDims.HeightTopSection, alignItems: 'center' }}>
+            <View style={{
+                height: SDims.HeightCentralSection * .75,
+                width: SDims.Width90p,
+                backgroundColor: 'black',
+                borderColor: 'red',
+                borderWidth: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <Text style={fonts.txtSubBrandBanner}>SELECCIONAR COLORES</Text>
+                <SwatchGridStyle
+                    colors={colorsRowOne}
+                    onSelectColor={handleSelectColor}
+                    selectedColors={selectedColors}
+                    selectedSwatchStyle={selectedSwatchStyle}
+                />
+                <SwatchGridStyle
+                    colors={colorsRowTwo}
+                    onSelectColor={handleSelectColor}
+                    selectedColors={selectedColors}
+                    selectedSwatchStyle={selectedSwatchStyle}
+                />
+                <TouchableOpacity onPress={onClose}>
+                    <View>
+                        <Text style={fonts.txtNavButton}>Cerrar</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
-        </Modal>
+        </View>
+    </Modal>
     );
-};
-
+}
 export default SubModal;
