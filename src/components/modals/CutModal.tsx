@@ -21,6 +21,10 @@ const CutModal: React.FC<CutModalProps> = ({
 }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
+  // AddToCart
+  const handleAddToCart = () => {
+    console.log('Add to cart', selectedColors.length);
+  }
 
   // Function to toggle SubModal visibility
   const toggleSubModal = () => {
@@ -57,7 +61,7 @@ const CutModal: React.FC<CutModalProps> = ({
           />
           </View>
           <View style={{ height: SDims.HeightCentralSection * .25 }}>
-            <ModalFooter onClose={onClose} />
+            <ModalFooter onClose={onClose} onAddToCart={handleAddToCart} />
           </View>
         </View>
       </View>
