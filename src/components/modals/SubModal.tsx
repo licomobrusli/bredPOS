@@ -46,13 +46,13 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, onSelectColor, 
                         colors={colorsRowOne}
                         onSelectColor={handleSelectColor}
                         selectedColors={selectedColors}
-                        selectedSwatchStyle={selectedSwatchStyle} // Add this line
+                        selectedSwatchStyle={selectedSwatchStyle}
                     />
                     <SwatchGridStyle
                         colors={colorsRowTwo}
                         onSelectColor={handleSelectColor}
                         selectedColors={selectedColors}
-                        selectedSwatchStyle={selectedSwatchStyle} // Add this line
+                        selectedSwatchStyle={selectedSwatchStyle}
                     />
                     <TouchableOpacity onPress={onClose}>
                         <View>

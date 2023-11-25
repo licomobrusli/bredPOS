@@ -1,12 +1,10 @@
-// ThemeList.tsx:
+// ThemeList.tsx
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Text, Dimensions, TouchableOpacity } from 'react-native';
-import { fetchCategories, fetchServices, fetchModalCounts } from '../config/apiCalls';
-import { cardGridStyle } from '../config/cardGridStyle';
-import ThemeCard from '../components/ThemeCard';
-import styles from '../config/fonts';
-import { Theme, ModalCount } from '../config/types';
+import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { fetchServices, fetchModalCounts } from '../config/apiCalls';
+import { ModalCount } from '../config/types';
 import SubModal from '../components/modals/SubModal';
+import styles from '../config/fonts';
 
 interface ThemeListProps {
   categoryCode: string;
@@ -15,33 +13,21 @@ interface ThemeListProps {
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode, onSelectColor }) => {
-  const [themes, setThemes] = useState<Theme[]>([]);
-  const [services, setServices] = useState<Theme[]>([]);
+  const [services, setServices] = useState<ModalCount[]>([]);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
 
-  const handleSelectColor = (colors: string[]) => {
-    setSelectedColors(colors);
-    onSelectColor(colors);
-  };
-
   useEffect(() => {
     const loadData = async () => {
       try {
-        const categories = await fetchCategories(categoryCode);
-        setThemes(categories);
+        const servicesData = await fetchServices(selectedServiceCode);
+        setServices(servicesData);
 
-        const services = await fetchServices(selectedServiceCode);
-        setServices(services);
-
+        // Correctly passing categoryCode here
         const modalCountsData = await fetchModalCounts({ categoryCode, serviceCode: selectedServiceCode });
         setModalCounts(modalCountsData);
-
-        if (modalCountsData.some((mc: { logic: string; }) => mc.logic === 'NOT')) {
-          setSelectedModalCounts([modalCountsData.find((mc: { logic: string; }) => mc.logic === 'NOT')?.id || '']);
-        }
       } catch (error) {
         console.error('Error:', error);
       }
@@ -52,69 +38,34 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
 
   const handleModalCountPress = (id: string, logic: string, sub: number) => {
     setSelectedModalCounts(prevSelected => {
-        let newSelected = [...prevSelected];
+      let newSelected = [...prevSelected];
   
-        if (logic === 'OR') {
-            if (!newSelected.includes(id)) {
-                // Add to selection if not already selected
-                newSelected.push(id);
-            }
-            // If already selected, it remains in the array, thus maintaining its selection
-        } else if (logic === 'NOT') {
-            // If currently selected, keep it selected. Otherwise, select it and deselect others
-            newSelected = newSelected.includes(id) ? newSelected : [id];
+      if (logic === 'OR') {
+        if (!newSelected.includes(id)) {
+          newSelected.push(id);
         }
+      } else if (logic === 'NOT') {
+        newSelected = newSelected.includes(id) ? newSelected : [id];
+      }
   
-        return newSelected;
+      return newSelected;
     });
   
-    // Open SubModal if sub > 0
     if (sub > 0) {
-        setIsSubModalVisible(true);
+      setIsSubModalVisible(true);
     }
-};
-  
-  const isModalCountSelected = (id: string) => {
-    return selectedModalCounts.includes(id);
   };
 
-  const renderItem = ({ item, index }: { item: Theme; index: number }) => {
-    const marginLeft = index % 3 === 0 ? cardGridStyle.margin : cardGridStyle.gap;
+  const isModalCountSelected = (id: string) => selectedModalCounts.includes(id);
 
-    return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <ThemeCard
-          style={{
-            width: cardGridStyle.imageWidth,
-            height: cardGridStyle.imageHeight * 1.5,
-            marginLeft,
-            marginBottom: cardGridStyle.gap,
-          }}
-          imageUrl={item.imageUrl}
-          onPress={() => console.log(`Pressed theme ${item.id}`)}
-          serviceName={item.name} // Assuming 'name' is the property for the service name
-        />
-      </View>
-    );
-  };
-
-    const closeSubModal = () => {
+  const closeSubModal = () => {
     setIsSubModalVisible(false);
   };
 
-  const keyExtractor = (item: Theme) => item.id;
   const screenWidth = Dimensions.get('window').width;
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: cardGridStyle.margin }}>
-      <FlatList
-        data={[...services, ...themes]}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        numColumns={3}
-        columnWrapperStyle={{ justifyContent: 'center' }}
-        style={{ marginTop: cardGridStyle.margin, marginLeft: cardGridStyle.margin, marginRight: cardGridStyle.margin * 2 }}
-      />
+    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: 20 }}>
       {modalCounts.map(modalCount => (
         <TouchableOpacity
           key={modalCount.id}
@@ -153,7 +104,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
       <SubModal
         isVisible={isSubModalVisible}
         onClose={closeSubModal}
-        onSelectColor={handleSelectColor}
+        onSelectColor={onSelectColor} 
         selectedColors={selectedColors}
       />
     </View>
