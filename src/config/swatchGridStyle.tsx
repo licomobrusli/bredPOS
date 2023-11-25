@@ -22,23 +22,25 @@
             <View style={{ alignSelf: 'center', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center', width: totalRowSpace }}>
                 {colors.map(color => {
                     const isSelected = selectedColors.includes(color);
+
+                    console.log(`Color: ${color}, Is Selected: ${isSelected}`);
+
                     let style = { borderColor: 'white'
-                        , borderWidth: 1
+                        , borderWidth: 0
                         , backgroundColor: color
                     };
 
                     if (isSelected && selectedSwatchStyle) {
-                        style = {
-                            borderColor: selectedSwatchStyle.borderColor,
-                            borderWidth: selectedSwatchStyle.borderWidth,
-                            backgroundColor: selectedSwatchStyle.backgroundColor,
-                        };
+                        style = { ...style, ...selectedSwatchStyle};
                     }
 
                     return (
                         <TouchableOpacity
                             key={color}
-                            onPress={() => onSelectColor(color)}
+                            onPress={() => {
+                                console.log(`Pressed color: ${color}`);
+                                onSelectColor(color)
+                            }}
                             style={{
                                 height: SDims.Height5p,
                                 width: SDims.Height5p,

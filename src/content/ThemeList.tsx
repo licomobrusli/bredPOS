@@ -18,6 +18,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const handleSelectColor = (colors: string[]) => {setSelectedColors(colors);};
 
   useEffect(() => {
     const loadData = async () => {
@@ -104,7 +105,7 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
       <SubModal
         isVisible={isSubModalVisible}
         onClose={closeSubModal}
-        onSelectColor={onSelectColor} 
+        onSelectColor={handleSelectColor} 
         selectedColors={selectedColors}
       />
     </View>

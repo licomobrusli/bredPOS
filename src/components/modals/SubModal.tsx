@@ -30,6 +30,8 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, onSelectColor, 
             updatedSelectedColors.push(color); // Add the color
         }
     
+        console.log(`Updated selected colors: ${updatedSelectedColors}`);
+
         onSelectColor(updatedSelectedColors); // Update with the new array
     };
     
