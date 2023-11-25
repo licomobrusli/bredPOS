@@ -60,14 +60,12 @@ const ThemeList: React.FC<ThemeListProps> = ({
   };
 
   const isModalCountSelected = (modalCount: ModalCount) => {
-    // Check for OR logic and selected colors
-    if (modalCount.logic === 'OR' && selectedColors.length > 1) {
-      return true;
+    if (modalCount.logic === 'OR') {
+      return selectedColors.length > 1 && selectedModalCounts.includes(modalCount.id);
     }
-    // Existing logic for other cases
     return selectedModalCounts.includes(modalCount.id);
   };
-
+  
   const closeSubModal = () => {
     setIsSubModalVisible(false);
   };
