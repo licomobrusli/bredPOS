@@ -8,7 +8,7 @@
         onSelectColor: (color: string) => void;
         selectedColors: string[];
         selectedSwatchStyle?: {
-            backgroundColor: string;
+            backgroundColor?: string;
             borderColor: string;
             borderWidth: number;
         };

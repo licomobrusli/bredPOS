@@ -43,23 +43,22 @@ const CutModal: React.FC<CutModalProps> = ({
           backgroundColor: 'black',
         }}>
           <View style={{ height: SDims.HeightCentralSection / 2 }}>
-            <ModalTheme
-              categoryCode={categoryCode}
-              selectedServiceCode={selectedServiceCode}
-              onSelectColor={setSelectedColors}
-              setSelectedColors={setSelectedColors}
-              selectedColors={selectedColors} // Add this line to pass selectedColors to ModalTheme
-            />
+          <ModalTheme
+            categoryCode={categoryCode}
+            selectedServiceCode={selectedServiceCode}
+            onSelectColor={setSelectedColors}
+            setSelectedColors={setSelectedColors}
+            selectedColors={selectedColors}
+          />
           </View>
           <View style={{ height: SDims.HeightCentralSection / 4 }}>
             <ModalControls />
           </View>
           <View style={{ height: SDims.HeightCentralSection / 4 }}>
           <ModalDetail 
-              selectedColors={selectedColors}
-              onSwatchPress={toggleSubModal}
-              setSelectedColors={setSelectedColors} // This needs to be a correctly defined function
-            />
+            selectedColors={selectedColors}
+            setSelectedColors={setSelectedColors}
+          />
           </View>
           <View style={{ height: SDims.HeightCentralSection / 4 }}>
             <ModalFooter onClose={onClose} />

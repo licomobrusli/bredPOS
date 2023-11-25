@@ -1,6 +1,6 @@
 // ModalDetail.tsx
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import SDims from '../../config/dimensions';
 import SwatchGridStyle from '../../config/swatchGridStyle';
 import Fonts from '../../config/fonts';
@@ -8,17 +8,20 @@ import SubModal from '../modals/SubModal';
 
 interface ModalDetailProps {
   selectedColors: string[];
-  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>; // Add this line
-  onSwatchPress: () => void;
+  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const ModalDetail: React.FC<ModalDetailProps> = ({
-  selectedColors, setSelectedColors, onSwatchPress // Update this line
+  selectedColors, setSelectedColors
 }) => {
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
 
   const toggleSubModal = () => {
     setIsSubModalVisible(!isSubModalVisible);
+  };
+
+  const handleSwatchPress = () => {
+    toggleSubModal();
   };
 
   return (
@@ -30,20 +33,19 @@ const ModalDetail: React.FC<ModalDetailProps> = ({
       )}
       <SwatchGridStyle
         colors={selectedColors}
-        onSelectColor={() => {}}
+        onSelectColor={handleSwatchPress}
         selectedColors={selectedColors}
+        selectedSwatchStyle={{
+          borderColor: 'white',
+          borderWidth: 5,
+        }}
       />
-      <TouchableOpacity onPress={toggleSubModal}>
-        <View>
-          <Text style={Fonts.txtModalCounts}>Open/Close SubModal</Text>
-        </View>
-      </TouchableOpacity>
       <SubModal
         isVisible={isSubModalVisible}
         onClose={toggleSubModal}
         selectedColors={selectedColors}
         setSelectedColors={setSelectedColors}
-        />
+      />
     </View>
   );
 };
