@@ -8,10 +8,16 @@ import SDims from '../config/dimensions';
 
 const McentralSection: React.FC = () => {
   return (
-    <View style={{ height: SDims.Height70p, backgroundColor: 'black', flexDirection: 'column' }}>
-      <MlistSection />
-      <McentralControlsSection />
-      <MadvertSection />
+    <View style={{ height: SDims.HeightCentralSection, backgroundColor: 'black', flexDirection: 'column' }}>
+      <View style={{ height: SDims.HeightCentralSection * .5 }}>
+        <MlistSection />
+      </View>
+      <View style={{  height: SDims.HeightCentralSection * .25 }}>
+        <McentralControlsSection />
+      </View>
+      <View style={{ height: SDims.HeightCentralSection * .25 }}>
+        <MadvertSection />
+      </View>
     </View>
   );
 };

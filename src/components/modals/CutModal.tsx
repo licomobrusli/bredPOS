@@ -1,7 +1,6 @@
 // CutModal.tsx
 import React, { useState } from 'react';
 import { Modal, View } from 'react-native';
-import ModalControls from './ModalControls';
 import ModalTheme from './ModalTheme';
 import ModalDetail from './ModalDetail';
 import ModalFooter from './ModalFooter';
@@ -37,12 +36,12 @@ const CutModal: React.FC<CutModalProps> = ({
     >
       <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: SDims.Height10p, alignItems: 'center' }}>
         <View style={{
-          height: SDims.HeightCentralSection,
+          height: SDims.HeightCentralSection ,
           width: SDims.Width100p,
           justifyContent: 'space-between',
           backgroundColor: 'black',
         }}>
-          <View style={{ height: SDims.HeightCentralSection * .6 }}>
+          <View style={{ height: SDims.HeightCentralSection * .5 }}>
           <ModalTheme
             categoryCode={categoryCode}
             selectedServiceCode={selectedServiceCode}
@@ -51,16 +50,13 @@ const CutModal: React.FC<CutModalProps> = ({
             selectedColors={selectedColors}
           />
           </View>
-          <View style={{ height: SDims.HeightCentralSection * .05 }}>
-            <ModalControls />
-          </View>
-          <View style={{ height: SDims.HeightCentralSection * .2 }}>
+          <View style={{ height: SDims.HeightCentralSection * .25 }}>
           <ModalDetail 
             selectedColors={selectedColors}
             setSelectedColors={setSelectedColors}
           />
           </View>
-          <View style={{ height: SDims.HeightCentralSection / 4 }}>
+          <View style={{ height: SDims.HeightCentralSection * .25 }}>
             <ModalFooter onClose={onClose} />
           </View>
         </View>

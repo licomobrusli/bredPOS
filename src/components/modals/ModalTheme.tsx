@@ -46,15 +46,21 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
   }, [categoryCode, selectedServiceCode]);
 
   return (
-    <View style={[styles.container, style]}>
-      <ThemeType themes={[...services, ...themes]} />
-      <ThemeList 
-        categoryCode={categoryCode}
-        selectedServiceCode={selectedServiceCode}
-        onSelectColor={onSelectColor}
-        selectedColors={selectedColors} // Pass the actual state here
-        setSelectedColors={setSelectedColors} // Pass the function here
-      />
+    <View style={[styles.container, style, { justifyContent: 'space-between' }]}>
+      <View style={{ flex: 1 }}>
+        <ThemeType themes={[...services, ...themes]} />
+      </View>
+      {/* Optional Spacer View */}
+      <View style={{ height: 20 }}></View>
+      <View style={{ flex: 1 }}>
+        <ThemeList 
+          categoryCode={categoryCode}
+          selectedServiceCode={selectedServiceCode}
+          onSelectColor={onSelectColor}
+          selectedColors={selectedColors}
+          setSelectedColors={setSelectedColors}
+        />
+      </View>
     </View>
   );
 };
