@@ -10,13 +10,23 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: 'black' }
 });
 
-const ModalTheme: React.FC<{
-  style?: ViewStyle, 
-  categoryCode: string, 
-  selectedServiceCode: string,
-  onSelectColor: (colors: string[]) => void,
-  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>> // Add this prop
-}> = ({ style, categoryCode, selectedServiceCode, onSelectColor, setSelectedColors }) => {
+interface ModalThemeProps {
+  style?: ViewStyle;
+  categoryCode: string;
+  selectedServiceCode: string;
+  onSelectColor: (colors: string[]) => void;
+  selectedColors: string[]; // Ensure this prop is included
+  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const ModalTheme: React.FC<ModalThemeProps> = ({
+  style,
+  categoryCode,
+  selectedServiceCode,
+  onSelectColor,
+  selectedColors, // Include this prop
+  setSelectedColors // Include this prop
+}) => {
   const [themes, setThemes] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
 
@@ -42,8 +52,8 @@ const ModalTheme: React.FC<{
         categoryCode={categoryCode}
         selectedServiceCode={selectedServiceCode}
         onSelectColor={onSelectColor}
-        selectedColors={[]} // This needs to be a state or prop
-        setSelectedColors={setSelectedColors} // Pass the actual function here
+        selectedColors={selectedColors} // Pass the actual state here
+        setSelectedColors={setSelectedColors} // Pass the function here
       />
     </View>
   );

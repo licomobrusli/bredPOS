@@ -24,15 +24,15 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
     const handleSelectColor = (color: string) => {
         let updatedSelectedColors = [...selectedColors];
         const colorIndex = updatedSelectedColors.indexOf(color);
-    
+      
         if (colorIndex >= 0) {
-            updatedSelectedColors.splice(colorIndex, 1); // Remove the color
+          updatedSelectedColors.splice(colorIndex, 1);
         } else {
-            updatedSelectedColors.push(color); // Add the color
+          updatedSelectedColors.push(color);
         }
-
-        setSelectedColors(updatedSelectedColors); // Use setSelectedColors from props
-    };
+      
+        setSelectedColors(updatedSelectedColors);
+      };
     
     return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>

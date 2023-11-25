@@ -41,9 +41,9 @@ const ModalDetail: React.FC<ModalDetailProps> = ({
       <SubModal
         isVisible={isSubModalVisible}
         onClose={toggleSubModal}
-        selectedColors={selectedColors} // Pass selectedColors to SubModal
-        setSelectedColors={setSelectedColors} // Pass setSelectedColors to SubModal
-      />
+        selectedColors={selectedColors}
+        setSelectedColors={setSelectedColors}
+        />
     </View>
   );
 };

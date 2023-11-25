@@ -20,7 +20,7 @@ interface CutModalProps {
 const CutModal: React.FC<CutModalProps> = ({
   visible, onClose, selectedCategoryImage, selectedServiceImage, categoryCode, selectedServiceCode
 }) => {
-  const [selectedColors, setSelectedColors] = useState<string[]>([]); // Manage selected colors
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
 
   // Function to toggle SubModal visibility
@@ -43,23 +43,23 @@ const CutModal: React.FC<CutModalProps> = ({
           backgroundColor: 'black',
         }}>
           <View style={{ height: SDims.HeightCentralSection / 2 }}>
-          <ModalTheme
-            categoryCode={categoryCode}
-            selectedServiceCode={selectedServiceCode}
-            onSelectColor={setSelectedColors} // You're already passing this
-            setSelectedColors={setSelectedColors} // Add this line
-          />
+            <ModalTheme
+              categoryCode={categoryCode}
+              selectedServiceCode={selectedServiceCode}
+              onSelectColor={setSelectedColors}
+              setSelectedColors={setSelectedColors}
+              selectedColors={selectedColors} // Add this line to pass selectedColors to ModalTheme
+            />
           </View>
           <View style={{ height: SDims.HeightCentralSection / 4 }}>
             <ModalControls />
           </View>
           <View style={{ height: SDims.HeightCentralSection / 4 }}>
-            <ModalDetail 
+          <ModalDetail 
               selectedColors={selectedColors}
-              onSwatchPress={toggleSubModal} // Passing selectedColors to ModalDetail
-              setSelectedColors={function (value: React.SetStateAction<string[]>): void {
-                throw new Error('Function not implemented.');
-              } }            />
+              onSwatchPress={toggleSubModal}
+              setSelectedColors={setSelectedColors} // This needs to be a correctly defined function
+            />
           </View>
           <View style={{ height: SDims.HeightCentralSection / 4 }}>
             <ModalFooter onClose={onClose} />
