@@ -22,11 +22,12 @@ const ThemeList: React.FC<ThemeListProps> = ({
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const subtotal = modalCounts.reduce((acc, modalCount) => {
-    if (selectedModalCounts.includes(modalCount.id)) {
-      return acc + modalCount.price * (modalCount.logic === 'OR' && selectedColors.length > 1 ? selectedColors.length - 1 : 1);
+    if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
+      // Apply different price calculation for 'OR' logic modal counts
+      return acc + modalCount.price * (modalCount.logic === 'OR' ? selectedColors.length - 1 : 1);
     }
     return acc;
-  }, 0);
+  }, 0);  
 
   useEffect(() => {
     const loadData = async () => {
@@ -49,8 +50,8 @@ const ThemeList: React.FC<ThemeListProps> = ({
       if (sub > 0) {
         setIsSubModalVisible(true);
       }
-    } else if (logic === 'AND') {
-      // Ensuring exclusivity for 'AND' logic
+    } else if (logic === 'NOT') {
+      // Ensuring exclusivity for 'NOT' logic
       setSelectedModalCounts(prevSelected => 
         prevSelected.includes(id) 
           ? prevSelected.filter(item => item !== id)
