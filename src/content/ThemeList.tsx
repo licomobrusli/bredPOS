@@ -51,6 +51,11 @@ const ThemeList: React.FC<ThemeListProps> = ({
         setIsSubModalVisible(true);
       }
     } else if (logic === 'NOT') {
+      // Open the SubModal when logic is 'NOT'
+      if (sub > 0) {
+        setIsSubModalVisible(true);
+      }
+  
       // Ensuring exclusivity for 'NOT' logic
       setSelectedModalCounts(prevSelected => 
         prevSelected.includes(id) 
@@ -66,6 +71,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
       );
     }
   };
+  
 
   const isModalCountSelected = (modalCount: ModalCount) => {
     if (modalCount.logic === 'OR') {
