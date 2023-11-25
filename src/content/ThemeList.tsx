@@ -11,16 +11,22 @@ interface ThemeListProps {
   selectedServiceCode: string;
   onSelectColor: (colors: string[]) => void;
   selectedColors: string[]; // Add this line
-  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>; // Add this line
+  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>; 
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({
-  categoryCode, selectedServiceCode, selectedColors, setSelectedColors // Update this line
+  categoryCode, selectedServiceCode, selectedColors, setSelectedColors 
 }) => {
   const [services, setServices] = useState<ModalCount[]>([]);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
+  const subtotal = modalCounts.reduce((acc, modalCount) => {
+    if (selectedModalCounts.includes(modalCount.id)) {
+      return acc + modalCount.price * (modalCount.logic === 'OR' && selectedColors.length > 1 ? selectedColors.length - 1 : 1);
+    }
+    return acc;
+  }, 0);
 
   useEffect(() => {
     const loadData = async () => {
@@ -28,7 +34,6 @@ const ThemeList: React.FC<ThemeListProps> = ({
         const servicesData = await fetchServices(selectedServiceCode);
         setServices(servicesData);
 
-        // Correctly passing categoryCode here
         const modalCountsData = await fetchModalCounts({ categoryCode, serviceCode: selectedServiceCode });
         setModalCounts(modalCountsData);
       } catch (error) {
@@ -40,32 +45,34 @@ const ThemeList: React.FC<ThemeListProps> = ({
   }, [categoryCode, selectedServiceCode]);
 
   const handleModalCountPress = (id: string, logic: string, sub: number) => {
-    setSelectedModalCounts(prevSelected => {
-      let newSelected = [...prevSelected];
-  
-      if (logic === 'OR') {
-        if (!newSelected.includes(id)) {
-          newSelected.push(id);
-        }
-      } else if (logic === 'NOT') {
-        newSelected = newSelected.includes(id) ? newSelected : [id];
+    if (logic === 'OR') {
+      if (sub > 0) {
+        setIsSubModalVisible(true);
       }
-  
-      return newSelected;
-    });
-  
-    if (sub > 0) {
-      setIsSubModalVisible(true);
+    } else if (logic === 'AND') {
+      // Ensuring exclusivity for 'AND' logic
+      setSelectedModalCounts(prevSelected => 
+        prevSelected.includes(id) 
+          ? prevSelected.filter(item => item !== id)
+          : [id]
+      );
+    } else {
+      // Toggling selection for other logics
+      setSelectedModalCounts(prevSelected => 
+        prevSelected.includes(id) 
+          ? prevSelected.filter(item => item !== id)
+          : [...prevSelected, id]
+      );
     }
   };
 
   const isModalCountSelected = (modalCount: ModalCount) => {
     if (modalCount.logic === 'OR') {
-      return selectedColors.length > 1 && selectedModalCounts.includes(modalCount.id);
+      return selectedColors.length > 1; 
     }
     return selectedModalCounts.includes(modalCount.id);
   };
-  
+
   const closeSubModal = () => {
     setIsSubModalVisible(false);
   };
@@ -113,11 +120,29 @@ const ThemeList: React.FC<ThemeListProps> = ({
           </View>
         </TouchableOpacity>
       ))}
+      <View style={{ 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        alignSelf: 'center', 
+        width: screenWidth * 0.55, 
+        marginVertical: 5, 
+        borderColor: 'red', 
+        borderWidth: 1 
+      }}>
+        <Text style={[styles.txtModalCounts, { flex: 4.2, textAlign: 'left', paddingLeft: 10 }]}>
+          SUBTOTAL
+        </Text>
+        <Text style={[styles.txtModalCounts, { flex: 1, textAlign: 'right', paddingRight: 10 }]}>
+          {subtotal}€
+        </Text>
+      </View>
+
       <SubModal
         isVisible={isSubModalVisible}
         onClose={closeSubModal}
-        selectedColors={selectedColors} // Pass selectedColors to SubModal
-        setSelectedColors={setSelectedColors} // Pass setSelectedColors to SubModal
+        selectedColors={selectedColors} 
+        setSelectedColors={setSelectedColors} 
       />
     </View>
   );

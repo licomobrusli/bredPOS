@@ -42,7 +42,7 @@ const CutModal: React.FC<CutModalProps> = ({
           justifyContent: 'space-between',
           backgroundColor: 'black',
         }}>
-          <View style={{ height: SDims.HeightCentralSection / 2 }}>
+          <View style={{ height: SDims.HeightCentralSection * .6 }}>
           <ModalTheme
             categoryCode={categoryCode}
             selectedServiceCode={selectedServiceCode}
@@ -51,10 +51,10 @@ const CutModal: React.FC<CutModalProps> = ({
             selectedColors={selectedColors}
           />
           </View>
-          <View style={{ height: SDims.HeightCentralSection / 4 }}>
+          <View style={{ height: SDims.HeightCentralSection * .05 }}>
             <ModalControls />
           </View>
-          <View style={{ height: SDims.HeightCentralSection / 4 }}>
+          <View style={{ height: SDims.HeightCentralSection * .2 }}>
           <ModalDetail 
             selectedColors={selectedColors}
             setSelectedColors={setSelectedColors}
