@@ -4,14 +4,17 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import SDims from '../../config/dimensions';
 import SwatchGridStyle from '../../config/swatchGridStyle';
 import Fonts from '../../config/fonts';
-import SubModal from '../modals/SubModal'; // Adjust the import path as needed
+import SubModal from '../modals/SubModal';
 
 interface ModalDetailProps {
   selectedColors: string[];
+  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>; // Add this line
   onSwatchPress: () => void;
 }
 
-const ModalDetail: React.FC<ModalDetailProps> = ({ selectedColors, onSwatchPress }) => {
+const ModalDetail: React.FC<ModalDetailProps> = ({
+  selectedColors, setSelectedColors, onSwatchPress // Update this line
+}) => {
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
 
   const toggleSubModal = () => {
@@ -38,6 +41,8 @@ const ModalDetail: React.FC<ModalDetailProps> = ({ selectedColors, onSwatchPress
       <SubModal
         isVisible={isSubModalVisible}
         onClose={toggleSubModal}
+        selectedColors={selectedColors} // Pass selectedColors to SubModal
+        setSelectedColors={setSelectedColors} // Pass setSelectedColors to SubModal
       />
     </View>
   );

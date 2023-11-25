@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Modal, View } from 'react-native';
 import ModalControls from './ModalControls';
 import ModalTheme from './ModalTheme';
-import ModalDetail from './ModalDetail'; // Import ModalDetail here
+import ModalDetail from './ModalDetail';
 import ModalFooter from './ModalFooter';
 import SDims from '../../config/dimensions';
 import SubModal from './SubModal';
@@ -28,9 +28,6 @@ const CutModal: React.FC<CutModalProps> = ({
     setIsSubModalVisible(!isSubModalVisible);
   };
 
-  // Log the selectedColors here
-  console.log('selectedColors in CutModal:', selectedColors);
-
   return (
     <Modal
       animationType="fade"
@@ -46,17 +43,23 @@ const CutModal: React.FC<CutModalProps> = ({
           backgroundColor: 'black',
         }}>
           <View style={{ height: SDims.HeightCentralSection / 2 }}>
-            <ModalTheme
-              categoryCode={categoryCode}
-              selectedServiceCode={selectedServiceCode}
-              onSelectColor={setSelectedColors}
-            />
+          <ModalTheme
+            categoryCode={categoryCode}
+            selectedServiceCode={selectedServiceCode}
+            onSelectColor={setSelectedColors} // You're already passing this
+            setSelectedColors={setSelectedColors} // Add this line
+          />
           </View>
           <View style={{ height: SDims.HeightCentralSection / 4 }}>
             <ModalControls />
           </View>
           <View style={{ height: SDims.HeightCentralSection / 4 }}>
-            <ModalDetail selectedColors={selectedColors} onSwatchPress={toggleSubModal} />
+            <ModalDetail 
+              selectedColors={selectedColors}
+              onSwatchPress={toggleSubModal} // Passing selectedColors to ModalDetail
+              setSelectedColors={function (value: React.SetStateAction<string[]>): void {
+                throw new Error('Function not implemented.');
+              } }            />
           </View>
           <View style={{ height: SDims.HeightCentralSection / 4 }}>
             <ModalFooter onClose={onClose} />
@@ -67,6 +70,8 @@ const CutModal: React.FC<CutModalProps> = ({
         <SubModal
           isVisible={isSubModalVisible}
           onClose={() => setIsSubModalVisible(false)}
+          selectedColors={selectedColors} // Passing selectedColors to SubModal
+          setSelectedColors={setSelectedColors} // Passing setSelectedColors to SubModal
         />
       )}
     </Modal>

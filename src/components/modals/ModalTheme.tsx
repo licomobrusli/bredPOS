@@ -14,8 +14,9 @@ const ModalTheme: React.FC<{
   style?: ViewStyle, 
   categoryCode: string, 
   selectedServiceCode: string,
-  onSelectColor: (colors: string[]) => void  
-}> = ({ style, categoryCode, selectedServiceCode, onSelectColor }) => {
+  onSelectColor: (colors: string[]) => void,
+  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>> // Add this prop
+}> = ({ style, categoryCode, selectedServiceCode, onSelectColor, setSelectedColors }) => {
   const [themes, setThemes] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
 
@@ -38,9 +39,11 @@ const ModalTheme: React.FC<{
     <View style={[styles.container, style]}>
       <ThemeType themes={[...services, ...themes]} />
       <ThemeList 
-        categoryCode={categoryCode} 
+        categoryCode={categoryCode}
         selectedServiceCode={selectedServiceCode}
         onSelectColor={onSelectColor}
+        selectedColors={[]} // This needs to be a state or prop
+        setSelectedColors={setSelectedColors} // Pass the actual function here
       />
     </View>
   );

@@ -10,15 +10,17 @@ interface ThemeListProps {
   categoryCode: string;
   selectedServiceCode: string;
   onSelectColor: (colors: string[]) => void;
+  selectedColors: string[]; // Add this line
+  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>; // Add this line
 }
 
-const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode }) => {
+const ThemeList: React.FC<ThemeListProps> = ({
+  categoryCode, selectedServiceCode, selectedColors, setSelectedColors // Update this line
+}) => {
   const [services, setServices] = useState<ModalCount[]>([]);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
-  const [selectedColors, setSelectedColors] = useState<string[]>([]);
-  const handleSelectColor = (colors: string[]) => {setSelectedColors(colors);};
 
   useEffect(() => {
     const loadData = async () => {
@@ -104,7 +106,10 @@ const ThemeList: React.FC<ThemeListProps> = ({ categoryCode, selectedServiceCode
       ))}
       <SubModal
         isVisible={isSubModalVisible}
-        onClose={closeSubModal} />
+        onClose={closeSubModal}
+        selectedColors={selectedColors} // Pass selectedColors to SubModal
+        setSelectedColors={setSelectedColors} // Pass setSelectedColors to SubModal
+      />
     </View>
   );
 };
