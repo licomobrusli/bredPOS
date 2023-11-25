@@ -23,8 +23,21 @@ const CutModal: React.FC<CutModalProps> = ({
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   // AddToCart
   const handleAddToCart = () => {
-    console.log('Add to cart', selectedColors.length);
-  }
+    // Example values - replace with actual data retrieval logic
+    const serviceName = "Service Name"; // Replace with actual service name retrieval logic
+    const categoryName = "Category Name"; // Replace with actual category name retrieval logic
+    // const modalCountsDetails = []; // Replace with actual modal_counts details retrieval logic
+    const subtotal = { name: "Subtotal", price: 0 }; // Replace with actual subtotal retrieval logic
+    console.log('Add to Cart Details:', {
+      serviceName,
+      serviceCode: selectedServiceCode,
+      categoryName,
+      categoryCode,
+      // modalCountsDetails,
+      selectedColors,
+      subtotal
+    });
+  };
 
   // Function to toggle SubModal visibility
   const toggleSubModal = () => {
