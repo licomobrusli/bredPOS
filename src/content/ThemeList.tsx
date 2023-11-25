@@ -106,7 +106,11 @@ const ThemeList: React.FC<ThemeListProps> = ({
                 textAlign: 'right',
                 paddingRight: 10,
               }]}>
-              {`${Math.floor(modalCount.price)}€`}
+              {modalCount.logic === 'OR' 
+                ? (selectedColors.length > 1 
+                  ? `${Math.floor(modalCount.price * (selectedColors.length - 1))}€` 
+                  : '')
+                : `${modalCount.price}€`}
             </Text>
           </View>
         </TouchableOpacity>
