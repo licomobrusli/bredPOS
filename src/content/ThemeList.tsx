@@ -59,7 +59,14 @@ const ThemeList: React.FC<ThemeListProps> = ({
     }
   };
 
-  const isModalCountSelected = (id: string) => selectedModalCounts.includes(id);
+  const isModalCountSelected = (modalCount: ModalCount) => {
+    // Check for OR logic and selected colors
+    if (modalCount.logic === 'OR' && selectedColors.length > 1) {
+      return true;
+    }
+    // Existing logic for other cases
+    return selectedModalCounts.includes(modalCount.id);
+  };
 
   const closeSubModal = () => {
     setIsSubModalVisible(false);
@@ -78,7 +85,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
             flexDirection: 'row', 
             justifyContent: 'space-between', 
             alignItems: 'center', 
-            backgroundColor: isModalCountSelected(modalCount.id) ? 'red' : 'black', 
+            backgroundColor: isModalCountSelected(modalCount) ? 'red' : 'black', 
             alignSelf: 'center', 
             width: screenWidth * 0.55, 
             marginVertical: 5, 
