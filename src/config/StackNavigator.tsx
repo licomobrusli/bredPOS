@@ -5,9 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CategoryScreen from '../screens/CategoryScreen';
 import ServiceScreen from '../screens/ServiceScreen';
 
-// If you are using TypeScript, you can define the types for your navigation parameters
 export type RootStackParamList = {
-  CategoryScreen: undefined;
+  CategoryScreen: { categoryCode: string };
   ServiceScreen: { categoryCode: string };
 };
 

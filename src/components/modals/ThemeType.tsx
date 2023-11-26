@@ -20,8 +20,6 @@ const ThemeType: React.FC<ThemeTypeProps> = ({ themes, onServiceNameChange, onCa
     const handlePress = () => {
       console.log(`Pressed theme ${item.id}`);
       onServiceNameChange(item.name); // Call the callback with the service name
-      // Assuming category name is available here. Replace 'CategoryName' with actual logic to get the category name
-      onCategoryNameChange('CategoryName');
     };
 
     return (

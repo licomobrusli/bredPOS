@@ -1,10 +1,10 @@
 // ModalTheme.tsx
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { View, StyleSheet, ViewStyle, ActivityIndicator } from 'react-native';
 import ThemeType from '../modals/ThemeType';
 import ThemeList from '../../content/ThemeList';
 import { fetchCategories, fetchServices } from '../../config/apiCalls';
-import { ModalCount, Theme } from '../../config/types';
+import { Theme } from '../../config/types';
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: 'black' }
@@ -19,7 +19,7 @@ interface ModalThemeProps {
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
   onServiceNameChange: (name: string) => void;
   onCategoryNameChange: (name: string) => void;
-  onModalCountsChange: (details: any[]) => void; // Replace 'any[]' with the correct type if known
+  onModalCountsChange: (details: any[]) => void;
 }
 
 const ModalTheme: React.FC<ModalThemeProps> = ({
@@ -33,47 +33,48 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
   onCategoryNameChange,
   onModalCountsChange
 }) => {
-  const [themes, setThemes] = useState<Theme[]>([]);
+  const [Categories, setCategories] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
-
-  // Define the callback functions
-  const handleServiceNameChange = (name: string) => {
-    // Logic to handle service name change
-  };
-
-  const handleCategoryNameChange = (name: string) => {
-    // Logic to handle category name change
-  };
-
-  const handleModalCountsChange = (modalCounts: ModalCount[]) => {
-    // Logic to handle modal counts change
-  };
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const fetchedThemes = await fetchCategories(categoryCode);
-        setThemes(fetchedThemes);
+        const fetchedCategories = await fetchCategories(categoryCode);
         const fetchedServices = await fetchServices(selectedServiceCode);
+        setCategories(fetchedCategories);
         setServices(fetchedServices);
       } catch (error) {
         console.error('Error fetching theme type data:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     loadData();
   }, [categoryCode, selectedServiceCode]);
+  console.log('Categories:', Categories);
+  console.log('services:', services);
+
+  if (isLoading) {
+    // Display a loading indicator while data is being fetched
+    return (
+      <View style={[styles.container, style, { justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color="#00ff00" />
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.container, style]}>
       <View style={{ flex: 1 }}>
         <ThemeType 
-          themes={[...services, ...themes]}
+          themes={[...services, ...Categories]}
           onServiceNameChange={onServiceNameChange}
           onCategoryNameChange={onCategoryNameChange}
         />
       </View>
-      <View style={{ height: 20 }}></View>
+      <View style={{ height: 20 }} />
       <View style={{ flex: 1 }}>
         <ThemeList 
           categoryCode={categoryCode}

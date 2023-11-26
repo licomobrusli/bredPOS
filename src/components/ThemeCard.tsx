@@ -6,15 +6,15 @@ import customStyles from '../config/fonts'; // Make sure to import your custom s
 interface ThemeCardProps {
   style?: StyleProp<ViewStyle>;
   imageUrl: any;
-  serviceName?: string;  // New optional prop for service name
-  categoryName?: string;  // New optional prop for category name
+  serviceName?: string;
   onPress: () => void;
 }
 
-const ThemeCard: React.FC<ThemeCardProps> = ({ style, imageUrl, serviceName, categoryName, onPress }) => {
+const ThemeCard: React.FC<ThemeCardProps> = ({ style, imageUrl, serviceName, onPress }) => {
   // Determine if the imageUrl is a local image or a remote URL
+  console.log(`Service Name: ${serviceName}`);
   const imageSource = typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl;
-  const displayText = serviceName?.toUpperCase() || categoryName?.toUpperCase() || 'N/A';
+  const displayText = serviceName?.toUpperCase() || 'N/A';
 
   return (
     <TouchableOpacity onPress={onPress} style={[styles.card, style]}>

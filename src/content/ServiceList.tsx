@@ -9,11 +9,6 @@ import ListCard from '../components/ListCard';
 import { cardGridStyle } from '../config/cardGridStyle'; // Update the import path
 import { fetchServices } from '../config/apiCalls'; // Import your API calls
 
-// Importing images
-import CUTImage from '../main/assets/images/CUT.jpg';
-import COLImage from '../main/assets/images/COL.jpg';
-import DSNImage from '../main/assets/images/DSN.jpg';
-
 const ServiceList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

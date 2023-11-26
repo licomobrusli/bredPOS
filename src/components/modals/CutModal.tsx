@@ -31,7 +31,7 @@ const CutModal: React.FC<CutModalProps> = ({
   const handleServiceNameChange = (name: string) => {
     setServiceName(name);
   };
-
+  
   const handleCategoryNameChange = (name: string) => {
     setCategoryName(name);
   };
