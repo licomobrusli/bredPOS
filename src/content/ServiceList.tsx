@@ -18,16 +18,15 @@ const ServiceList: React.FC = () => {
   const servicesWithPlaceholder = services.length % 2 !== 0 ? [...services, null] : services;
   const hardcodedDefault = '';
   const categoryCode = route.params?.categoryCode || 'DefaultCode'; // Preserve categoryCode from navigation route
-  // apiFilterCode is set to hardcodedDefault if it's not empty, otherwise use categoryCode
   const apiFilterCode = hardcodedDefault !== null ? hardcodedDefault : (route.params?.categoryCode || 'DefaultCode');  
-  const [selectedServiceCode, setSelectedServiceCode] = useState<string>('');
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   useEffect(() => {
     const loadServices = async () => {
       setLoading(true);
       try {
-        const loadedServices = await fetchServices(apiFilterCode); // Fetch services based on the filter code
-        setServices(loadedServices); // Use the services as they are returned
+        const loadedServices = await fetchServices(apiFilterCode);
+        setServices(loadedServices);
         setError(null);
       } catch (error) {
         setError('Failed to load services');
@@ -39,11 +38,10 @@ const ServiceList: React.FC = () => {
   
     loadServices();
   }, [apiFilterCode]);
-  
 
   const onImagePress = (service: Service) => {
     console.log('Service pressed!', service);
-    setSelectedServiceCode(service.code); // Set the selected service code
+    setSelectedService(service);
     setModalVisible(true);
   };
 
@@ -64,7 +62,7 @@ const ServiceList: React.FC = () => {
           marginLeft,
           marginBottom: cardGridStyle.gap,
         }}
-        imageUrl={item.imageUrl} // Use the imageUrl that includes the mapped image
+        imageUrl={item.imageUrl}
         serviceName={item.name}
         onPress={() => onImagePress(item)}
       />
@@ -81,9 +79,8 @@ const ServiceList: React.FC = () => {
         selectedCategoryImage={''}
         selectedServiceImage={''}
         categoryCode={categoryCode}
-        selectedServiceCode={selectedServiceCode} // Pass the selected service code
+        selectedService={selectedService}
       />
-
       {loading ? (
         <Text>Loading...</Text>
       ) : error ? (

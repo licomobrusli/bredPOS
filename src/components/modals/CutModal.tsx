@@ -1,11 +1,12 @@
 // CutModal.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, View } from 'react-native';
 import ModalTheme from './ModalTheme';
 import ModalDetail from './ModalDetail';
 import ModalFooter from './ModalFooter';
 import SDims from '../../config/dimensions';
 import SubModal from './SubModal';
+import { Service } from '../../config/types'; // Ensure this path is correct
 
 interface CutModalProps {
   visible: boolean;
@@ -13,44 +14,40 @@ interface CutModalProps {
   selectedCategoryImage: string;
   selectedServiceImage: string;
   categoryCode: string;
-  selectedServiceCode: string;
+  selectedService: Service | null;
 }
 
 const CutModal: React.FC<CutModalProps> = ({
-  visible, onClose, selectedCategoryImage, selectedServiceImage, categoryCode, selectedServiceCode
+  visible, onClose, selectedCategoryImage, selectedServiceImage, categoryCode, selectedService
 }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
 
-  // New state declarations for service and category names, and modal counts details
-  const [serviceName, setServiceName] = useState('');
-  const [categoryName, setCategoryName] = useState('');
-  const [modalCountsDetails, setModalCountsDetails] = useState<any[]>([]); // Replace 'any' with the correct type
-
-  // Callbacks to update state
-  const handleServiceNameChange = (name: string) => {
-    setServiceName(name);
-  };
-  
-  const handleCategoryNameChange = (name: string) => {
-    setCategoryName(name);
+  // Placeholder callback functions
+  const onServiceNameChange = (name: string) => {
+    // Implement your logic here if needed
   };
 
-  const handleModalCountsChange = (details: any[]) => {
-    setModalCountsDetails(details);
+  const onCategoryNameChange = (name: string) => {
+    // Implement your logic here if needed
   };
+
+  const onModalCountsChange = (counts: any[]) => { // Replace 'any' with the appropriate type
+    // Implement your logic here if needed
+  };
+
+  // UseEffect to log selectedService details
+  useEffect(() => {
+    if (selectedService) {
+      console.log('BOBOB:', selectedService);
+    }
+  }, [selectedService]);
 
   // AddToCart
   const handleAddToCart = () => {
-    const subtotal = modalCountsDetails.reduce((acc, item) => acc + item.price, 0);
-    console.log('Add to Cart Details:', {
-      serviceName,
-      serviceCode: selectedServiceCode,
-      categoryName,
-      categoryCode,
-      modalCountsDetails,
-      selectedColors,
-      subtotal
+    console.log('BIBIB:', {
+      selectedService,
+      selectedColors
     });
   };
 
@@ -68,7 +65,7 @@ const CutModal: React.FC<CutModalProps> = ({
     >
       <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: SDims.Height10p, alignItems: 'center' }}>
         <View style={{
-          height: SDims.HeightCentralSection ,
+          height: SDims.HeightCentralSection,
           width: SDims.Width100p,
           justifyContent: 'space-between',
           backgroundColor: 'black',
@@ -76,13 +73,13 @@ const CutModal: React.FC<CutModalProps> = ({
           <View style={{ height: SDims.HeightCentralSection * .5 }}>
             <ModalTheme
               categoryCode={categoryCode}
-              selectedServiceCode={selectedServiceCode}
+              selectedServiceCode={selectedService ? selectedService.code : ''}
               onSelectColor={setSelectedColors}
               setSelectedColors={setSelectedColors}
               selectedColors={selectedColors}
-              onServiceNameChange={handleServiceNameChange}
-              onCategoryNameChange={handleCategoryNameChange}
-              onModalCountsChange={handleModalCountsChange}
+              onServiceNameChange={onServiceNameChange}
+              onCategoryNameChange={onCategoryNameChange}
+              onModalCountsChange={onModalCountsChange}
             />
           </View>
           <View style={{ height: SDims.HeightCentralSection * .25 }}>
