@@ -50,6 +50,7 @@ const CutModal: React.FC<CutModalProps> = ({
   // AddToCart
   const handleAddToCart = () => {
     console.log('Add to Cart Details:', {
+      selectedCategory,
       selectedService,
       selectedColors
     });
