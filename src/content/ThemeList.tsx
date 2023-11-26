@@ -1,7 +1,7 @@
 // ThemeList.tsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
-import { fetchServices, fetchModalCounts } from '../config/apiCalls';
+import { fetchModalCounts } from '../config/apiCalls';
 import { ModalCount } from '../config/types';
 import SubModal from '../components/modals/SubModal';
 import styles from '../config/fonts';
@@ -18,7 +18,6 @@ interface ThemeListProps {
 const ThemeList: React.FC<ThemeListProps> = ({
   categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange
 }) => {
-  const [services, setServices] = useState<ModalCount[]>([]);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
@@ -33,18 +32,17 @@ const ThemeList: React.FC<ThemeListProps> = ({
   useEffect(() => {
     const loadData = async () => {
       try {
-        const servicesData = await fetchServices(selectedServiceCode);
-        setServices(servicesData);
-
         const modalCountsData = await fetchModalCounts({ categoryCode, serviceCode: selectedServiceCode });
+        console.log('Modal Counts Data:', modalCountsData); // Log the modal counts data
         setModalCounts(modalCountsData);
       } catch (error) {
         console.error('Error:', error);
       }
     };
-
+  
     loadData();
   }, [categoryCode, selectedServiceCode]);
+  ;
 
   useEffect(() => {
     // Call the callback with the modal counts details

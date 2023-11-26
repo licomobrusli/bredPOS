@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ViewStyle, ActivityIndicator } from 'react-native';
 import ThemeType from '../modals/ThemeType';
 import ThemeList from '../../content/ThemeList';
-import { fetchCategories, fetchServices } from '../../config/apiCalls';
-import { Theme } from '../../config/types';
+import { Category, Service, Theme } from '../../config/types';
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: 'black' }
+  container: { flex: 1, backgroundColor: 'black' },
 });
 
 interface ModalThemeProps {
@@ -20,6 +19,9 @@ interface ModalThemeProps {
   onServiceNameChange: (name: string) => void;
   onCategoryNameChange: (name: string) => void;
   onModalCountsChange: (details: any[]) => void;
+  // Add these props to show in console logs
+  selectedService: Service | null;
+  selectedCategory: Category | null;
 }
 
 const ModalTheme: React.FC<ModalThemeProps> = ({
@@ -31,30 +33,40 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
   setSelectedColors,
   onServiceNameChange,
   onCategoryNameChange,
-  onModalCountsChange
+  onModalCountsChange,
+  selectedService, // Added prop
+  selectedCategory, // Added prop
 }) => {
   const [Categories, setCategories] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const fetchedCategories = await fetchCategories(categoryCode);
-        const fetchedServices = await fetchServices(selectedServiceCode);
-        setCategories(fetchedCategories);
-        setServices(fetchedServices);
-      } catch (error) {
-        console.error('Error fetching theme type data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    // Simulate fetching data from APIs (remove API calls)
+    // Instead, set Categories and Services directly from selectedService and selectedCategory
+    if (selectedCategory) {
+      // Convert 'id' to string
+      const categoryTheme: Theme = {
+        ...selectedCategory,
+        id: selectedCategory.id.toString(),
+      };
+      setCategories([categoryTheme]);
+    }
+    if (selectedService) {
+      // Convert 'id' to string
+      const serviceTheme: Theme = {
+        ...selectedService,
+        id: selectedService.id.toString(),
+      };
+      setServices([serviceTheme]);
+    }
 
-    loadData();
-  }, [categoryCode, selectedServiceCode]);
-  console.log('Categories:', Categories);
-  console.log('services:', services);
+    setIsLoading(false);
+  }, [selectedCategory, selectedService]);
+
+  // Log selectedService and selectedCategory
+  console.log('selectedService in ModalTheme:', selectedService);
+  console.log('selectedCategory in ModalTheme:', selectedCategory);
 
   if (isLoading) {
     // Display a loading indicator while data is being fetched

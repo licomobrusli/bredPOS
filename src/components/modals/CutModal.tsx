@@ -6,7 +6,7 @@ import ModalDetail from './ModalDetail';
 import ModalFooter from './ModalFooter';
 import SDims from '../../config/dimensions';
 import SubModal from './SubModal';
-import { Category, Service } from '../../config/types'; // Ensure this path is correct
+import { Category, Service } from '../../config/types';
 
 interface CutModalProps {
   visible: boolean;
@@ -26,24 +26,19 @@ const CutModal: React.FC<CutModalProps> = ({
 
   // Placeholder callback functions
   const onServiceNameChange = (name: string) => {
-    // Implement your logic here if needed
   };
 
   const onCategoryNameChange = (name: string) => {
-    // Implement your logic here if needed
   };
 
-  const onModalCountsChange = (counts: any[]) => { // Replace 'any' with the appropriate type
-    // Implement your logic here if needed
+  const onModalCountsChange = (counts: any[]) => { 
   };
 
   // UseEffect to log selectedService details
   useEffect(() => {
     if (selectedService) {
-      console.log('CutModal Service log:', selectedService);
     }
     if (selectedCategory) {
-      console.log('CutModal Category log:', selectedCategory);
     }
   }, [selectedService, selectedCategory]);
 
@@ -85,6 +80,8 @@ const CutModal: React.FC<CutModalProps> = ({
               onServiceNameChange={onServiceNameChange}
               onCategoryNameChange={onCategoryNameChange}
               onModalCountsChange={onModalCountsChange}
+              selectedService={selectedService}
+              selectedCategory={selectedCategory}
             />
           </View>
           <View style={{ height: SDims.HeightCentralSection * .25 }}>
