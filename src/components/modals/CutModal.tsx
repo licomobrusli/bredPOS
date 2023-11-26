@@ -6,7 +6,7 @@ import ModalDetail from './ModalDetail';
 import ModalFooter from './ModalFooter';
 import SDims from '../../config/dimensions';
 import SubModal from './SubModal';
-import { Service } from '../../config/types'; // Ensure this path is correct
+import { Category, Service } from '../../config/types'; // Ensure this path is correct
 
 interface CutModalProps {
   visible: boolean;
@@ -15,10 +15,11 @@ interface CutModalProps {
   selectedServiceImage: string;
   categoryCode: string;
   selectedService: Service | null;
+  selectedCategory: Category | null;
 }
 
 const CutModal: React.FC<CutModalProps> = ({
-  visible, onClose, selectedCategoryImage, selectedServiceImage, categoryCode, selectedService
+  visible, onClose, selectedCategoryImage, selectedServiceImage, categoryCode, selectedService, selectedCategory
 }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
@@ -39,13 +40,16 @@ const CutModal: React.FC<CutModalProps> = ({
   // UseEffect to log selectedService details
   useEffect(() => {
     if (selectedService) {
-      console.log('BOBOB:', selectedService);
+      console.log('CutModal Service log:', selectedService);
     }
-  }, [selectedService]);
+    if (selectedCategory) {
+      console.log('CutModal Category log:', selectedCategory);
+    }
+  }, [selectedService, selectedCategory]);
 
   // AddToCart
   const handleAddToCart = () => {
-    console.log('BIBIB:', {
+    console.log('Add to Cart Details:', {
       selectedService,
       selectedColors
     });

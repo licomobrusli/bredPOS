@@ -35,9 +35,9 @@ const CategoryList = () => {
   }, []);
   
   const onCategoryPress = (category: Category) => {
-    navigation.navigate('ServiceScreen', { categoryCode: category.code });
-    console.log('Category pressed!', category);
+    navigation.navigate('ServiceScreen', { categoryCode: category.code, category: category });
   };
+  
 
   const renderItem = ({ item, index }: { item: Category | null; index: number }) => {
     const isPlaceholder = item === null;

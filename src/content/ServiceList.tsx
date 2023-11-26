@@ -1,7 +1,7 @@
 // ServiceList.tsx
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text } from 'react-native';
-import { Service } from '../config/types'; // Adjust the import path
+import { Category, Service } from '../config/types'; // Adjust the import path
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../config/StackNavigator'; // Update the import path
 import CutModal from '../components/modals/CutModal';
@@ -20,8 +20,10 @@ const ServiceList: React.FC = () => {
   const categoryCode = route.params?.categoryCode || 'DefaultCode'; // Preserve categoryCode from navigation route
   const apiFilterCode = hardcodedDefault !== null ? hardcodedDefault : (route.params?.categoryCode || 'DefaultCode');  
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
   useEffect(() => {
+    setSelectedCategory(route.params?.category);
     const loadServices = async () => {
       setLoading(true);
       try {
@@ -40,7 +42,6 @@ const ServiceList: React.FC = () => {
   }, [apiFilterCode]);
 
   const onImagePress = (service: Service) => {
-    console.log('Service pressed!', service);
     setSelectedService(service);
     setModalVisible(true);
   };
@@ -80,6 +81,7 @@ const ServiceList: React.FC = () => {
         selectedServiceImage={''}
         categoryCode={categoryCode}
         selectedService={selectedService}
+        selectedCategory={selectedCategory}
       />
       {loading ? (
         <Text>Loading...</Text>

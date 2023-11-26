@@ -4,10 +4,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CategoryScreen from '../screens/CategoryScreen';
 import ServiceScreen from '../screens/ServiceScreen';
+import { Category } from './types';
 
 export type RootStackParamList = {
-  CategoryScreen: { categoryCode: string };
-  ServiceScreen: { categoryCode: string };
+  CategoryScreen: undefined; // Assuming no parameters for CategoryScreen
+  ServiceScreen: { 
+    categoryCode: string;
+    category: Category; // Add this line
+  };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
