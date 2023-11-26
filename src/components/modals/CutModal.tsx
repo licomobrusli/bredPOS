@@ -16,10 +16,18 @@ interface CutModalProps {
   categoryCode: string;
   selectedService: Service | null;
   selectedCategory: Category | null;
+  selectedModalCounts: string[];
 }
 
 const CutModal: React.FC<CutModalProps> = ({
-  visible, onClose, selectedCategoryImage, selectedServiceImage, categoryCode, selectedService, selectedCategory
+  visible,
+  onClose,
+  selectedCategoryImage,
+  selectedServiceImage,
+  categoryCode,
+  selectedService,
+  selectedCategory,
+  selectedModalCounts, // Receive selectedModalCounts as a prop
 }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
@@ -47,7 +55,8 @@ const CutModal: React.FC<CutModalProps> = ({
     console.log('Add to Cart Details:', {
       selectedCategory,
       selectedService,
-      selectedColors
+      selectedColors,
+      selectedModalCounts, // Log selectedModalCounts
     });
   };
 
@@ -82,6 +91,7 @@ const CutModal: React.FC<CutModalProps> = ({
               onModalCountsChange={onModalCountsChange}
               selectedService={selectedService}
               selectedCategory={selectedCategory}
+              selectedModalCounts={selectedModalCounts}
             />
           </View>
           <View style={{ height: SDims.HeightCentralSection * .25 }}>

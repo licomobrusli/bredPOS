@@ -22,6 +22,7 @@ interface ModalThemeProps {
   // Add these props to show in console logs
   selectedService: Service | null;
   selectedCategory: Category | null;
+  selectedModalCounts: string[]; // Add this prop
 }
 
 const ModalTheme: React.FC<ModalThemeProps> = ({
@@ -36,6 +37,7 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
   onModalCountsChange,
   selectedService, // Added prop
   selectedCategory, // Added prop
+  selectedModalCounts, // Added prop
 }) => {
   const [Categories, setCategories] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
@@ -95,6 +97,7 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
           selectedColors={selectedColors}
           setSelectedColors={setSelectedColors}
           onModalCountsChange={onModalCountsChange}
+          selectedModalCounts={selectedModalCounts}
         />
       </View>
     </View>

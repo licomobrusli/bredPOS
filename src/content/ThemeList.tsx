@@ -12,14 +12,15 @@ interface ThemeListProps {
   onSelectColor: (colors: string[]) => void;
   selectedColors: string[];
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>; 
-  onModalCountsChange: (modalCounts: ModalCount[]) => void; // Added this line
+  onModalCountsChange: (modalCounts: ModalCount[]) => void;
+  selectedModalCounts: string[];
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({
   categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange
 }) => {
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
-  const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
+  const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]); // Initialize with an empty array
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const subtotal = modalCounts.reduce((acc, modalCount) => {
     if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
@@ -27,13 +28,12 @@ const ThemeList: React.FC<ThemeListProps> = ({
       return acc + modalCount.price * (modalCount.logic === 'OR' ? selectedColors.length - 1 : 1);
     }
     return acc;
-  }, 0);  
+  }, 0);
 
   useEffect(() => {
     const loadData = async () => {
       try {
         const modalCountsData = await fetchModalCounts({ categoryCode, serviceCode: selectedServiceCode });
-        console.log('Modal Counts Data:', modalCountsData); // Log the modal counts data
         setModalCounts(modalCountsData);
       } catch (error) {
         console.error('Error:', error);
@@ -42,8 +42,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
   
     loadData();
   }, [categoryCode, selectedServiceCode]);
-  ;
-
+  
   useEffect(() => {
     // Call the callback with the modal counts details
     onModalCountsChange(modalCounts);
@@ -75,7 +74,30 @@ const ThemeList: React.FC<ThemeListProps> = ({
       );
     }
   };
+
+  const logSelectedModalCounts = () => {
+    const selectedCounts = modalCounts.filter((modalCount: ModalCount) => {
+      if (modalCount.logic === 'OR' && selectedColors.length > 1) {
+        // Calculate the price based on the number of selected colors for 'OR' logic
+        const price = Math.floor(modalCount.price * (selectedColors.length - 1));
+        return price > 0;
+      } else if (selectedModalCounts.includes(modalCount.id)) {
+        return true;
+      }
+      return false;
+    });
   
+    console.log('Selected Modal Counts:', selectedCounts.map((modalCount: ModalCount) => ({
+      name: modalCount.name,
+      price: modalCount.logic === 'OR' && selectedColors.length > 1
+        ? `${Math.floor(modalCount.price * (selectedColors.length - 1))}€`
+        : `${modalCount.price}€`,
+    })));
+  };
+    
+  useEffect(() => {
+    logSelectedModalCounts();
+  }, [selectedColors, modalCounts, selectedModalCounts]);
 
   const isModalCountSelected = (modalCount: ModalCount) => {
     if (modalCount.logic === 'OR') {
@@ -83,7 +105,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     }
     return selectedModalCounts.includes(modalCount.id);
   };
-
+  
   const closeSubModal = () => {
     setIsSubModalVisible(false);
   };
@@ -99,7 +121,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
         >
           <View style={{ 
             flexDirection: 'row', 
-            justifyContent: 'space-between', 
+            justifyContent: 'space-between',
             alignItems: 'center', 
             backgroundColor: isModalCountSelected(modalCount) ? 'red' : 'black', 
             alignSelf: 'center', 
@@ -108,6 +130,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
             borderColor: 'red', 
             borderWidth: 1 
           }}>
+
             <Text
               style={[styles.txtModalCounts, {
                 flex: 4.2,
@@ -133,7 +156,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
       ))}
       <View style={{ 
         flexDirection: 'row', 
-        justifyContent: 'space-between', 
+        justifyContent: 'space-between',
         alignItems: 'center', 
         alignSelf: 'center', 
         width: screenWidth * 0.55, 
