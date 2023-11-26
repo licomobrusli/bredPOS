@@ -10,12 +10,13 @@ interface ThemeListProps {
   categoryCode: string;
   selectedServiceCode: string;
   onSelectColor: (colors: string[]) => void;
-  selectedColors: string[]; // Add this line
+  selectedColors: string[];
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>; 
+  onModalCountsChange: (modalCounts: ModalCount[]) => void; // Added this line
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({
-  categoryCode, selectedServiceCode, selectedColors, setSelectedColors 
+  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange
 }) => {
   const [services, setServices] = useState<ModalCount[]>([]);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
@@ -45,6 +46,11 @@ const ThemeList: React.FC<ThemeListProps> = ({
     loadData();
   }, [categoryCode, selectedServiceCode]);
 
+  useEffect(() => {
+    // Call the callback with the modal counts details
+    onModalCountsChange(modalCounts);
+  }, [modalCounts, onModalCountsChange]);
+  
   const handleModalCountPress = (id: string, logic: string, sub: number) => {
     if (logic === 'OR') {
       if (sub > 0) {

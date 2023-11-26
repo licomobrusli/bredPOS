@@ -21,19 +21,34 @@ const CutModal: React.FC<CutModalProps> = ({
 }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
+
+  // New state declarations for service and category names, and modal counts details
+  const [serviceName, setServiceName] = useState('');
+  const [categoryName, setCategoryName] = useState('');
+  const [modalCountsDetails, setModalCountsDetails] = useState<any[]>([]); // Replace 'any' with the correct type
+
+  // Callbacks to update state
+  const handleServiceNameChange = (name: string) => {
+    setServiceName(name);
+  };
+
+  const handleCategoryNameChange = (name: string) => {
+    setCategoryName(name);
+  };
+
+  const handleModalCountsChange = (details: any[]) => {
+    setModalCountsDetails(details);
+  };
+
   // AddToCart
   const handleAddToCart = () => {
-    // Example values - replace with actual data retrieval logic
-    const serviceName = "Service Name"; // Replace with actual service name retrieval logic
-    const categoryName = "Category Name"; // Replace with actual category name retrieval logic
-    // const modalCountsDetails = []; // Replace with actual modal_counts details retrieval logic
-    const subtotal = { name: "Subtotal", price: 0 }; // Replace with actual subtotal retrieval logic
+    const subtotal = modalCountsDetails.reduce((acc, item) => acc + item.price, 0);
     console.log('Add to Cart Details:', {
       serviceName,
       serviceCode: selectedServiceCode,
       categoryName,
       categoryCode,
-      // modalCountsDetails,
+      modalCountsDetails,
       selectedColors,
       subtotal
     });
@@ -59,19 +74,22 @@ const CutModal: React.FC<CutModalProps> = ({
           backgroundColor: 'black',
         }}>
           <View style={{ height: SDims.HeightCentralSection * .5 }}>
-          <ModalTheme
-            categoryCode={categoryCode}
-            selectedServiceCode={selectedServiceCode}
-            onSelectColor={setSelectedColors}
-            setSelectedColors={setSelectedColors}
-            selectedColors={selectedColors}
-          />
+            <ModalTheme
+              categoryCode={categoryCode}
+              selectedServiceCode={selectedServiceCode}
+              onSelectColor={setSelectedColors}
+              setSelectedColors={setSelectedColors}
+              selectedColors={selectedColors}
+              onServiceNameChange={handleServiceNameChange}
+              onCategoryNameChange={handleCategoryNameChange}
+              onModalCountsChange={handleModalCountsChange}
+            />
           </View>
           <View style={{ height: SDims.HeightCentralSection * .25 }}>
-          <ModalDetail 
-            selectedColors={selectedColors}
-            setSelectedColors={setSelectedColors}
-          />
+            <ModalDetail 
+              selectedColors={selectedColors}
+              setSelectedColors={setSelectedColors}
+            />
           </View>
           <View style={{ height: SDims.HeightCentralSection * .25 }}>
             <ModalFooter onClose={onClose} onAddToCart={handleAddToCart} />
@@ -82,8 +100,8 @@ const CutModal: React.FC<CutModalProps> = ({
         <SubModal
           isVisible={isSubModalVisible}
           onClose={() => setIsSubModalVisible(false)}
-          selectedColors={selectedColors} // Passing selectedColors to SubModal
-          setSelectedColors={setSelectedColors} // Passing setSelectedColors to SubModal
+          selectedColors={selectedColors}
+          setSelectedColors={setSelectedColors}
         />
       )}
     </Modal>
