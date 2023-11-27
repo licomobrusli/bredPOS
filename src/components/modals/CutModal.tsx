@@ -65,6 +65,7 @@
         selectedColors,
         modalCountsDetails
       });
+      onClose();
     };
 
     // Function to toggle SubModal visibility
