@@ -16,20 +16,21 @@ interface ThemeListProps {
   selectedModalCounts: string[];
 }
 
+// Define a type for calculatedPrices
+interface CalculatedPrices {
+  [key: string]: number;
+}
+
 const ThemeList: React.FC<ThemeListProps> = ({
   categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange
 }) => {
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
-  const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]); // Initialize with an empty array
+  const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]); 
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
-  const subtotal = modalCounts.reduce((acc, modalCount) => {
-    if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
-      // Apply different price calculation for 'OR' logic modal counts
-      return acc + modalCount.price * (modalCount.logic === 'OR' ? selectedColors.length - 1 : 1);
-    }
-    return acc;
-  }, 0);
+  const [subtotal, setSubtotal] = useState<number>(0);
+  const [calculatedPrices, setCalculatedPrices] = useState<CalculatedPrices>({} as CalculatedPrices);
 
+  
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -42,12 +43,27 @@ const ThemeList: React.FC<ThemeListProps> = ({
   
     loadData();
   }, [categoryCode, selectedServiceCode]);
-  
+
   useEffect(() => {
-    // Call the callback with the modal counts details
-    onModalCountsChange(modalCounts);
-  }, [modalCounts, onModalCountsChange]);
+    // Explicitly type newCalculatedPrices as CalculatedPrices
+    const newCalculatedPrices: CalculatedPrices = {};
+    let newSubtotal = 0;
   
+    modalCounts.forEach(modalCount => {
+      if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
+        const price = modalCount.logic === 'OR' 
+          ? Math.floor(modalCount.price * (selectedColors.length - 1)) 
+          : modalCount.price;
+        newCalculatedPrices[modalCount.id] = price;
+        newSubtotal += price;
+      }
+    });
+  
+    setCalculatedPrices(newCalculatedPrices);
+    setSubtotal(newSubtotal);
+  }, [modalCounts, selectedModalCounts, selectedColors]);
+  
+
   const handleModalCountPress = (id: string, logic: string, sub: number) => {
     if (logic === 'OR') {
       if (sub > 0) {
@@ -76,28 +92,28 @@ const ThemeList: React.FC<ThemeListProps> = ({
   };
 
   const logSelectedModalCounts = () => {
-    const selectedCounts = modalCounts.filter((modalCount: ModalCount) => {
-      if (modalCount.logic === 'OR' && selectedColors.length > 1) {
-        // Calculate the price based on the number of selected colors for 'OR' logic
-        const price = Math.floor(modalCount.price * (selectedColors.length - 1));
-        return price > 0;
-      } else if (selectedModalCounts.includes(modalCount.id)) {
-        return true;
-      }
-      return false;
-    });
-  
-    console.log('Selected Modal Counts:', selectedCounts.map((modalCount: ModalCount) => ({
-      name: modalCount.name,
-      price: modalCount.logic === 'OR' && selectedColors.length > 1
-        ? `${Math.floor(modalCount.price * (selectedColors.length - 1))}€`
-        : `${modalCount.price}€`,
-    })));
+  const selectedCounts = modalCounts.filter((modalCount: ModalCount) => 
+    selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)
+  ).map(modalCount => ({
+    name: modalCount.name,
+    price: `${calculatedPrices[modalCount.id]}€`
+  }));
+
+  // Add a "Sub total" item to the selectedCounts array
+  const subtotalItem = {
+    name: "Sub total",
+    price: `${subtotal}€`
   };
-    
-  useEffect(() => {
-    logSelectedModalCounts();
-  }, [selectedColors, modalCounts, selectedModalCounts]);
+
+  selectedCounts.push(subtotalItem);
+
+  console.log('LOG Selected Modal Counts:', selectedCounts);
+};
+
+useEffect(() => {
+  logSelectedModalCounts();
+}, [selectedColors, modalCounts, selectedModalCounts, subtotal]);
+
 
   const isModalCountSelected = (modalCount: ModalCount) => {
     if (modalCount.logic === 'OR') {
@@ -145,11 +161,9 @@ const ThemeList: React.FC<ThemeListProps> = ({
                 textAlign: 'right',
                 paddingRight: 10,
               }]}>
-              {modalCount.logic === 'OR' 
-                ? (selectedColors.length > 1 
-                  ? `${Math.floor(modalCount.price * (selectedColors.length - 1))}€` 
-                  : '')
-                : `${modalCount.price}€`}
+              {calculatedPrices[modalCount.id] !== undefined 
+                ? `${calculatedPrices[modalCount.id]}€` 
+                : ''}
             </Text>
           </View>
         </TouchableOpacity>
