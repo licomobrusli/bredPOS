@@ -34,10 +34,10 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
   setSelectedColors,
   onServiceNameChange,
   onCategoryNameChange,
+  selectedService,
+  selectedCategory,
+  selectedModalCounts,
   onModalCountsChange,
-  selectedService, // Added prop
-  selectedCategory, // Added prop
-  selectedModalCounts, // Added prop
 }) => {
   const [Categories, setCategories] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
@@ -96,8 +96,8 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
           onSelectColor={onSelectColor}
           selectedColors={selectedColors}
           setSelectedColors={setSelectedColors}
-          onModalCountsChange={onModalCountsChange}
           selectedModalCounts={selectedModalCounts}
+          onModalCountsChange={onModalCountsChange}
         />
       </View>
     </View>

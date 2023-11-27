@@ -12,7 +12,7 @@ interface ThemeListProps {
   onSelectColor: (colors: string[]) => void;
   selectedColors: string[];
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>; 
-  onModalCountsChange: (modalCounts: ModalCount[]) => void;
+  onModalCountsChange: (modalCounts: { name: string; price: string; }[]) => void;
   selectedModalCounts: string[];
 }
 
@@ -92,29 +92,29 @@ const ThemeList: React.FC<ThemeListProps> = ({
   };
 
   const logSelectedModalCounts = () => {
-  const selectedCounts = modalCounts.filter((modalCount: ModalCount) => 
-    selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)
-  ).map(modalCount => ({
-    name: modalCount.name,
-    price: `${calculatedPrices[modalCount.id]}€`
-  }));
-
-  // Add a "Sub total" item to the selectedCounts array
-  const subtotalItem = {
-    name: "Sub total",
-    price: `${subtotal}€`
+    const selectedCounts = modalCounts.filter((modalCount: ModalCount) => 
+      selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)
+    ).map(modalCount => ({
+      name: modalCount.name,
+      price: `${calculatedPrices[modalCount.id]}€`
+    }));
+  
+    const subtotalItem = {
+      name: "Sub total",
+      price: `${subtotal}€`
+    };
+  
+    selectedCounts.push(subtotalItem);
+  
+    // Use the callback to pass data to the parent
+    onModalCountsChange(selectedCounts);
   };
-
-  selectedCounts.push(subtotalItem);
-
-  console.log('LOG Selected Modal Counts:', selectedCounts);
-};
-
-useEffect(() => {
-  logSelectedModalCounts();
-}, [selectedColors, modalCounts, selectedModalCounts, subtotal]);
-
-
+  
+  // Update useEffect to call this function
+  useEffect(() => {
+    logSelectedModalCounts();
+  }, [selectedColors, modalCounts, selectedModalCounts, subtotal]);
+  
   const isModalCountSelected = (modalCount: ModalCount) => {
     if (modalCount.logic === 'OR') {
       return selectedColors.length > 1; 
