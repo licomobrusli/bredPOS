@@ -32,7 +32,36 @@ const CutModal: React.FC<CutModalProps> = ({
   selectedModalCounts,
 }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [modalCountsDetails, setModalCountsDetails] = useState<any[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const { cartItems, addToCart, updateCartItem } = useCart();
+
+  useEffect(() => {
+    // Function to find and load existing cart item details
+    const loadExistingCartItemDetails = () => {
+      const existingCartItem = cartItems.find(item =>
+        item.selectedService?.id === selectedService?.id &&
+        item.selectedCategory?.id === selectedCategory?.id
+      );
+
+      if (existingCartItem) {
+        setSelectedColors(existingCartItem.selectedColors);
+        setModalCountsDetails(existingCartItem.modalCountsDetails);
+        setIsEditing(true); // Set editing mode to true
+      } else {
+        // Reset for new item
+        setSelectedColors([]);
+        setModalCountsDetails([]);
+        setIsEditing(false); // Set editing mode to false
+      }
+    };
+
+    if (visible) {
+      loadExistingCartItemDetails();
+    }
+  }, [visible, cartItems, selectedService, selectedCategory]);
 
   // Placeholder callback functions
   const onServiceNameChange = (name: string) => {
@@ -43,8 +72,6 @@ const CutModal: React.FC<CutModalProps> = ({
 
   const onModalCountsChange = (counts: any[]) => { 
   };
-
-  const [modalCountsDetails, setModalCountsDetails] = useState<any[]>([]);
 
 const handleModalCountsChange = (counts: any[]) => {
   setModalCountsDetails(counts);
@@ -57,8 +84,6 @@ const handleModalCountsChange = (counts: any[]) => {
     if (selectedCategory) {
     }
   }, [selectedService, selectedCategory]);
-  
-  const { addToCart } = useCart();
 
   // AddToCart
   const handleAddToCart = () => {
@@ -74,7 +99,13 @@ const handleModalCountsChange = (counts: any[]) => {
       selectedColors,
       modalCountsDetails
     };
-    addToCart(cartItem);
+    if (isEditing) {
+      // Update existing item
+      updateCartItem(cartItem); // Implement updateCartItem in CartContext
+    } else {
+      // Add new item
+      addToCart(cartItem);
+    }
     onClose();
   };
 

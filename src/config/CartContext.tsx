@@ -12,11 +12,13 @@ interface CartItem {
 interface CartContextType {
     cartItems: CartItem[];
     addToCart: (item: CartItem) => void;
+    updateCartItem: (item: CartItem) => void;
 }
 
 const CartContext = createContext<CartContextType>({
   cartItems: [],
-  addToCart: () => {}
+  addToCart: () => {},
+  updateCartItem: () => {},
 });
 
 export const useCart = () => useContext(CartContext);
@@ -32,8 +34,23 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         setCartItems([...cartItems, item]);
     };
 
+    const updateCartItem = (updatedItem: CartItem) => {
+        // Find the index of the item to be updated
+        const itemIndex = cartItems.findIndex(item =>
+            item.selectedService?.id === updatedItem.selectedService?.id &&
+            item.selectedCategory?.id === updatedItem.selectedCategory?.id
+        );
+
+        if (itemIndex !== -1) {
+            // Update the item at the found index
+            const updatedCartItems = [...cartItems];
+            updatedCartItems[itemIndex] = updatedItem;
+            setCartItems(updatedCartItems);
+        }
+    };
+
     return (
-        <CartContext.Provider value={{ cartItems, addToCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, updateCartItem }}>
             {children}
         </CartContext.Provider>
     );
