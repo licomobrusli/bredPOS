@@ -27,6 +27,7 @@ const fonts = StyleSheet.create({
     fontFamily: 'OilvareBase-Regular',
     letterSpacing: 18,
     fontSize: adaptiveFontSize(60),
+    textTransform: 'uppercase',
     color: 'white',
   },
   txtProductCard: {
