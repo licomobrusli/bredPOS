@@ -30,6 +30,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const [subtotal, setSubtotal] = useState<number>(0);
   const [calculatedPrices, setCalculatedPrices] = useState<CalculatedPrices>({} as CalculatedPrices);
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     const loadData = async () => {
@@ -43,6 +44,26 @@ const ThemeList: React.FC<ThemeListProps> = ({
 
     loadData();
   }, [categoryCode, selectedServiceCode]);
+
+  useEffect(() => {
+    // Modify the calculation of prices to include the counter
+    const newCalculatedPrices: CalculatedPrices = {};
+    let newSubtotal = 0;
+
+    modalCounts.forEach(modalCount => {
+      if (selectedModalCounts.includes(modalCount.id)) {
+        let price = modalCount.price;
+        if (modalCount.sub === 1) {
+          price *= counter; // Multiply the price by the counter if modalCount.sub is 1
+        }
+        newCalculatedPrices[modalCount.id] = price;
+        newSubtotal += price;
+      }
+    });
+
+    setCalculatedPrices(newCalculatedPrices);
+    setSubtotal(newSubtotal);
+  }, [modalCounts, selectedModalCounts, counter]);
 
   useEffect(() => {
     // Explicitly type newCalculatedPrices as CalculatedPrices
@@ -199,11 +220,19 @@ const ThemeList: React.FC<ThemeListProps> = ({
       </View>
 
       {isSubModalVisible && (
-        // Render SubModal or SubModalB based on the value of sub
         modalCounts.find(modalCount => modalCount.id === selectedModalCounts[0])?.sub === 2 ? (
-          <SubModal isVisible={isSubModalVisible} onClose={closeSubModal} selectedColors={selectedColors} setSelectedColors={setSelectedColors} />
+          <SubModal
+            isVisible={isSubModalVisible}
+            onClose={closeSubModal}
+            selectedColors={selectedColors}
+            setSelectedColors={setSelectedColors}
+          />
         ) : (
-          <SubModalB isVisible={isSubModalVisible} onClose={closeSubModal} />
+          <SubModalB
+            isVisible={isSubModalVisible}
+            onClose={closeSubModal}
+            onCounterChange={setCounter} // Pass setCounter as the onCounterChange prop
+          />
         )
       )}
     </View>

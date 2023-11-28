@@ -6,20 +6,23 @@ import fonts from '../../config/fonts';
 interface SubModalBProps {
   isVisible: boolean;
   onClose: () => void;
+  onCounterChange: (count: number) => void;
 }
 
-const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose }) => {
-  const [counter, setCounter] = useState(0);
+const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChange }) => {
+const [counter, setCounter] = useState(0);
 
-  const handleIncrement = () => {
+const handleIncrement = () => {
     setCounter(counter + 1);
-  };
+    onCounterChange(counter + 1); // Call onCounterChange when the counter is incremented
+};
 
-  const handleDecrement = () => {
+const handleDecrement = () => {
     if (counter > 0) {
-      setCounter(counter - 1);
+    setCounter(counter - 1);
+    onCounterChange(counter - 1); // Call onCounterChange when the counter is decremented
     }
-  };
+};
 
   return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>
