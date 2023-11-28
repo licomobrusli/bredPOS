@@ -4,6 +4,7 @@ import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { fetchModalCounts } from '../config/apiCalls';
 import { ModalCount } from '../config/types';
 import SubModal from '../components/modals/SubModal';
+import SubModalB from '../components/modals/SubModalB'; // Import SubModalB
 import styles from '../config/fonts';
 
 interface ThemeListProps {
@@ -62,7 +63,6 @@ const ThemeList: React.FC<ThemeListProps> = ({
     setSubtotal(newSubtotal);
   }, [modalCounts, selectedModalCounts, selectedColors]);
 
-
   useEffect(() => {
     // Ensure at least one 'NOT' item is selected if present
     const notItems = modalCounts.filter((modalCount) => modalCount.logic === 'NOT');
@@ -73,12 +73,11 @@ const ThemeList: React.FC<ThemeListProps> = ({
   }, [modalCounts, selectedModalCounts, selectedColors]);
 
   const handleModalCountPress = (id: string, logic: string, sub: number) => {
-    if (logic === 'OR') {
-      if (sub > 0) {
-        setIsSubModalVisible(true);
-      }
+    if (logic === 'OR' && sub > 0) {
+      // Open SubModal when logic is 'OR' and sub > 0
+      setIsSubModalVisible(true);
     } else if (logic === 'NOT') {
-      // Open the SubModal when logic is 'NOT'
+      // Open SubModalB when logic is 'NOT' and sub > 0
       if (sub > 0) {
         setIsSubModalVisible(true);
       }
@@ -199,12 +198,14 @@ const ThemeList: React.FC<ThemeListProps> = ({
         </Text>
       </View>
 
-      <SubModal
-        isVisible={isSubModalVisible}
-        onClose={closeSubModal}
-        selectedColors={selectedColors}
-        setSelectedColors={setSelectedColors}
-      />
+      {isSubModalVisible && (
+        // Render SubModal or SubModalB based on the value of sub
+        modalCounts.find(modalCount => modalCount.id === selectedModalCounts[0])?.sub === 2 ? (
+          <SubModal isVisible={isSubModalVisible} onClose={closeSubModal} selectedColors={selectedColors} setSelectedColors={setSelectedColors} />
+        ) : (
+          <SubModalB isVisible={isSubModalVisible} onClose={closeSubModal} />
+        )
+      )}
     </View>
   );
 };
