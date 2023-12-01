@@ -82,6 +82,8 @@ const ServiceList: React.FC = () => {
         categoryCode={categoryCode}
         selectedService={selectedService}
         selectedCategory={selectedCategory}
+        selectedModalCounts={[]}
+        modalCountsDetails={[]}
       />
       {loading ? (
         <Text>Loading...</Text>
