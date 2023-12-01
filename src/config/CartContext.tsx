@@ -13,12 +13,14 @@ interface CartContextType {
     cartItems: CartItem[];
     addToCart: (item: CartItem) => void;
     updateCartItem: (item: CartItem) => void;
+    setCartItems: (items: CartItem[]) => void;
 }
 
 const CartContext = createContext<CartContextType>({
   cartItems: [],
   addToCart: () => {},
   updateCartItem: () => {},
+    setCartItems: () => {},
 });
 
 export const useCart = () => useContext(CartContext);
@@ -28,7 +30,10 @@ interface CartProviderProps {
   }  
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [cartItems, setCartItemsState] = useState<CartItem[]>([]);
+    const setCartItems = (items: CartItem[]) => {
+        setCartItemsState(items);
+    };
 
     const addToCart = (item: CartItem) => {
         setCartItems([...cartItems, item]);
@@ -50,7 +55,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, updateCartItem }}>
+        <CartContext.Provider value={{ cartItems, addToCart, updateCartItem, setCartItems }}>
             {children}
         </CartContext.Provider>
     );

@@ -11,7 +11,14 @@ interface CartModalProps {
 }
 
 const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
-  const { cartItems } = useCart();
+  const { cartItems, setCartItems } = useCart();
+
+  // Function to handle item deletion
+  const handleDelete = (index: number) => {
+    const newCartItems = [...cartItems];
+    newCartItems.splice(index, 1); // Remove the item at the specified index
+    setCartItems(newCartItems); // Update the cart items
+  };
 
   return (
     <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
@@ -26,15 +33,27 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
               selectedColors={item.selectedColors} 
               selectedSwatchStyle={styles.selectedSwatchStyle}
             />
-              {item.modalCountsDetails.map((detail, detailIndex) => (
+            {item.modalCountsDetails.map((detail, detailIndex) => (
               <Text key={detailIndex} style={fonts.txtNavButton}>
                 {detail.name}: {detail.price}
               </Text>
             ))}
+            {/* Edit Button */}
+            <TouchableOpacity style={styles.cartButton}>
+              <Text style={fonts.txtNavButton}>Edit</Text>
+            </TouchableOpacity>
+            {/* Delete Button */}
+            <TouchableOpacity onPress={() => handleDelete(index)} style={styles.cartButton}>
+              <Text style={fonts.txtNavButton}>X</Text>
+            </TouchableOpacity>
           </View>
         ))}
+        {/* Submit Button */}
+        <TouchableOpacity style={styles.cartButton}>
+          <Text style={fonts.txtNavButton}>Submit</Text>
+        </TouchableOpacity>
         <View style={styles.modalContainer}>
-          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+          <TouchableOpacity onPress={onClose} style={styles.cartButton}>
             <Text style={fonts.txtNavButton}>Close</Text>
           </TouchableOpacity>
         </View>
@@ -54,8 +73,9 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 5,
   },
-  closeButton: {
-    padding: 1,
+  cartButton: {
+    padding: 10,
+    marginVertical: 5,
     backgroundColor: 'black',
     borderRadius: 5,
     borderColor: 'white',
@@ -64,6 +84,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     borderColor: 'yellow',
     borderWidth: 1,
+    padding: 10,
   },
 });
 
