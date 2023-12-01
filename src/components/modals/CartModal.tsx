@@ -1,9 +1,10 @@
 // CartModal.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useCart } from '../../config/CartContext';
 import fonts from '../../config/fonts'; // Import the fonts object
 import SwatchGridStyle from '../../config/swatchGridStyle';
+import SubModal from './SubModal';
 
 interface CartModalProps {
   visible: boolean;
@@ -19,6 +20,8 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
     newCartItems.splice(index, 1); // Remove the item at the specified index
     setCartItems(newCartItems); // Update the cart items
   };
+
+  const [isSubModalVisible, setIsSubModalVisible] = useState(false);
 
   return (
     <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
@@ -39,7 +42,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
               </Text>
             ))}
             {/* Edit Button */}
-            <TouchableOpacity style={styles.cartButton}>
+            <TouchableOpacity onPress={() => setIsSubModalVisible(true)} style={styles.cartButton}>
               <Text style={fonts.txtNavButton}>Edit</Text>
             </TouchableOpacity>
             {/* Delete Button */}
@@ -57,6 +60,15 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
             <Text style={fonts.txtNavButton}>Close</Text>
           </TouchableOpacity>
         </View>
+        {isSubModalVisible && (
+          <SubModal
+            isVisible={isSubModalVisible}
+            onClose={() => setIsSubModalVisible(false)}
+            selectedColors={cartItems[0].selectedColors}
+            setSelectedColors={() => {}}
+            // ... other props you might need to pass to SubModal ...
+          />
+        )}
       </View>
     </Modal>
   );
