@@ -5,6 +5,7 @@ import { useCart } from '../../config/CartContext';
 import fonts from '../../config/fonts'; // Import the fonts object
 import SwatchGridStyle from '../../config/swatchGridStyle';
 import SubModal from './SubModal';
+import SubModalB from './SubModalB';
 
 interface CartModalProps {
   visible: boolean;
@@ -13,6 +14,31 @@ interface CartModalProps {
 
 const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const { cartItems, setCartItems } = useCart();
+
+  const [modalType, setModalType] = useState<'subModal' | 'subModalB' | null>(null);
+
+  const openModal = (sub: number) => {
+    if (sub === 2) {
+      setModalType('subModal');
+    } else if (sub === 1) {
+      setModalType('subModalB');
+    } else {
+      setModalType(null);
+    }
+  };
+
+  // function to handle no edit button if sub = 0
+  const handleSubZero = (sub: number) => {
+    if (sub === 0) {
+      return null;
+    } else {
+      return (
+        <TouchableOpacity onPress={() => openModal(sub)} style={styles.cartButton}>
+          <Text style={fonts.txtNavButton}>Edit</Text>
+        </TouchableOpacity>
+      );
+    }
+  };
 
   // Function to handle item deletion
   const handleDelete = (index: number) => {
@@ -29,7 +55,9 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
         {/* Display cart items */}
         {cartItems.map((item, index) => (
           <View key={index} style={styles.itemContainer}>
-            <Text style={[fonts.txtSubBrandBanner]}>{item.selectedService?.name} de {item.selectedCategory?.name} </Text>
+            <Text style={[fonts.txtSubBrandBanner]}>
+              {item.selectedService?.name} de {item.selectedCategory?.name}
+            </Text>
             <SwatchGridStyle
               colors={item.selectedColors} 
               onSelectColor={() => {}} 
@@ -41,10 +69,12 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
                 {detail.name}: {detail.price}
               </Text>
             ))}
-            {/* Edit Button */}
-            <TouchableOpacity onPress={() => setIsSubModalVisible(true)} style={styles.cartButton}>
-              <Text style={fonts.txtNavButton}>Edit</Text>
-            </TouchableOpacity>
+  
+            {/* Edit Button - Only show for first detail item */}
+            {item.modalCountsDetails.length > 0 && (
+              handleSubZero(item.modalCountsDetails[0].sub)
+            )}
+  
             {/* Delete Button */}
             <TouchableOpacity onPress={() => handleDelete(index)} style={styles.cartButton}>
               <Text style={fonts.txtNavButton}>X</Text>
@@ -55,24 +85,30 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
         <TouchableOpacity style={styles.cartButton}>
           <Text style={fonts.txtNavButton}>Submit</Text>
         </TouchableOpacity>
-        <View style={styles.modalContainer}>
-          <TouchableOpacity onPress={onClose} style={styles.cartButton}>
-            <Text style={fonts.txtNavButton}>Close</Text>
-          </TouchableOpacity>
-        </View>
-        {isSubModalVisible && (
+        {/* Close Button */}
+        <TouchableOpacity onPress={onClose} style={styles.cartButton}>
+          <Text style={fonts.txtNavButton}>Close</Text>
+        </TouchableOpacity>
+        {/* SubModal or SubModalB */}
+        {modalType === 'subModal' && (
           <SubModal
-            isVisible={isSubModalVisible}
-            onClose={() => setIsSubModalVisible(false)}
+            isVisible={true}
+            onClose={() => setModalType(null)}
             selectedColors={cartItems[0].selectedColors}
             setSelectedColors={() => {}}
-            // ... other props you might need to pass to SubModal ...
+          />
+        )}
+        {modalType === 'subModalB' && (
+          <SubModalB
+            isVisible={true}
+            onClose={() => setModalType(null)}
+            onCounterChange={() => {}}
           />
         )}
       </View>
     </Modal>
   );
-};
+};  
 
 const styles = StyleSheet.create({
   modalContainer: {

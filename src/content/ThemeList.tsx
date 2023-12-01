@@ -13,7 +13,7 @@ interface ThemeListProps {
   onSelectColor: (colors: string[]) => void;
   selectedColors: string[];
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
-  onModalCountsChange: (modalCounts: { name: string; price: string; }[]) => void;
+  onModalCountsChange: (modalCounts: { name: string; price: string; sub: number }[]) => void;
   selectedModalCounts: string[];
 }
 
@@ -129,12 +129,14 @@ const ThemeList: React.FC<ThemeListProps> = ({
       selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)
     ).map(modalCount => ({
       name: modalCount.name,
-      price: `${calculatedPrices[modalCount.id]}€`
+      price: `${calculatedPrices[modalCount.id]}€`,
+      sub: modalCount.sub
     }));
 
     const subtotalItem = {
       name: "Sub total",
-      price: `${subtotal}€`
+      price: `${subtotal}€`,
+      sub: 0
     };
 
     selectedCounts.push(subtotalItem);
