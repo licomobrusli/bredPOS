@@ -7,10 +7,11 @@ interface SubModalBProps {
   isVisible: boolean;
   onClose: () => void;
   onCounterChange: (count: number) => void;
+  selectedValue: number;
 }
 
-const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChange }) => {
-const [counter, setCounter] = useState(0);
+const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChange, selectedValue }) => {
+const [counter, setCounter] = useState(selectedValue);
 
 const handleIncrement = () => {
     setCounter(counter + 1);

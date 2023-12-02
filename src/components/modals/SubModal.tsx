@@ -9,7 +9,7 @@ interface SubModalProps {
   isVisible: boolean;
   onClose: () => void;
   selectedColors: string[]; // Add this line
-  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>; // Add this line
+  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors, setSelectedColors }) => {
@@ -50,13 +50,13 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
                 <SwatchGridStyle
                     colors={colorsRowOne}
                     onSelectColor={handleSelectColor}
-                    selectedColors={selectedColors} // Use selectedColors from props
+                    selectedColors={selectedColors ?? []}  // Use selectedColors from props
                     selectedSwatchStyle={selectedSwatchStyle}
                 />
                 <SwatchGridStyle
                     colors={colorsRowTwo}
                     onSelectColor={handleSelectColor}
-                    selectedColors={selectedColors} // Use selectedColors from props
+                    selectedColors={selectedColors ?? []}  // Use selectedColors from props
                     selectedSwatchStyle={selectedSwatchStyle}
                 />
                 <TouchableOpacity onPress={onClose}>

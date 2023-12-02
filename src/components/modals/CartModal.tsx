@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Modal, View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useCart } from '../../config/CartContext';
-import fonts from '../../config/fonts'; // Import the fonts object
+import fonts from '../../config/fonts';
 import SwatchGridStyle from '../../config/swatchGridStyle';
 import SubModal from './SubModal';
 import SubModalB from './SubModalB';
@@ -16,8 +16,11 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const { cartItems, setCartItems } = useCart();
 
   const [modalType, setModalType] = useState<'subModal' | 'subModalB' | null>(null);
+  const [selectedItemDetails, setSelectedItemDetails] = useState({ colors: [], value: 0 });
 
-  const openModal = (sub: number) => {
+  const openModal = (sub: number, itemDetails: any) => {
+    console.log('Opening modal with sub:', sub, 'and itemDetails:', itemDetails);
+    setSelectedItemDetails(itemDetails); // Set selected item details
     if (sub === 2) {
       setModalType('subModal');
     } else if (sub === 1) {
@@ -28,12 +31,13 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   };
 
   // function to handle no edit button if sub = 0
-  const handleSubZero = (sub: number) => {
+  const handleSubZero = (sub: number, itemDetails: any) => {
+    console.log('handleSubZero called with sub:', sub, 'and itemDetails:', itemDetails);
     if (sub === 0) {
       return null;
     } else {
       return (
-        <TouchableOpacity onPress={() => openModal(sub)} style={styles.cartButton}>
+        <TouchableOpacity onPress={() => openModal(sub, itemDetails)} style={styles.cartButton}>
           <Text style={fonts.txtNavButton}>Edit</Text>
         </TouchableOpacity>
       );
@@ -72,7 +76,10 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   
             {/* Edit Button - Only show for first detail item */}
             {item.modalCountsDetails.length > 0 && (
-              handleSubZero(item.modalCountsDetails[0].sub)
+              handleSubZero(item.modalCountsDetails[0].sub, {
+                colors: item.selectedColors, // Ensure these values are correctly derived
+                value: item.value // Adjust according to your data structure
+              })
             )}
   
             {/* Delete Button */}
@@ -94,7 +101,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
           <SubModal
             isVisible={true}
             onClose={() => setModalType(null)}
-            selectedColors={cartItems[0].selectedColors}
+            selectedColors={selectedItemDetails.colors}
             setSelectedColors={() => {}}
           />
         )}
@@ -103,6 +110,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
             isVisible={true}
             onClose={() => setModalType(null)}
             onCounterChange={() => {}}
+            selectedValue={selectedItemDetails.value}
           />
         )}
       </View>
