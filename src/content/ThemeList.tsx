@@ -18,8 +18,14 @@ interface ThemeListProps {
 }
 
 // Define a type for calculatedPrices
+interface PriceDetails {
+  unitPrice: number;
+  quantity: number;
+  totalPrice: number;
+}
+
 interface CalculatedPrices {
-  [key: string]: number;
+  [key: string]: PriceDetails;
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({
@@ -46,43 +52,43 @@ const ThemeList: React.FC<ThemeListProps> = ({
   }, [categoryCode, selectedServiceCode]);
 
   useEffect(() => {
-    // Modify the calculation of prices to include the counter
     const newCalculatedPrices: CalculatedPrices = {};
     let newSubtotal = 0;
-
-    modalCounts.forEach(modalCount => {
-      if (selectedModalCounts.includes(modalCount.id)) {
-        let price = modalCount.price;
-        if (modalCount.sub === 1) {
-          price *= counter; // Multiply the price by the counter if modalCount.sub is 1
-        }
-        newCalculatedPrices[modalCount.id] = price;
-        newSubtotal += price;
-      }
-    });
-
-    setCalculatedPrices(newCalculatedPrices);
-    setSubtotal(newSubtotal);
-  }, [modalCounts, selectedModalCounts, counter]);
-
-  useEffect(() => {
-    // Explicitly type newCalculatedPrices as CalculatedPrices
-    const newCalculatedPrices: CalculatedPrices = {};
-    let newSubtotal = 0;
-
+  
     modalCounts.forEach(modalCount => {
       if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
-        const price = modalCount.logic === 'OR'
-          ? Math.floor(modalCount.price * (selectedColors.length - 1))
-          : modalCount.price;
-        newCalculatedPrices[modalCount.id] = price;
-        newSubtotal += price;
+        const unitPrice = modalCount.price;
+        const quantity = modalCount.logic === 'OR' ? selectedColors.length - 1 : 1;
+        const totalPrice = unitPrice * quantity;
+  
+        newCalculatedPrices[modalCount.id] = { unitPrice, quantity, totalPrice };
+        newSubtotal += totalPrice;
       }
     });
-
+  
     setCalculatedPrices(newCalculatedPrices);
     setSubtotal(newSubtotal);
   }, [modalCounts, selectedModalCounts, selectedColors]);
+
+  useEffect(() => {
+    const newCalculatedPrices: CalculatedPrices = {};
+    let newSubtotal = 0;
+  
+    modalCounts.forEach(modalCount => {
+      if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
+        const unitPrice = modalCount.price;
+        const quantity = modalCount.logic === 'OR' ? (selectedColors.length - 1) : 1;
+        const totalPrice = unitPrice * quantity;
+  
+        newCalculatedPrices[modalCount.id] = { unitPrice, quantity, totalPrice };
+        newSubtotal += totalPrice;
+      }
+    });
+  
+    setCalculatedPrices(newCalculatedPrices);
+    setSubtotal(newSubtotal);
+  }, [modalCounts, selectedModalCounts, selectedColors]);
+  
 
   useEffect(() => {
     // Ensure at least one 'NOT' item is selected if present
@@ -127,11 +133,15 @@ const ThemeList: React.FC<ThemeListProps> = ({
   const logSelectedModalCounts = () => {
     const selectedCounts = modalCounts.filter((modalCount: ModalCount) =>
       selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)
-    ).map(modalCount => ({
-      name: modalCount.name,
-      price: `${calculatedPrices[modalCount.id]}€`,
-      sub: modalCount.sub
-    }));
+    ).map(modalCount => {
+      const priceDetail = calculatedPrices[modalCount.id];
+      return {
+        name: modalCount.name,
+        price: priceDetail ? `${priceDetail.unitPrice}€ x ${priceDetail.quantity}` : '',
+        sub: modalCount.sub
+      };
+    });
+    
 
     const subtotalItem = {
       name: "Sub total",
@@ -197,7 +207,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
                 paddingRight: 10,
               }]}>
               {calculatedPrices[modalCount.id] !== undefined
-                ? `${calculatedPrices[modalCount.id]}€`
+                ? `${calculatedPrices[modalCount.id].unitPrice}€ x ${calculatedPrices[modalCount.id].quantity}`
                 : ''}
             </Text>
           </View>

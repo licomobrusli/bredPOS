@@ -16,11 +16,14 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const { cartItems, setCartItems } = useCart();
 
   const [modalType, setModalType] = useState<'subModal' | 'subModalB' | null>(null);
-  const [selectedItemDetails, setSelectedItemDetails] = useState({ colors: [], value: 0 });
+  const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
 
-  const openModal = (sub: number, itemDetails: any) => {
+  const openModal = (sub: number, itemDetails: any, index: number) => {
     console.log('Opening modal with sub:', sub, 'and itemDetails:', itemDetails);
-    setSelectedItemDetails(itemDetails); // Set selected item details
+    setSelectedColors(itemDetails.colors);
+    setSelectedItemIndex(index);
+
     if (sub === 2) {
       setModalType('subModal');
     } else if (sub === 1) {
@@ -30,14 +33,24 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
     }
   };
 
+  const updateCartItems = () => {
+    if (selectedItemIndex !== null) {
+      const updatedItem = { ...cartItems[selectedItemIndex], selectedColors: selectedColors };
+      const newCartItems = [...cartItems];
+      newCartItems[selectedItemIndex] = updatedItem;
+      setCartItems(newCartItems); // Update the cart items with new colors
+      setModalType(null);
+    }
+  };
+
   // function to handle no edit button if sub = 0
-  const handleSubZero = (sub: number, itemDetails: any) => {
+  const handleSubZero = (sub: number, itemDetails: any, index: number) => {
     console.log('handleSubZero called with sub:', sub, 'and itemDetails:', itemDetails);
     if (sub === 0) {
       return null;
     } else {
       return (
-        <TouchableOpacity onPress={() => openModal(sub, itemDetails)} style={styles.cartButton}>
+        <TouchableOpacity onPress={() => openModal(sub, itemDetails, index)} style={styles.cartButton}>
           <Text style={fonts.txtNavButton}>Edit</Text>
         </TouchableOpacity>
       );
@@ -78,8 +91,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
             {item.modalCountsDetails.length > 0 && (
               handleSubZero(item.modalCountsDetails[0].sub, {
                 colors: item.selectedColors, // Ensure these values are correctly derived
-                value: item.value // Adjust according to your data structure
-              })
+              }, index) // Pass 'index' as the third argument
             )}
   
             {/* Delete Button */}
@@ -97,20 +109,20 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
           <Text style={fonts.txtNavButton}>Close</Text>
         </TouchableOpacity>
         {/* SubModal or SubModalB */}
-        {modalType === 'subModal' && (
-          <SubModal
-            isVisible={true}
-            onClose={() => setModalType(null)}
-            selectedColors={selectedItemDetails.colors}
-            setSelectedColors={() => {}}
-          />
-        )}
+        {modalType === 'subModal' && selectedItemIndex !== null && (
+        <SubModal
+          isVisible={true}
+          onClose={updateCartItems} // Call updateCartItems when closing the modal
+          selectedColors={selectedColors}
+          setSelectedColors={setSelectedColors}
+        />
+      )}
         {modalType === 'subModalB' && (
           <SubModalB
             isVisible={true}
             onClose={() => setModalType(null)}
             onCounterChange={() => {}}
-            selectedValue={selectedItemDetails.value}
+            selectedValue={0}
           />
         )}
       </View>
