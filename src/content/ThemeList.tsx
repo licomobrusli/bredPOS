@@ -138,7 +138,8 @@ const ThemeList: React.FC<ThemeListProps> = ({
       return {
         name: modalCount.name,
         price: priceDetail ? `${priceDetail.unitPrice}€ x ${priceDetail.quantity}` : '',
-        sub: modalCount.sub
+        sub: modalCount.sub,
+        logic: modalCount.logic
       };
     });
     
@@ -146,7 +147,8 @@ const ThemeList: React.FC<ThemeListProps> = ({
     const subtotalItem = {
       name: "Sub total",
       price: `${subtotal}€`,
-      sub: 0
+      sub: 0,
+      logic: ''
     };
 
     selectedCounts.push(subtotalItem);

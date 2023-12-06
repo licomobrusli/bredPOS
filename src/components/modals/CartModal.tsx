@@ -14,13 +14,11 @@ interface CartModalProps {
 
 const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const { cartItems, setCartItems } = useCart();
-
   const [modalType, setModalType] = useState<'subModal' | 'subModalB' | null>(null);
   const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
 
   const openModal = (sub: number, itemDetails: any, index: number) => {
-    console.log('Opening modal with sub:', sub, 'and itemDetails:', itemDetails);
     setSelectedColors(itemDetails.colors);
     setSelectedItemIndex(index);
 
@@ -35,17 +33,58 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
 
   const updateCartItems = () => {
     if (selectedItemIndex !== null) {
-      const updatedItem = { ...cartItems[selectedItemIndex], selectedColors: selectedColors };
       const newCartItems = [...cartItems];
-      newCartItems[selectedItemIndex] = updatedItem;
-      setCartItems(newCartItems); // Update the cart items with new colors
+      newCartItems[selectedItemIndex] = {
+        ...newCartItems[selectedItemIndex],
+        selectedColors: selectedColors,
+      };
+
+      calculatePrices(newCartItems);
+      setCartItems(newCartItems);
       setModalType(null);
     }
-  };
+  };  
 
+  // Assuming you have a type definition for the structure of a modal count detail
+interface ModalCountDetail {
+  logic: string;
+  unitPrice: number;
+  price: string;
+  sub: number;
+  name: string;
+}
+
+const calculatePrices = (newCartItems: any[]) => {
+  newCartItems.forEach((item, index) => {
+    if (index === selectedItemIndex) {
+      let itemSubtotal = 0;
+
+      const originalItem = cartItems.find((_, idx) => idx === selectedItemIndex); // Get the original item
+
+      const updatedModalCountsDetails = item.modalCountsDetails.map((detail: ModalCountDetail, detailIndex: number) => {
+        if (detail.logic === 'OR') {
+          const originalUnitPrice = originalItem ? originalItem.modalCountsDetails[detailIndex].price.split('€')[0] : 0; // Get unitPrice from original item
+          const unitPrice = Number(originalUnitPrice); // Ensure it's a number
+          const colorCount = selectedColors.length - 1;
+          const totalPrice = unitPrice * colorCount;
+          itemSubtotal += totalPrice;
+          return { ...detail, price: `${unitPrice}€ x ${colorCount}` };
+        } else {
+          itemSubtotal += Number(detail.price.split('€')[0]) || 0;
+          return detail;
+        }
+      });
+
+      item.modalCountsDetails = updatedModalCountsDetails;
+      item.subtotal = itemSubtotal;
+    }
+  });
+};
+  
+           
+        
   // function to handle no edit button if sub = 0
   const handleSubZero = (sub: number, itemDetails: any, index: number) => {
-    console.log('handleSubZero called with sub:', sub, 'and itemDetails:', itemDetails);
     if (sub === 0) {
       return null;
     } else {
@@ -60,16 +99,13 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   // Function to handle item deletion
   const handleDelete = (index: number) => {
     const newCartItems = [...cartItems];
-    newCartItems.splice(index, 1); // Remove the item at the specified index
-    setCartItems(newCartItems); // Update the cart items
+    newCartItems.splice(index, 1);
+    setCartItems(newCartItems);
   };
-
-  const [isSubModalVisible, setIsSubModalVisible] = useState(false);
 
   return (
     <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
-        {/* Display cart items */}
         {cartItems.map((item, index) => (
           <View key={index} style={styles.itemContainer}>
             <Text style={[fonts.txtSubBrandBanner]}>
@@ -86,37 +122,34 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
                 {detail.name}: {detail.price}
               </Text>
             ))}
-  
-            {/* Edit Button - Only show for first detail item */}
+
             {item.modalCountsDetails.length > 0 && (
               handleSubZero(item.modalCountsDetails[0].sub, {
-                colors: item.selectedColors, // Ensure these values are correctly derived
-              }, index) // Pass 'index' as the third argument
+                colors: item.selectedColors,
+              }, index)
             )}
-  
-            {/* Delete Button */}
+
             <TouchableOpacity onPress={() => handleDelete(index)} style={styles.cartButton}>
               <Text style={fonts.txtNavButton}>X</Text>
             </TouchableOpacity>
           </View>
         ))}
-        {/* Submit Button */}
+
         <TouchableOpacity style={styles.cartButton}>
           <Text style={fonts.txtNavButton}>Submit</Text>
         </TouchableOpacity>
-        {/* Close Button */}
         <TouchableOpacity onPress={onClose} style={styles.cartButton}>
           <Text style={fonts.txtNavButton}>Close</Text>
         </TouchableOpacity>
-        {/* SubModal or SubModalB */}
+
         {modalType === 'subModal' && selectedItemIndex !== null && (
-        <SubModal
-          isVisible={true}
-          onClose={updateCartItems} // Call updateCartItems when closing the modal
-          selectedColors={selectedColors}
-          setSelectedColors={setSelectedColors}
-        />
-      )}
+          <SubModal
+            isVisible={true}
+            onClose={updateCartItems}
+            selectedColors={selectedColors}
+            setSelectedColors={setSelectedColors}
+          />
+        )}
         {modalType === 'subModalB' && (
           <SubModalB
             isVisible={true}
