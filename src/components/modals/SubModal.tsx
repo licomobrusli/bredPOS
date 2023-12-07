@@ -64,6 +64,15 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
                         <Text style={fonts.txtNavButton}>Cerrar</Text>
                     </View>
                 </TouchableOpacity>
+                <SwatchGridStyle
+                    colors={selectedColors ?? []}
+                    onSelectColor={handleSelectColor}
+                    selectedColors={selectedColors ?? []}  // Use selectedColors from props
+                    selectedSwatchStyle={{
+                        borderColor: 'white',
+                        borderWidth: 5,
+                        }}
+                />
             </View>
         </View>
     </Modal>
