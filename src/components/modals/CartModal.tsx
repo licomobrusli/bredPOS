@@ -17,6 +17,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const [modalType, setModalType] = useState<'subModal' | 'subModalB' | null>(null);
   const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [calculatedPrices, setCalculatedPrices] = useState<{ [key: string]: { unitPrice: number; quantity: number; totalPrice: number; } }>({});
 
   const openModal = (sub: number, itemDetails: any, index: number) => {
     setSelectedColors(itemDetails.colors);
@@ -30,6 +31,9 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
       setModalType(null);
     }
   };
+
+  console.log("Cart items:", JSON.stringify(cartItems, null, 2));
+
 
   const updateCartItems = () => {
     if (selectedItemIndex !== null) {
@@ -45,7 +49,6 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
     }
   };  
 
-  // Assuming you have a type definition for the structure of a modal count detail
 interface ModalCountDetail {
   logic: string;
   unitPrice: number;
@@ -58,30 +61,39 @@ const calculatePrices = (newCartItems: any[]) => {
   newCartItems.forEach((item, index) => {
     if (index === selectedItemIndex) {
       let itemSubtotal = 0;
+      console.log("Initial item:", JSON.stringify(item));
 
-      const originalItem = cartItems.find((_, idx) => idx === selectedItemIndex); // Get the original item
+      item.modalCountsDetails.forEach((detail: ModalCountDetail, detailIndex: number) => {
+        console.log(`Detail at index ${detailIndex}:`, JSON.stringify(detail));
 
-      const updatedModalCountsDetails = item.modalCountsDetails.map((detail: ModalCountDetail, detailIndex: number) => {
         if (detail.logic === 'OR') {
-          const originalUnitPrice = originalItem ? originalItem.modalCountsDetails[detailIndex].price.split('€')[0] : 0; // Get unitPrice from original item
-          const unitPrice = Number(originalUnitPrice); // Ensure it's a number
-          const colorCount = selectedColors.length - 1;
-          const totalPrice = unitPrice * colorCount;
+          const quantity = Math.max(selectedColors.length - 1, 0);
+          const totalPrice = detail.unitPrice * quantity;
           itemSubtotal += totalPrice;
-          return { ...detail, price: `${unitPrice}€ x ${colorCount}` };
-        } else {
-          itemSubtotal += Number(detail.price.split('€')[0]) || 0;
-          return detail;
+
+          console.log(`OR logic: unitPrice: ${detail.unitPrice}, quantity: ${quantity}, totalPrice: ${totalPrice}`);
+          item.modalCountsDetails[detailIndex] = { ...detail, price: `${totalPrice.toFixed(0)}€` };
+        } else if (detail.name !== "Sub total") {
+          const nonOrPrice = parseFloat(detail.price.split('€')[0]);
+          itemSubtotal += isNaN(nonOrPrice) ? 0 : nonOrPrice;
         }
       });
 
-      item.modalCountsDetails = updatedModalCountsDetails;
-      item.subtotal = itemSubtotal;
+      // Update subtotal
+      const subtotalIndex = item.modalCountsDetails.findIndex((detail: ModalCountDetail) => detail.name === "Sub total");
+      if (subtotalIndex !== -1) {
+        item.modalCountsDetails[subtotalIndex] = { ...item.modalCountsDetails[subtotalIndex], price: `${itemSubtotal.toFixed(0)}€` };
+      }
+
+      console.log("Updated item:", JSON.stringify(item));
     }
   });
+
+  setCartItems(newCartItems);
 };
-  
-           
+
+
+
         
   // function to handle no edit button if sub = 0
   const handleSubZero = (sub: number, itemDetails: any, index: number) => {
@@ -119,7 +131,7 @@ const calculatePrices = (newCartItems: any[]) => {
             />
             {item.modalCountsDetails.map((detail, detailIndex) => (
               <Text key={detailIndex} style={fonts.txtNavButton}>
-                {detail.name}: {detail.price}
+                {detail.name}: {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
               </Text>
             ))}
 

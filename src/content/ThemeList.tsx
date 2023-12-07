@@ -13,7 +13,7 @@ interface ThemeListProps {
   onSelectColor: (colors: string[]) => void;
   selectedColors: string[];
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
-  onModalCountsChange: (modalCounts: { name: string; price: string; sub: number }[]) => void;
+  onModalCountsChange: (modalCounts: { name: string; price: string; unitPrice: number; sub: number }[]) => void;
   selectedModalCounts: string[];
 }
 
@@ -137,7 +137,9 @@ const ThemeList: React.FC<ThemeListProps> = ({
       const priceDetail = calculatedPrices[modalCount.id];
       return {
         name: modalCount.name,
-        price: priceDetail ? `${priceDetail.unitPrice}€ x ${priceDetail.quantity}` : '',
+        // show total price
+        price: priceDetail ? `${priceDetail.totalPrice}€` : '',
+        unitPrice: priceDetail ? priceDetail.unitPrice : 0,
         sub: modalCount.sub,
         logic: modalCount.logic
       };
@@ -147,6 +149,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     const subtotalItem = {
       name: "Sub total",
       price: `${subtotal}€`,
+      unitPrice: 0,
       sub: 0,
       logic: ''
     };
@@ -209,7 +212,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
                 paddingRight: 10,
               }]}>
               {calculatedPrices[modalCount.id] !== undefined
-                ? `${calculatedPrices[modalCount.id].unitPrice}€ x ${calculatedPrices[modalCount.id].quantity}`
+                ? `${calculatedPrices[modalCount.id].totalPrice}€`
                 : ''}
             </Text>
           </View>
