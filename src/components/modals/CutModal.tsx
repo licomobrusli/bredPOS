@@ -123,13 +123,13 @@ const handleModalCountsChange = (counts: any[]) => {
     >
       <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: SDims.Height20p }}>
         <View style={{
-          height: SDims.Height80p,
+          height: SDims.Height70p,
           width: SDims.Width90p,
-          justifyContent: 'space-between',
+          
           flexDirection: 'column',
           backgroundColor: 'black',
         }}>
-          <View style={{ flex: .47, borderColor: 'red', borderWidth: 10 }}>
+          <View style={{ flex: .55 }}>
             <ModalTheme
               categoryCode={categoryCode}
               selectedServiceCode={selectedService ? selectedService.code : ''}
@@ -144,14 +144,19 @@ const handleModalCountsChange = (counts: any[]) => {
               onModalCountsChange={handleModalCountsChange}
             />
           </View>
-          <View style={{  }}>
+          <View style={{ flex: .15 }}>
             <ModalDetail 
               selectedColors={selectedColors}
               setSelectedColors={setSelectedColors}
             />
           </View>
-          <View style={{  }}>
-            <ModalFooter onClose={onClose} onAddToCart={handleAddToCart} />
+          <View style={{ flex: .25 }}>
+            <ModalFooter 
+              onClose={onClose} 
+              onAddToCart={handleAddToCart} 
+              sub={selectedColors.length} 
+              color={selectedColors} 
+            />
           </View>
         </View>
       </View>
