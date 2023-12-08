@@ -36,9 +36,9 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
     
     return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>
-        <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: SDims.HeightTopSection, alignItems: 'center' }}>
+        <View style={{ marginTop: 1070, alignItems: 'center' }}>
             <View style={{
-                height: SDims.HeightCentralSection * .75,
+                height: SDims.HeightCentralSection * .5,
                 width: SDims.Width90p,
                 backgroundColor: 'black',
                 borderColor: 'red',
@@ -64,15 +64,17 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
                         <Text style={fonts.txtNavButton}>Cerrar</Text>
                     </View>
                 </TouchableOpacity>
-                <SwatchGridStyle
-                    colors={selectedColors ?? []}
-                    onSelectColor={handleSelectColor}
-                    selectedColors={selectedColors ?? []}  // Use selectedColors from props
-                    selectedSwatchStyle={{
-                        borderColor: 'white',
-                        borderWidth: 5,
+                <View style={{ height: 150 }}>
+                    <SwatchGridStyle
+                        colors={selectedColors ?? []}
+                        onSelectColor={handleSelectColor}
+                        selectedColors={selectedColors ?? []}
+                        selectedSwatchStyle={{
+                            borderColor: 'white',
+                            borderWidth: 5,
                         }}
-                />
+                    />
+                </View>
             </View>
         </View>
     </Modal>
