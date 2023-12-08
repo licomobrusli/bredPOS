@@ -67,10 +67,6 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
     setIsLoading(false);
   }, [selectedCategory, selectedService]);
 
-  // Log selectedService and selectedCategory
-  console.log('selectedService in ModalTheme:', selectedService);
-  console.log('selectedCategory in ModalTheme:', selectedCategory);
-
   return (
     <View style={[styles.container, style ]}>
       <View style={{ height: 550 }}>

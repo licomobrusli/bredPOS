@@ -32,9 +32,6 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
     }
   };
 
-  console.log("Cart items:", JSON.stringify(cartItems, null, 2));
-
-
   const updateCartItems = () => {
     if (selectedItemIndex !== null) {
       const newCartItems = [...cartItems];
@@ -61,17 +58,13 @@ const calculatePrices = (newCartItems: any[]) => {
   newCartItems.forEach((item, index) => {
     if (index === selectedItemIndex) {
       let itemSubtotal = 0;
-      console.log("Initial item:", JSON.stringify(item));
 
       item.modalCountsDetails.forEach((detail: ModalCountDetail, detailIndex: number) => {
-        console.log(`Detail at index ${detailIndex}:`, JSON.stringify(detail));
 
         if (detail.logic === 'OR') {
           const quantity = Math.max(selectedColors.length - 1, 0);
           const totalPrice = detail.unitPrice * quantity;
           itemSubtotal += totalPrice;
-
-          console.log(`OR logic: unitPrice: ${detail.unitPrice}, quantity: ${quantity}, totalPrice: ${totalPrice}`);
           item.modalCountsDetails[detailIndex] = { ...detail, price: `${totalPrice.toFixed(0)}€` };
         } else if (detail.name !== "Sub total") {
           const nonOrPrice = parseFloat(detail.price.split('€')[0]);
@@ -84,8 +77,6 @@ const calculatePrices = (newCartItems: any[]) => {
       if (subtotalIndex !== -1) {
         item.modalCountsDetails[subtotalIndex] = { ...item.modalCountsDetails[subtotalIndex], price: `${itemSubtotal.toFixed(0)}€` };
       }
-
-      console.log("Updated item:", JSON.stringify(item));
     }
   });
 

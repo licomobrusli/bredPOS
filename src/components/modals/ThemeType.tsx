@@ -18,7 +18,6 @@ const ThemeType: React.FC<ThemeTypeProps> = ({ themes, onServiceNameChange, onCa
 
     // Example of using the callbacks
     const handlePress = () => {
-      console.log(`Pressed theme ${item.id}`);
       onServiceNameChange(item.name); // Call the callback with the service name
     };
 

@@ -87,12 +87,6 @@ const handleModalCountsChange = (counts: any[]) => {
 
   // AddToCart
   const handleAddToCart = () => {
-    console.log('Add to Cart Details:', {
-      selectedCategory,
-      selectedService,
-      selectedColors,
-      modalCountsDetails
-    });
     const cartItem = {
       selectedCategory,
       selectedService,

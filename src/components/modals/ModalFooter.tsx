@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
 import fonts from '../../config/fonts'; // Make sure this path is correct
 import SDims from '../../config/dimensions';
+import { getSelectedColors } from '../../config/selectedColorsState';
 
 interface ModalFooterProps {
   onClose: () => void;
@@ -13,9 +14,10 @@ interface ModalFooterProps {
 
 const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, sub, color }) => {
   const [isColorModalVisible, setColorModalVisible] = useState(false);
-
+  console.log('sub', sub);
+  console.log('color', color);
   const handleAddToCart = () => {
-    if (sub === 2 && color.length < 1) {
+    if (sub === 0 && color.length < 1) {
       setColorModalVisible(true);
     } else {
       if (onAddToCart) {
@@ -39,7 +41,7 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, sub, co
 
       <Modal visible={isColorModalVisible} transparent={true}>
         <TouchableWithoutFeedback onPress={() => setColorModalVisible(false)}>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'blue' }}>
             <Text style={fonts.txtProductCard}>Debes seleccionar al menos un color</Text>
           </View>
         </TouchableWithoutFeedback>
