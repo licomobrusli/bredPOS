@@ -4,6 +4,7 @@ import { View, StyleSheet, ViewStyle, ActivityIndicator } from 'react-native';
 import ThemeType from '../modals/ThemeType';
 import ThemeList from '../../content/ThemeList';
 import { Category, Service, Theme } from '../../config/types';
+import SDims from '../../config/dimensions';
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: 'black' },
@@ -70,26 +71,16 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
   console.log('selectedService in ModalTheme:', selectedService);
   console.log('selectedCategory in ModalTheme:', selectedCategory);
 
-  if (isLoading) {
-    // Display a loading indicator while data is being fetched
-    return (
-      <View style={[styles.container, style, { justifyContent: 'center', alignItems: 'center' }]}>
-        <ActivityIndicator size="large" color="#00ff00" />
-      </View>
-    );
-  }
-
   return (
-    <View style={[styles.container, style]}>
-      <View style={{ flex: 1 }}>
+    <View style={[styles.container, style ]}>
+      <View style={{ height: 700, borderColor: 'green', borderWidth: 20 }}>
         <ThemeType 
           themes={[...services, ...Categories]}
           onServiceNameChange={onServiceNameChange}
           onCategoryNameChange={onCategoryNameChange}
         />
       </View>
-      <View style={{ height: 20 }} />
-      <View style={{ flex: 1 }}>
+      <View style={{ height: 500, borderColor: 'blue', borderWidth: 10 }}>
         <ThemeList 
           categoryCode={categoryCode}
           selectedServiceCode={selectedServiceCode}

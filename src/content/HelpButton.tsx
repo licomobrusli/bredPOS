@@ -18,9 +18,9 @@ const HelpButton: React.FC = () => {
   return (
     <>
       {isHelpButtonVisible && (
-        <TouchableOpacity onPress={handlePress} style={styles.helpButton}>
-          <View style={styles.transparentCard}>
-            <Text style={customStyles.txtNavButton}>Ayuda</Text>
+        <TouchableOpacity onPress={handlePress}>
+          <View>
+            <Text style={customStyles.txtProductCard}>Informacíon</Text>
           </View>
         </TouchableOpacity>
       )}

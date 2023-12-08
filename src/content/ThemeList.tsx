@@ -6,6 +6,7 @@ import { ModalCount } from '../config/types';
 import SubModal from '../components/modals/SubModal';
 import SubModalB from '../components/modals/SubModalB'; // Import SubModalB
 import styles from '../config/fonts';
+import SDims from '../config/dimensions';
 
 interface ThemeListProps {
   categoryCode: string;
@@ -179,7 +180,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
   const screenWidth = Dimensions.get('window').width;
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: 20 }}>
+    <View style={{ backgroundColor: 'black', borderColor: 'white', borderWidth: 5, justifyContent: 'center' }}>
       {modalCounts.map(modalCount => (
         <TouchableOpacity
           key={modalCount.id}
@@ -192,7 +193,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
             backgroundColor: isModalCountSelected(modalCount) ? 'red' : 'black',
             alignSelf: 'center',
             width: screenWidth * 0.55,
-            marginVertical: 5,
+            marginVertical: 10,
             borderColor: 'red',
             borderWidth: 1
           }}>
@@ -224,7 +225,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
         alignItems: 'center',
         alignSelf: 'center',
         width: screenWidth * 0.55,
-        marginVertical: 5,
+        marginVertical: 10,
         borderColor: 'red',
         borderWidth: 1
       }}>

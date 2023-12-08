@@ -29,7 +29,8 @@ const ThemeType: React.FC<ThemeTypeProps> = ({ themes, onServiceNameChange, onCa
             width: cardGridStyle.imageWidth,
             height: cardGridStyle.imageHeight * 1.5,
             marginLeft,
-            marginBottom: cardGridStyle.gap,
+            marginRight: cardGridStyle.gap,
+            marginTop: cardGridStyle.gap,
           }}
           imageUrl={item.imageUrl}
           onPress={handlePress}
@@ -46,7 +47,7 @@ const ThemeType: React.FC<ThemeTypeProps> = ({ themes, onServiceNameChange, onCa
       data={themes}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
-      numColumns={3}
+      numColumns={2}
       columnWrapperStyle={{ justifyContent: 'center' }}
     />
   );
