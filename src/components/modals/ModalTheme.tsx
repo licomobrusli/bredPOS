@@ -73,14 +73,14 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
 
   return (
     <View style={[styles.container, style ]}>
-      <View style={{ height: 700, borderColor: 'green', borderWidth: 20 }}>
+      <View style={{ height: 550 }}>
         <ThemeType 
           themes={[...services, ...Categories]}
           onServiceNameChange={onServiceNameChange}
           onCategoryNameChange={onCategoryNameChange}
         />
       </View>
-      <View style={{ height: 500, borderColor: 'blue', borderWidth: 10 }}>
+      <View style={{ height: 330 }}>
         <ThemeList 
           categoryCode={categoryCode}
           selectedServiceCode={selectedServiceCode}

@@ -30,7 +30,8 @@ const ThemeType: React.FC<ThemeTypeProps> = ({ themes, onServiceNameChange, onCa
             height: cardGridStyle.imageHeight * 1.5,
             marginLeft,
             marginRight: cardGridStyle.gap,
-            marginTop: cardGridStyle.gap,
+            marginTop: cardGridStyle.margin * .5,
+            
           }}
           imageUrl={item.imageUrl}
           onPress={handlePress}

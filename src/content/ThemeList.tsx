@@ -180,7 +180,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
   const screenWidth = Dimensions.get('window').width;
 
   return (
-    <View style={{ backgroundColor: 'black', borderColor: 'white', borderWidth: 5, justifyContent: 'center' }}>
+    <View style={{ backgroundColor: 'black', justifyContent: 'center' }}>
       {modalCounts.map(modalCount => (
         <TouchableOpacity
           key={modalCount.id}
