@@ -24,8 +24,6 @@ interface CutModalProps {
 const CutModal: React.FC<CutModalProps> = ({
   visible,
   onClose,
-  selectedCategoryImage,
-  selectedServiceImage,
   categoryCode,
   selectedService,
   selectedCategory,

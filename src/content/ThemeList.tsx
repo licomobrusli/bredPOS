@@ -245,14 +245,14 @@ const ThemeList: React.FC<ThemeListProps> = ({
             selectedColors={selectedColors}
             setSelectedColors={setSelectedColors}
           />
-        ) : (
+        ) : modalCounts.find(modalCount => modalCount.id === selectedModalCounts[0])?.sub === 1 ? (
           <SubModalB
             isVisible={isSubModalVisible}
             onClose={closeSubModal}
             onCounterChange={setCounter}
             selectedValue={counter}
           />
-        )
+        ) : null
       )}
     </View>
   );
