@@ -54,13 +54,16 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCo
       <Modal visible={isColorModalVisible} transparent={true}>
         <TouchableWithoutFeedback onPress={() => setColorModalVisible(false)}>
           <View style={{ marginTop: 1060,
-            height: SDims.HeightCentralSection * .5,
-            width: SDims.Width90p,
-            justifyContent: 'center',
             alignSelf: 'center',
-            alignItems: 'center',
-            backgroundColor: 'blue' }}>
-              <Text style={fonts.txtProductCard}>Debes seleccionar al menos un color</Text>
+            height: SDims.HeightCentralSection * .65,
+            width: SDims.Width90p,
+            backgroundColor: 'black',
+            borderColor: 'red',
+            borderWidth: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <Text style={fonts.txtProductCard}>Debes seleccionar al menos un color</Text>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
