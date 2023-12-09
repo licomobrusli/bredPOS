@@ -13,7 +13,6 @@ interface ThemeListProps {
   selectedServiceCode: string;
   onSelectColor: (colors: string[]) => void;
   selectedColors: string[];
-  selectedValue: number;
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
   onModalCountsChange: (modalCounts: { name: string; price: string; unitPrice: number; sub: number }[]) => void;
   selectedModalCounts: string[];
@@ -31,7 +30,7 @@ interface CalculatedPrices {
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({
-  categoryCode, selectedServiceCode, selectedColors, selectedValue, setSelectedColors, onModalCountsChange
+  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange
 }) => {
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
@@ -58,19 +57,24 @@ const ThemeList: React.FC<ThemeListProps> = ({
     let newSubtotal = 0;
   
     modalCounts.forEach(modalCount => {
-      if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
-        const unitPrice = modalCount.price;
-        const quantity = modalCount.logic === 'OR' ? selectedColors.length - 1 : 1;
-        const totalPrice = unitPrice * quantity;
-  
-        newCalculatedPrices[modalCount.id] = { unitPrice, quantity, totalPrice };
-        newSubtotal += totalPrice;
-      }
+        if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
+            const unitPrice = modalCount.price;
+            let quantity = modalCount.logic === 'OR' ? selectedColors.length - 1 : 1;
+
+            // Special handling for 'Basic design'
+            if (modalCount.name === 'Basic design') {
+                quantity = counter;  // Use counter value for 'Basic design'
+            }
+
+            const totalPrice = unitPrice * quantity;
+            newCalculatedPrices[modalCount.id] = { unitPrice, quantity, totalPrice };
+            newSubtotal += totalPrice;
+        }
     });
   
     setCalculatedPrices(newCalculatedPrices);
     setSubtotal(newSubtotal);
-  }, [modalCounts, selectedModalCounts, selectedColors]);
+}, [modalCounts, selectedModalCounts, selectedColors, counter]);
 
   useEffect(() => {
     // Ensure at least one 'NOT' item is selected if present
@@ -145,7 +149,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
   // Update useEffect to call this function
   useEffect(() => {
     logSelectedModalCounts();
-  }, [selectedColors, selectedValue, modalCounts, selectedModalCounts, subtotal]);
+  }, [selectedColors, modalCounts, selectedModalCounts, subtotal]);
 
   const isModalCountSelected = (modalCount: ModalCount) => {
     if (modalCount.logic === 'OR') {
@@ -226,14 +230,14 @@ const ThemeList: React.FC<ThemeListProps> = ({
             selectedColors={selectedColors}
             setSelectedColors={setSelectedColors}
           />
-        ) : modalCounts.find(modalCount => modalCount.id === selectedModalCounts[0])?.sub === 1 ? (
+        ) : (
           <SubModalB
             isVisible={isSubModalVisible}
             onClose={closeSubModal}
             onCounterChange={setCounter}
             selectedValue={counter}
           />
-        ) : null
+        )
       )}
     </View>
   );

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// SubModalB.tsx
+import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import SDims from '../../config/dimensions';
 import fonts from '../../config/fonts';
@@ -11,19 +12,30 @@ interface SubModalBProps {
 }
 
 const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChange, selectedValue }) => {
-const [counter, setCounter] = useState(selectedValue);
+  const [counter, setCounter] = useState(selectedValue);
 
-const handleIncrement = () => {
-    setCounter(counter + 1);
-    onCounterChange(counter + 1); // Call onCounterChange when the counter is incremented
-};
+  // Update the counter when selectedValue changes
+  useEffect(() => {
+    setCounter(selectedValue);
+  }, [selectedValue]);
 
-const handleDecrement = () => {
-    if (counter > 0) {
-    setCounter(counter - 1);
-    onCounterChange(counter - 1); // Call onCounterChange when the counter is decremented
+  const handleIncrement = () => {
+    setCounter(prevCounter => {
+      const newCounter = prevCounter + 1;
+      onCounterChange(newCounter);
+      return newCounter;
+    });
+  };
+
+  const handleDecrement = () => {
+    if (counter > 1) {
+      setCounter(prevCounter => {
+        const newCounter = prevCounter - 1;
+        onCounterChange(newCounter);
+        return newCounter;
+      });
     }
-};
+  };
 
   return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>
