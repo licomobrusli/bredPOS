@@ -43,7 +43,7 @@ const fonts = StyleSheet.create({
     textAlignVertical: 'center',
     fontFamily: 'OilvareBase-Regular',
     letterSpacing: 10,
-    fontSize: adaptiveFontSize(40),
+    fontSize: adaptiveFontSize(30),
     color: 'white',
   },
   txtNavButton: {

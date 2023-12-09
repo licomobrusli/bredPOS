@@ -27,9 +27,9 @@ const handleDecrement = () => {
 
   return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>
-      <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: SDims.HeightTopSection, alignItems: 'center' }}>
+      <View style={{ marginTop: 1060, alignItems: 'center' }}>
         <View style={{
-          height: SDims.HeightCentralSection * .75,
+          height: SDims.HeightCentralSection * .65,
           width: SDims.Width90p,
           backgroundColor: 'black',
           borderColor: 'red',

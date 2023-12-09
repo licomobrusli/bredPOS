@@ -36,9 +36,9 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
     
     return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>
-        <View style={{ marginTop: 1070, alignItems: 'center' }}>
+        <View style={{ marginTop: 1060, alignItems: 'center' }}>
             <View style={{
-                height: SDims.HeightCentralSection * .5,
+                height: SDims.HeightCentralSection * .65,
                 width: SDims.Width90p,
                 backgroundColor: 'black',
                 borderColor: 'red',

@@ -34,22 +34,33 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCo
   };        
       
   return (
-    <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'black' }}>
+    <View style={{ flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      alignItems: 'flex-start',
+      backgroundColor: 'black',
+       }}>
       <TouchableOpacity onPress={handleAddToCart} style={{  }}>
-        <View style={{flexDirection: 'column', borderColor: 'red', borderWidth: 1 }}>
+        <View style={{flexDirection: 'column', borderColor: 'red', borderWidth: 1, padding: 50 }}>
           <Text style={fonts.txtProductCard}>AÑADIR</Text>
           <Text style={fonts.txtProductCard}>AL</Text>
           <Text style={fonts.txtProductCard}>CARRITO</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={onClose} style={{ padding: SDims.Width5p }}>
+      <TouchableOpacity onPress={onClose} style={{ padding: SDims.Width5p, paddingTop: SDims.Width10p }}>
         <Text style={fonts.txtModalCounts}>CANCELAR</Text>
       </TouchableOpacity>
 
       <Modal visible={isColorModalVisible} transparent={true}>
         <TouchableWithoutFeedback onPress={() => setColorModalVisible(false)}>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'blue' }}>
-            <Text style={fonts.txtProductCard}>Debes seleccionar al menos un color</Text>
+          <View style={{ marginTop: 1060,
+            height: SDims.HeightCentralSection * .5,
+            width: SDims.Width90p,
+            justifyContent: 'center',
+            alignSelf: 'center',
+            alignItems: 'center',
+            backgroundColor: 'blue' }}>
+              <Text style={fonts.txtProductCard}>Debes seleccionar al menos un color</Text>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
