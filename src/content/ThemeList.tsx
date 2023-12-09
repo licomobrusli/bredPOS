@@ -13,6 +13,7 @@ interface ThemeListProps {
   selectedServiceCode: string;
   onSelectColor: (colors: string[]) => void;
   selectedColors: string[];
+  selectedValue: number;
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
   onModalCountsChange: (modalCounts: { name: string; price: string; unitPrice: number; sub: number }[]) => void;
   selectedModalCounts: string[];
@@ -30,7 +31,7 @@ interface CalculatedPrices {
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({
-  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange
+  categoryCode, selectedServiceCode, selectedColors, selectedValue, setSelectedColors, onModalCountsChange
 }) => {
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
@@ -70,26 +71,6 @@ const ThemeList: React.FC<ThemeListProps> = ({
     setCalculatedPrices(newCalculatedPrices);
     setSubtotal(newSubtotal);
   }, [modalCounts, selectedModalCounts, selectedColors]);
-
-  useEffect(() => {
-    const newCalculatedPrices: CalculatedPrices = {};
-    let newSubtotal = 0;
-  
-    modalCounts.forEach(modalCount => {
-      if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
-        const unitPrice = modalCount.price;
-        const quantity = modalCount.logic === 'OR' ? (selectedColors.length - 1) : 1;
-        const totalPrice = unitPrice * quantity;
-  
-        newCalculatedPrices[modalCount.id] = { unitPrice, quantity, totalPrice };
-        newSubtotal += totalPrice;
-      }
-    });
-  
-    setCalculatedPrices(newCalculatedPrices);
-    setSubtotal(newSubtotal);
-  }, [modalCounts, selectedModalCounts, selectedColors]);
-  
 
   useEffect(() => {
     // Ensure at least one 'NOT' item is selected if present
@@ -164,7 +145,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
   // Update useEffect to call this function
   useEffect(() => {
     logSelectedModalCounts();
-  }, [selectedColors, modalCounts, selectedModalCounts, subtotal]);
+  }, [selectedColors, selectedValue, modalCounts, selectedModalCounts, subtotal]);
 
   const isModalCountSelected = (modalCount: ModalCount) => {
     if (modalCount.logic === 'OR') {
