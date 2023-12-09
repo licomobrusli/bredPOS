@@ -3,29 +3,36 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
 import fonts from '../../config/fonts'; // Make sure this path is correct
 import SDims from '../../config/dimensions';
-import { getSelectedColors } from '../../config/selectedColorsState';
 
 interface ModalFooterProps {
   onClose: () => void;
   onAddToCart?: () => void;
-  sub: number;
-  color: string[];
+  modalCountsDetails: any[];
+  selectedColors: string[];
 }
 
-const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, sub, color }) => {
+const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCountsDetails, selectedColors }) => {
+  console.log("ModalFooter rendering", { modalCountsDetails });
   const [isColorModalVisible, setColorModalVisible] = useState(false);
-  console.log('sub', sub);
-  console.log('color', color);
   const handleAddToCart = () => {
-    if (sub === 0 && color.length < 1) {
-      setColorModalVisible(true);
-    } else {
-      if (onAddToCart) {
-        onAddToCart();
+    if (modalCountsDetails.length > 0) {
+      const firstDetail = modalCountsDetails[0];
+  
+      // Log the details
+      console.log('Detail Sub:', firstDetail.sub);
+      console.log('Selected Colors:', selectedColors);
+  
+      // If 'sub' is greater than 0 and no colors are selected, show the color modal
+      if (firstDetail.sub === 2 && selectedColors.length === 0) {
+        setColorModalVisible(true);
+      } else {
+        // If 'sub' is not greater than 0 or colors are selected, add to cart and close the modal
+        onAddToCart && onAddToCart();
+        onClose(); // Close the modal after adding to cart
       }
     }
-  };
-
+  };        
+      
   return (
     <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'black' }}>
       <TouchableOpacity onPress={handleAddToCart} style={{  }}>

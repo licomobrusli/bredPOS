@@ -148,8 +148,8 @@ const handleModalCountsChange = (counts: any[]) => {
             <ModalFooter 
               onClose={onClose} 
               onAddToCart={handleAddToCart} 
-              sub={selectedColors.length} 
-              color={selectedColors} 
+              modalCountsDetails={modalCountsDetails}
+              selectedColors={selectedColors}
             />
           </View>
         </View>
