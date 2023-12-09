@@ -37,7 +37,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const [subtotal, setSubtotal] = useState<number>(0);
   const [calculatedPrices, setCalculatedPrices] = useState<CalculatedPrices>({} as CalculatedPrices);
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(1);
 
   useEffect(() => {
     const loadData = async () => {
