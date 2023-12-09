@@ -6,6 +6,7 @@ import fonts from '../../config/fonts';
 import SwatchGridStyle from '../../config/swatchGridStyle';
 import SubModal from './SubModal';
 import SubModalB from './SubModalB';
+import SDims from '../../config/dimensions';
 
 interface CartModalProps {
   visible: boolean;
@@ -93,7 +94,7 @@ const calculatePrices = (newCartItems: any[]) => {
     } else {
       return (
         <TouchableOpacity onPress={() => openModal(sub, itemDetails, index)} style={styles.cartButton}>
-          <Text style={fonts.txtNavButton}>Edit</Text>
+          <Text style={fonts.txtItems}>Edit</Text>
         </TouchableOpacity>
       );
     }
@@ -111,40 +112,40 @@ const calculatePrices = (newCartItems: any[]) => {
       <View style={styles.modalContainer}>
         {cartItems.map((item, index) => (
           <View key={index} style={styles.itemContainer}>
-            <Text style={[fonts.txtSubBrandBanner]}>
+            <Text style={[fonts.txtTitle]}>
               {item.selectedService?.name} de {item.selectedCategory?.name}
             </Text>
-            <SwatchGridStyle
-              colors={item.selectedColors} 
-              onSelectColor={() => {}} 
-              selectedColors={item.selectedColors} 
-              selectedSwatchStyle={styles.selectedSwatchStyle}
-            />
             {item.modalCountsDetails.map((detail, detailIndex) => (
-              <Text key={detailIndex} style={fonts.txtNavButton}>
+              <Text key={detailIndex} style={fonts.txtItems}>
                 {detail.name}: {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
               </Text>
             ))}
-
-            {item.modalCountsDetails.length > 0 && (
-              handleSubZero(item.modalCountsDetails[0].sub, {
-                colors: item.selectedColors,
-              }, index)
-            )}
-
-            <TouchableOpacity onPress={() => handleDelete(index)} style={styles.cartButton}>
-              <Text style={fonts.txtNavButton}>X</Text>
-            </TouchableOpacity>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {item.modalCountsDetails.length > 0 && (
+                handleSubZero(item.modalCountsDetails[0].sub, {
+                  colors: item.selectedColors,
+                }, index)
+              )}
+              <SwatchGridStyle
+                colors={item.selectedColors} 
+                onSelectColor={() => {}} 
+                selectedColors={item.selectedColors} 
+                selectedSwatchStyle={styles.selectedSwatchStyle}
+              />
+              <TouchableOpacity onPress={() => handleDelete(index)} style={styles.cartButton}>
+                <Text style={fonts.txtItems}>X</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         ))}
-
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TouchableOpacity style={styles.cartButton}>
-          <Text style={fonts.txtNavButton}>Submit</Text>
+          <Text style={fonts.txtItems}>Submit</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={onClose} style={styles.cartButton}>
-          <Text style={fonts.txtNavButton}>Close</Text>
+          <Text style={fonts.txtItems}>Close</Text>
         </TouchableOpacity>
-
+        </View>
         {modalType === 'subModal' && selectedItemIndex !== null && (
           <SubModal
             isVisible={true}
@@ -176,6 +177,9 @@ const styles = StyleSheet.create({
   selectedSwatchStyle: {
     borderColor: 'white',
     borderWidth: 5,
+    margin: 10,
+    height: SDims.Height5p * .5,
+    width: SDims.Height5p * .5,
   },
   cartButton: {
     padding: 10,
@@ -186,9 +190,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   itemContainer: {
-    borderColor: 'yellow',
+    borderColor: 'red',
     borderWidth: 1,
-    padding: 10,
+    padding: 1,
   },
 });
 

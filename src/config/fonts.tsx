@@ -1,4 +1,7 @@
 // fonts.tsx
+// WorkSans available weights:
+  // Black, ExtraBold, Bold, SemiBold, Medium, Regular (name: WorkSans), Light, ExtraLight, Thin, Hairline
+
 import { StyleSheet, Dimensions } from 'react-native';
 
 // Get screen width
@@ -16,7 +19,7 @@ const fonts = StyleSheet.create({
   txtBrandBanner: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontFamily: "OilvareBase-Regular",
+    fontFamily: 'WorkSansBlack',
     letterSpacing: 12,
     fontSize: adaptiveFontSize(220),
     color: 'white',
@@ -24,7 +27,7 @@ const fonts = StyleSheet.create({
   txtSubBrandBanner: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontFamily: 'OilvareBase-Regular',
+    fontFamily: 'WorkSansBold',
     letterSpacing: 18,
     fontSize: adaptiveFontSize(60),
     textTransform: 'uppercase',
@@ -33,25 +36,34 @@ const fonts = StyleSheet.create({
   txtProductCard: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontFamily: 'OilvareBase-Regular',
+    fontFamily: 'WorkSansBold',
     letterSpacing: 10,
     fontSize: adaptiveFontSize(50),
     color: 'white',
+    textTransform: 'uppercase',
   },
   txtModalCounts: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontFamily: 'OilvareBase-Regular',
+    fontFamily: 'WorkSansSemiBold',
     letterSpacing: 10,
-    fontSize: adaptiveFontSize(30),
+    fontSize: adaptiveFontSize(40),
     color: 'white',
   },
-  txtNavButton: {
+  txtItems: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontFamily: 'Poppins',
+    fontFamily: 'WorkSansRegular',
     fontSize: adaptiveFontSize(50),
     color: 'white',
+  },
+  txtTitle: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontFamily: 'WorkSansExtraBold',
+    fontSize: adaptiveFontSize(60),
+    color: 'white',
+    textTransform: 'uppercase',
   },
 });
 

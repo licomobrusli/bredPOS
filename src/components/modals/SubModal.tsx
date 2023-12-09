@@ -61,7 +61,7 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
                 />
                 <TouchableOpacity onPress={onClose}>
                     <View>
-                        <Text style={fonts.txtNavButton}>Cerrar</Text>
+                        <Text style={fonts.txtProductCard}>Cerrar</Text>
                     </View>
                 </TouchableOpacity>
                 <View style={{ height: 150 }}>

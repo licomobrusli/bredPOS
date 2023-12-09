@@ -52,16 +52,16 @@ const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChan
           <Text style={fonts.txtSubBrandBanner}>COUNTER CONTROL</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity onPress={handleDecrement}>
-              <Text style={fonts.txtNavButton}>-</Text>
+              <Text style={fonts.txtItems}>-</Text>
             </TouchableOpacity>
             <Text style={fonts.txtSubBrandBanner}>{counter}</Text>
             <TouchableOpacity onPress={handleIncrement}>
-              <Text style={fonts.txtNavButton}>+</Text>
+              <Text style={fonts.txtItems}>+</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={onClose}>
             <View>
-              <Text style={fonts.txtNavButton}>Cerrar</Text>
+              <Text style={fonts.txtItems}>Cerrar</Text>
             </View>
           </TouchableOpacity>
         </View>
