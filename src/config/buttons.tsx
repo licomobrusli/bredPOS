@@ -3,9 +3,20 @@ import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import fonts from '../config/fonts';
 import SDims from '../config/dimensions';
 
+// Define color constants
+// this should eventually be moved to a config file
+const COLOR_A = '#AD8457';
+const COLOR_B = 'black';
+
 interface ButtonAProps {
   title: string;
   onPress: () => void;
+}
+
+interface ButtonBProps {
+  title: string;
+  onPress: () => void;
+  color: 'A' | 'B';
 }
 
 interface listButtonProps {
@@ -21,7 +32,22 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 40,
     backgroundColor: '#AD8457',
+    borderColor: '#AD8457', 
+    borderWidth: 1,
     borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonB: {
+    flexDirection: 'column',
+    padding: 12,
+    borderColor: '#AD8457', 
+    borderWidth: 1,
+    borderRadius: 10, 
+    height: SDims.Height10p,
+    width: SDims.Width1_4f,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   ListButton: {
     margin: 5,
@@ -42,6 +68,9 @@ const styles = StyleSheet.create({
   // button text styles
   buttonAText: {
     ...fonts.txtButtonA,
+  },
+  buttonBText: {
+    ...fonts.txtCard,
   },
   listButtonText: {
     ...fonts.txtList,
@@ -68,6 +97,15 @@ const ButtonA: FC<ButtonAProps> = ({ title, onPress }) => {
   );
 };
 
+const ButtonB: FC<ButtonBProps> = ({ title, onPress, color }) => {
+  const backgroundColor = color === 'A' ? COLOR_A : COLOR_B;
+  return (
+    <TouchableOpacity style={[styles.buttonB, { backgroundColor }]} onPress={onPress}>
+      <Text style={styles.buttonBText}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
+
 const ListButton: FC<listButtonProps> = ({ name, price, onPress = () => {}, style }) => {
   return (
     <TouchableOpacity style={[styles.ListButton, style]} onPress={onPress}>
@@ -79,6 +117,7 @@ const ListButton: FC<listButtonProps> = ({ name, price, onPress = () => {}, styl
 
 const Buttons = {
   ButtonA,
+  ButtonB,
   ListButton,
 };
 

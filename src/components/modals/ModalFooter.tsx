@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
 import fonts from '../../config/fonts'; // Make sure this path is correct
 import SDims from '../../config/dimensions';
+import Buttons from '../../config/buttons';
 
 interface ModalFooterProps {
   onClose: () => void;
@@ -42,39 +43,23 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCo
       alignSelf: 'center',
       backgroundColor: 'black'
     }}>
-      <TouchableOpacity onPress={onClose} style={{}}>
-        <View style={{ 
-          flexDirection: 'column', 
-          borderColor: '#AD8457', 
-          borderWidth: 1, 
-          borderRadius: 10, 
-          height: SDims.Height10p,
-          width: SDims.Height10p + SDims.Width5p,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-          <Text style={fonts.txtButtonA}>CANCELAR</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleAddToCart} style={{}}>
-        <View style={{ 
-          flexDirection: 'column',
-          backgroundColor: '#AD8457', 
-          borderColor: '#AD8457', 
-          borderWidth: 1, 
-          borderRadius: 10, 
-          height: SDims.Height10p,
-          width: SDims.Height10p + SDims.Width5p,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-          <Text style={fonts.txtButtonA}>AÑADIR</Text>
-          <Text style={fonts.txtButtonA}>AL</Text>
-          <Text style={fonts.txtButtonA}>CARRITO</Text>
-        </View>
-      </TouchableOpacity>
+      <Buttons.ButtonB title="Cancelar" onPress={onClose} color='B' />
+      <Buttons.ButtonB title="Añadir al carrito" onPress={handleAddToCart} color='A' />
       <Modal visible={isColorModalVisible} transparent={true}>
-        {/* Modal implementation remains the same */}
+        <TouchableWithoutFeedback onPress={() => setColorModalVisible(false)}>
+          <View style={{ marginTop: 1060,
+            alignSelf: 'center',
+            height: SDims.HeightCentralSection * .65,
+            width: SDims.Width90p,
+            backgroundColor: 'black',
+            borderColor: '#AD8457',
+            borderWidth: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <Text style={fonts.txtCard}>Debes seleccionar al menos un color</Text>
+          </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </View>
   );
