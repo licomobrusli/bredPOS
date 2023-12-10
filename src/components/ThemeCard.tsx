@@ -19,7 +19,7 @@ const ThemeCard: React.FC<ThemeCardProps> = ({ style, imageUrl, serviceName, onP
   return (
     <TouchableOpacity onPress={onPress} style={[styles.card, style]}>
       <Image source={imageSource} style={styles.image} />
-      <Text style={customStyles.txtButtonA}>{displayText}</Text>
+      <Text style={customStyles.txtCard}>{displayText}</Text>
     </TouchableOpacity>
   );
 };

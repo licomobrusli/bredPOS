@@ -28,6 +28,8 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 40,
     backgroundColor: '#AD8457',
+    borderColor: '#AD8457',
+    borderWidth: 1,
     borderRadius: 10,
     // update these styles
     flexDirection: 'row',

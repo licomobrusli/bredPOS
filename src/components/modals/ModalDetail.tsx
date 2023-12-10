@@ -27,7 +27,7 @@ const ModalDetail: React.FC<ModalDetailProps> = ({
   return (
     <View style={{ height: 90 }}>
       {selectedColors.length > 0 && (
-        <Text style={Fonts.txtProductCard}>
+        <Text style={Fonts.txtCard}>
           Selected Colors: {selectedColors.length}
         </Text>
       )}

@@ -18,7 +18,7 @@ const ListCard: React.FC<ListCardProps> = ({ style, imageUrl, categoryName, serv
   return (
     <TouchableOpacity onPress={onPress} style={[styles.card, style]}>
       <Image source={imageSource} style={styles.image} />
-      <Text style={customStyles.txtButtonA}>{displayText}</Text>
+      <Text style={customStyles.txtCard}>{displayText}</Text>
     </TouchableOpacity>
   );
 };
@@ -26,7 +26,7 @@ const ListCard: React.FC<ListCardProps> = ({ style, imageUrl, categoryName, serv
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: '#AD8457',
     borderRadius: 5,
     overflow: 'hidden',
     backgroundColor: 'transparent',

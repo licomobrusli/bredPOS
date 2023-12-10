@@ -34,6 +34,16 @@ const fonts = StyleSheet.create({
     color: 'white',
   },
   
+  txtCard: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontFamily: 'WorkSansBold',
+    fontSize: adaptiveFontSize(60),
+    letterSpacing: adaptiveFontSize(4),
+    color: 'white',
+  },
+  
+  
   // old stuff that needs to be replaced
   
   txtBrandBanner: {

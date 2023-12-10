@@ -1,3 +1,5 @@
+// MARKED FOR DELETION
+// IS redundant
 import React from 'react';
 import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
 import { ModalCount } from '../config/types';

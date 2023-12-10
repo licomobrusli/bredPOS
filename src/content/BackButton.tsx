@@ -18,7 +18,7 @@ const BackButton: React.FC = () => {
     isBackButtonVisible && (
       <TouchableOpacity onPress={handlePress}>
         <View>
-          <Text style={customStyles.txtButtonA}>IR ATRAS</Text>
+          <Text style={customStyles.txtCard}>IR ATRAS</Text>
         </View>
       </TouchableOpacity>
     )

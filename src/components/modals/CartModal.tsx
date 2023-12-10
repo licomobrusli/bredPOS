@@ -97,7 +97,7 @@ const calculatePrices = (newCartItems: any[]) => {
       <View style={styles.modalContainer}>
         {cartItems.map((item, index) => (
           <View key={index} style={styles.itemContainer}>
-            <Text style={[fonts.txtTitle]}>
+            <Text style={[fonts.txtButtonA]}>
               {item.selectedService?.name} de {item.selectedCategory?.name}
             </Text>
             {item.modalCountsDetails.map((detail, detailIndex) => (
