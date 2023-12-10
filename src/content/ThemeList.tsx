@@ -1,12 +1,12 @@
 // ThemeList.tsx
 import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Dimensions, Text, TouchableOpacity } from 'react-native';
+import Buttons from '../config/buttons';
 import { fetchModalCounts } from '../config/apiCalls';
 import { ModalCount } from '../config/types';
 import SubModal from '../components/modals/SubModal';
 import SubModalB from '../components/modals/SubModalB'; // Import SubModalB
 import styles from '../config/fonts';
-import SDims from '../config/dimensions';
 
 interface ThemeListProps {
   categoryCode: string;
@@ -18,7 +18,6 @@ interface ThemeListProps {
   selectedModalCounts: string[];
 }
 
-// Define a type for calculatedPrices
 interface PriceDetails {
   unitPrice: number;
   quantity: number;
@@ -57,24 +56,24 @@ const ThemeList: React.FC<ThemeListProps> = ({
     let newSubtotal = 0;
   
     modalCounts.forEach(modalCount => {
-        if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
-            const unitPrice = modalCount.price;
-            let quantity = modalCount.logic === 'OR' ? selectedColors.length - 1 : 1;
+      if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
+        const unitPrice = modalCount.price;
+        let quantity = modalCount.logic === 'OR' ? selectedColors.length - 1 : 1;
 
-            // Special handling for 'Basic design'
-            if (modalCount.name === 'Basic design') {
-                quantity = counter;  // Use counter value for 'Basic design'
-            }
-
-            const totalPrice = unitPrice * quantity;
-            newCalculatedPrices[modalCount.id] = { unitPrice, quantity, totalPrice };
-            newSubtotal += totalPrice;
+        // Special handling for 'Basic design'
+        if (modalCount.name === 'Basic design') {
+          quantity = counter;  // Use counter value for 'Basic design'
         }
+
+        const totalPrice = unitPrice * quantity;
+        newCalculatedPrices[modalCount.id] = { unitPrice, quantity, totalPrice };
+        newSubtotal += totalPrice;
+      }
     });
   
     setCalculatedPrices(newCalculatedPrices);
     setSubtotal(newSubtotal);
-}, [modalCounts, selectedModalCounts, selectedColors, counter]);
+  }, [modalCounts, selectedModalCounts, selectedColors, counter]);
 
   useEffect(() => {
     // Ensure at least one 'NOT' item is selected if present
@@ -123,14 +122,12 @@ const ThemeList: React.FC<ThemeListProps> = ({
       const priceDetail = calculatedPrices[modalCount.id];
       return {
         name: modalCount.name,
-        // show total price
         price: priceDetail ? `${priceDetail.totalPrice}€` : '',
         unitPrice: priceDetail ? priceDetail.unitPrice : 0,
         sub: modalCount.sub,
         logic: modalCount.logic
       };
     });
-    
 
     const subtotalItem = {
       name: "Sub total",
@@ -170,8 +167,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
         <TouchableOpacity
           key={modalCount.id}
           onPress={() => handleModalCountPress(modalCount.id, modalCount.logic, modalCount.sub)}
-        >
-          <View style={{
+          style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -181,46 +177,23 @@ const ThemeList: React.FC<ThemeListProps> = ({
             marginVertical: 10,
             borderColor: 'red',
             borderWidth: 1
-          }}>
-
-            <Text
-              style={[styles.txtModalCounts, {
-                flex: 4.2,
-                textAlign: 'left',
-                paddingLeft: 10,
-              }]}>
-              {modalCount.name.toUpperCase()}
-            </Text>
-            <Text
-              style={[styles.txtModalCounts, {
-                flex: 1,
-                textAlign: 'right',
-                paddingRight: 10,
-              }]}>
-              {calculatedPrices[modalCount.id] !== undefined
-                ? `${calculatedPrices[modalCount.id].totalPrice}€`
-                : ''}
-            </Text>
-          </View>
+          }}
+        >
+          <Text style={[styles.txtList, { flex: 4.2, textAlign: 'left', paddingLeft: 10 }]}>
+            {modalCount.name.toUpperCase()}
+          </Text>
+          <Text style={[styles.txtList, { flex: 1, textAlign: 'right', paddingRight: 10 }]}>
+            {calculatedPrices[modalCount.id] ? `${calculatedPrices[modalCount.id].totalPrice}€` : ''}
+          </Text>
         </TouchableOpacity>
       ))}
-      <View style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        alignSelf: 'center',
-        width: screenWidth * 0.55,
-        marginVertical: 10,
-        borderColor: 'red',
-        borderWidth: 1
-      }}>
-        <Text style={[styles.txtModalCounts, { flex: 4.2, textAlign: 'left', paddingLeft: 10 }]}>
-          SUBTOTAL
-        </Text>
-        <Text style={[styles.txtModalCounts, { flex: 1, textAlign: 'right', paddingRight: 10 }]}>
-          {subtotal}€
-        </Text>
-      </View>
+
+      {/* Use ListButton for displaying subtotal */}
+      <Buttons.ListButton
+        name="SUBTOTAL"
+        price={`${subtotal}€`}
+        onPress={() => {/* Implement onPress action if needed */}}
+      />
 
       {isSubModalVisible && (
         modalCounts.find(modalCount => modalCount.id === selectedModalCounts[0])?.sub === 2 ? (

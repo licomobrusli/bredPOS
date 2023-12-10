@@ -16,6 +16,26 @@ const adaptiveFontSize = (baseSize: number) => {
 };
 
 const fonts = StyleSheet.create({
+  txtButtonA: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontFamily: 'WorkSansSemiBold',
+    fontSize: adaptiveFontSize(40),
+    letterSpacing: adaptiveFontSize(4),
+    color: 'white',
+  },
+
+  txtList: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontFamily: 'WorkSansSemiBold',
+    fontSize: adaptiveFontSize(40),
+    letterSpacing: adaptiveFontSize(4),
+    color: 'white',
+  },
+  
+  // old stuff that needs to be replaced
+  
   txtBrandBanner: {
     textAlign: 'center',
     textAlignVertical: 'center',
@@ -42,21 +62,7 @@ const fonts = StyleSheet.create({
     color: 'white',
     textTransform: 'uppercase',
   },
-  txtModalCounts: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontFamily: 'WorkSansSemiBold',
-    letterSpacing: 10,
-    fontSize: adaptiveFontSize(40),
-    color: 'white',
-  },
-  txtItems: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontFamily: 'WorkSansRegular',
-    fontSize: adaptiveFontSize(50),
-    color: 'white',
-  },
+  
   txtTitle: {
     textAlign: 'center',
     textAlignVertical: 'center',

@@ -7,6 +7,7 @@ import SwatchGridStyle from '../../config/swatchGridStyle';
 import SubModal from './SubModal';
 import SubModalB from './SubModalB';
 import SDims from '../../config/dimensions';
+import Buttons from '../../config/buttons';
 
 interface CartModalProps {
   visible: boolean;
@@ -84,22 +85,6 @@ const calculatePrices = (newCartItems: any[]) => {
   setCartItems(newCartItems);
 };
 
-
-
-        
-  // function to handle no edit button if sub = 0
-  const handleSubZero = (sub: number, itemDetails: any, index: number) => {
-    if (sub === 0) {
-      return null;
-    } else {
-      return (
-        <TouchableOpacity onPress={() => openModal(sub, itemDetails, index)} style={styles.cartButton}>
-          <Text style={fonts.txtItems}>Edit</Text>
-        </TouchableOpacity>
-      );
-    }
-  };
-
   // Function to handle item deletion
   const handleDelete = (index: number) => {
     const newCartItems = [...cartItems];
@@ -116,15 +101,13 @@ const calculatePrices = (newCartItems: any[]) => {
               {item.selectedService?.name} de {item.selectedCategory?.name}
             </Text>
             {item.modalCountsDetails.map((detail, detailIndex) => (
-              <Text key={detailIndex} style={fonts.txtItems}>
+              <Text key={detailIndex} style={fonts.txtButtonA}>
                 {detail.name}: {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
               </Text>
             ))}
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {item.modalCountsDetails.length > 0 && (
-                handleSubZero(item.modalCountsDetails[0].sub, {
-                  colors: item.selectedColors,
-                }, index)
+              {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
+                <Buttons.ButtonA title="Edit" onPress={() => openModal(item.modalCountsDetails[0].sub, { colors: item.selectedColors }, index)} />
               )}
               <SwatchGridStyle
                 colors={item.selectedColors} 
@@ -132,19 +115,13 @@ const calculatePrices = (newCartItems: any[]) => {
                 selectedColors={item.selectedColors} 
                 selectedSwatchStyle={styles.selectedSwatchStyle}
               />
-              <TouchableOpacity onPress={() => handleDelete(index)} style={styles.cartButton}>
-                <Text style={fonts.txtItems}>X</Text>
-              </TouchableOpacity>
+              <Buttons.ButtonA title="X" onPress={() => handleDelete(index)} />
             </View>
           </View>
         ))}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <TouchableOpacity style={styles.cartButton}>
-          <Text style={fonts.txtItems}>Submit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onClose} style={styles.cartButton}>
-          <Text style={fonts.txtItems}>Close</Text>
-        </TouchableOpacity>
+          <Buttons.ButtonA title="Submit" onPress={onClose} />
+          <Buttons.ButtonA title="Close" onPress={onClose} />
         </View>
         {modalType === 'subModal' && selectedItemIndex !== null && (
           <SubModal
@@ -181,14 +158,15 @@ const styles = StyleSheet.create({
     height: SDims.Height5p * .5,
     width: SDims.Height5p * .5,
   },
+  
   cartButton: {
-    padding: 10,
-    marginVertical: 5,
-    backgroundColor: 'black',
-    borderRadius: 5,
-    borderColor: 'white',
-    borderWidth: 1,
+    paddingVertical: 40,
+    paddingHorizontal: 40,
+    backgroundColor: '#AD8457',
+    borderRadius: 10,
+    ...fonts.txtButtonA, // Spread the font style here
   },
+  
   itemContainer: {
     borderColor: 'red',
     borderWidth: 1,
