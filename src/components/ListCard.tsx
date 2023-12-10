@@ -18,7 +18,7 @@ const ListCard: React.FC<ListCardProps> = ({ style, imageUrl, categoryName, serv
   return (
     <TouchableOpacity onPress={onPress} style={[styles.card, style]}>
       <Image source={imageSource} style={styles.image} />
-      <Text style={customStyles.txtProductCard}>{displayText}</Text>
+      <Text style={customStyles.txtButtonA}>{displayText}</Text>
     </TouchableOpacity>
   );
 };

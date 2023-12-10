@@ -35,7 +35,7 @@ const ThemeListItem: React.FC<ThemeListItemProps> = ({
       >
         <Text
           style={[
-            styles.txtModalCounts,
+            styles.txtButtonA,
             {
               flex: 4.2,
               textAlign: 'left',
@@ -47,7 +47,7 @@ const ThemeListItem: React.FC<ThemeListItemProps> = ({
         </Text>
         <Text
           style={[
-            styles.txtModalCounts,
+            styles.txtButtonA,
             {
               flex: 1,
               textAlign: 'right',

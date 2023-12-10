@@ -53,24 +53,6 @@ const fonts = StyleSheet.create({
     textTransform: 'uppercase',
     color: 'white',
   },
-  txtProductCard: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontFamily: 'WorkSansBold',
-    letterSpacing: 10,
-    fontSize: adaptiveFontSize(50),
-    color: 'white',
-    textTransform: 'uppercase',
-  },
-  
-  txtTitle: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontFamily: 'WorkSansExtraBold',
-    fontSize: adaptiveFontSize(60),
-    color: 'white',
-    textTransform: 'uppercase',
-  },
 });
 
 export default fonts;

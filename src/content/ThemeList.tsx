@@ -6,7 +6,6 @@ import { fetchModalCounts } from '../config/apiCalls';
 import { ModalCount } from '../config/types';
 import SubModal from '../components/modals/SubModal';
 import SubModalB from '../components/modals/SubModalB'; // Import SubModalB
-import styles from '../config/fonts';
 
 interface ThemeListProps {
   categoryCode: string;
