@@ -11,7 +11,8 @@ interface ButtonAProps {
 interface listButtonProps {
   name: string;
   price: string;
-  onPress: () => void;
+  onPress?: () => void;
+  style?: object;
 }
 
 const styles = StyleSheet.create({
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   ListButton: {
+    margin: 5,
     paddingVertical: 20,
     paddingHorizontal: 40,
     backgroundColor: '#AD8457',
@@ -64,15 +66,11 @@ const ButtonA: FC<ButtonAProps> = ({ title, onPress }) => {
   );
 };
 
-const ListButton: FC<listButtonProps> = ({ name, price, onPress }) => {
+const ListButton: FC<listButtonProps> = ({ name, price, onPress = () => {}, style }) => {
   return (
-    <TouchableOpacity style={styles.ListButton} onPress={onPress}>
-      <Text style={[styles.listButtonText, styles.name]}>
-        {name}
-      </Text>
-      <Text style={[styles.listButtonText, styles.price]}>
-        {price}
-      </Text>
+    <TouchableOpacity style={[styles.ListButton, style]} onPress={onPress}>
+      <Text style={[styles.listButtonText, styles.name]}>{name}</Text>
+      <Text style={[styles.listButtonText, styles.price]}>{price}</Text>
     </TouchableOpacity>
   );
 };

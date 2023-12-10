@@ -1,0 +1,144 @@
+more minor aesthetic adjustments -- the end of this will be all buttons will use buttons.tsx as source, all colours and fonts will be the new approved ones, the new log at the top, following all additional style guides regarding spacing and colouring etc, and all relative dimensions from SDims
+started aplying the new fonts and colours
+added all weights of Work Sans font and did a few aesthetic changes on CartModal, more to do on CartModal aesthetics and LATER return to make SubModalB persistent
+the counter doesnt persist nothing happens in subModalB in CartModal either
+both SubModals work and addToCart correctly.  Now check edit cart option from within CartModal.
+everything good selectedValue added but not in use yet
+updated open SubModalB condition to be exclusive to sub === 1, was where sub <> 2.  Later I need to look at stuff like only making it back update selectedValue for example when we close The SubModal or SubModalB.  THey dont need to update with every interaction.  NEXT make the counter value apply to the THemeList modalCount
+minor adjusts to No Colors warning. NEXT SubModalB counter doesn't seem to do anything
+a few more aesthetic things like to SubModalB MUST make the SUbModalB counter work again and be active in both CartModal and CutModal and have persistent memory etc. ALSO a whole bunch of aesthetic work on the CartModal  THEN submit order to the tables
+now the AddToCart correctly checks the sub and colors status and opens the warning if conditions not met otherwise adds to cart as previously NEXT make the colors warning prettier
+doing more adjusts to stop no color selected from being added to the cart
+Ok I did all the layout stuff more or less, still need to deal with the CartModal NEXT Launch COlor warning modal on sub === 2 and color.length < 1
+and now the SubModal looks good size, shape, position, organisation of contents.  NEXT deal with the ModalDetail section and LATER the Cancel/Add nuttons and THEN no AddToCart if len color = 0
+moving stuff around.  I got the ThemeType and ThemeList to sit well together in the ModalTheme and removed their borders. There only remains the red border of ModalTheme.  When I add a color and it creates the 3rd row in SubModal all the rows jump up to centrally align everything and make space, I should stop that, also Selected colors is down too low still on the screen and ModalFooter is off screen... also I need it to not allow AddToCart when no colors are selected if colors are required.
+Tidying up aesthetic issues, have applied a bunch of borders to help me understand the interplays of all the dumb flex things and other dimensions I've employed to get this far, removed borders from buttons, update button fonts NEXT Why is this dumb space under the ThemeList & THEN SubModal shoudl cover ModalDetail color swatches.
+Added 3rd row of color swatches to SubModal that shows selected swatches as in ModalDetail.  NEXT more aesthetic fixes, remove any non-relative dimensions, resize the modals, reposition the gridCardRows, unify the layout of all the buttons, position the cart, position the advert, etc
+fuck yeah!  I got the stupid modalCounts to calculate the changes correctly in CartModal after SubModal chnages. That was a lot.  I'm still in this weird valley with all this where I kind of don't know what I am doing so rely heavily on ai till I get angry with it being dumb af and realise that I need to dig in and work out whats up and fix it myself.  I am really not quite a pilot yet.  So we are 2 co-pilots just keeping the plane bobbing above the ground uneasily.  Anyway, it works now.  NEXT Submit the order which should launch the payment device first, then take payment, then print a ticket, then submit the order to the table.
+got the SubModal color change to update the xN value against the unitprice in the logic = OR rows of the item summary NEXT recalc the SubTotal
+soooo ... I have SubModal opening and can edit the color selection and the selection changes in the Cart and when I go back to CutModal the ThemeList is updated and the Selected colours bit which I cant remember its name it updated and if I  open SubModal it is updated and the total for the number fo colours only updates in ThemeList and not in CartModal NEXT update price in CartModal and make space for hte xN part int he ThemeList
+MEZZANINE From cartModal I can now open SubModal or SubModalB.  SubModal opens with the colors selected but does not allow chnages to selections and therefore does not dit or update the item yet.  SUbModalB opens with no value.  Turns out there is a variable called counter that handles the number of lines but it is not passed int he props for AddToCart and is never loaded to SubModalB (even though I believe it used to work, I guess it never did) so NEXT keep moving forwards with colors so the edits work and stick, later add a 3rd row of colors to SubModal so we can see the selected ones appear below THEN get counter passed through the whole AddToCart mullarkey
+EXITO I got the right subModal to open,  the edit button to only appear once, and the edit button to not be visible when sub = 0. NEXT add a 3rd row of color swatches to SubModal that show the selected ones, THEN deal with the editing behaviour by passing the colours up and down.
+EXITO I got CartModal to open SubModal for the edit, did it without ai too.  NEXT Pass the sub value from modal counts along with the name and price in the AddToCart props passed, this will enable the edit button to 1. not exist = 0, 2. launch SubModal or SubModalB with detailsdepending on whether SUB = 1 or 2.
+added edit, delete and submit buttons to Cart Modal, deletce button is live NEXT make edit button live THEN make submit button live
+fixing a silly error
+EXITO subModalB ineracts with price of sub = 1 modal_counts selected.  So lines count basically  NEXT Add a finalise order button on the CartModal to offer payment method then after payment is made or cash is selected print the reciept and submit the order to the table
+EXITO created SUbModalB opens when sub = 1 moved SubModal to open when sub = 2, subModalB has a -0+ control that functions.  NEXT make the +0- thing update the price of lines by multiplication and send that through to CartModal wiht AddToCart.
+fixed the selection of the logic = NOT modal_counts NEXT Make design SubModal functions
+updated cutModal and cartContext so that items of a Ser:Cat pair cannot be duplicated because each time you return to that pair after doing an AddToCart it will load the details of the previously added item and when you finish making any edits to the item and click addToCart again it updates the existing item by Ser:Cat pair NEXT There's a little issue with how the NOT items select and specifically can be deselected in ThemeList
+addToCart multiple items EXITO
+add to cart button now also closes CutModal NEXT write AddToCart detail to CartModal
+add to cart log now contains items with prices, subtotal, colors selected and order item theme which is everything it needs to know -- fucking FUCK YEAH!!! lets fucking go!!! NEXT print same to order summary and put a +1 on the cart items counter -- what a moment in this journey!
+YAY!!! back moving forwards again on the ApprovedDesign.  selectedCounts is now perfect NEXT pass selectedCounts up to CutModal
+Back to business!  APIs are all done now, so will merge this branch with ApprovedDesign in a moment.  EXITO logging the selected modal_counts with live prices in ThemeList NEXT pass that up to CutModal which is holding all the code for the itemSummary.  LATER Need to deal with it lets no NOT be selected even when there are colors selected, it should force at least 1 of te NOTs to be selected once colours are selected
+very happy to be making a positive commit again after 12 hours straight of problems and confusion but now I have almost finished removing all teh redundant API calls and have almost all the app running off the first API calls which provide all the required data right up until modal_counts .. which need an api call
+added category details to the order summary data NEXT Use the service and category data to handle all operations on CutModal with no API
+EXITO sent category details to CutModal
+damn that was wild but I'm glad I went back in for the win, the item summary is correctly including the service data now.  I will take a break and then follow the data down through each component to CutModal so that it populates the names on the cards without making a new API call OR repeate what I already achieved but now for category pressed
+after seeing all the dodgy API calls getting repeated, and having to do extra work to get the category and service names up to the item summary / oreder summary.  I have decided to fix these bullshit calls and make sure it keeps using the data it already has, I skipped this and just called it again earlier because I had too much other stuff to leran at the time and was trying to get other basic functions up and running without caring that it had to go back to the table if getting it to do so meant I could keep working and not getting it to do so would mean I would have got stuck
+EXITO added more logic for the item summary in order summary NEXT catName and serName are NULL, subtotal totals all modal_counts in set, items lists all items in set, should be prejudiced and only choose those that are selected and should not calc the subtotal rather just steal it from the subtotal in the modal
+added more details to the log NEXT add more details to the log still
+EXITO add to cart button logs 1 data point of item summary NEXT log all data points THEN send to order summary
+EXITO fixed the no select on NOT ... NEXT move Cancel/Añadir buttons above the ModalDetail and THEN (and I've been saying this for a while but) ... THEN submit to cart and summary
+messing around with the layouts a bit NEXT slecting a modal_count NOT doesnt open the SubModal only the OR does
+all selections and deselections of modal_counts seem correct (was NOT logic and not AND logic) PLUS subtotal is accurate NEXT añadir al puto carrito!!! and lastly the stupid lines thing, THEN submit order to table ... I really feel a lot closer now, adding a SubModal laternative for lines will be less complex and will involve the same things I already learned in this first SubModal
+attempt to reintroduce AND logic in modal counts failed
+now deselects when count drops below 1, so actually perfect NEXT add 1 row to modal_counts list name = subtotal price = sum price of selected items
+now it does the maths inline (stays selected when count goes below 2 will fix later) EXITO so NEXT add the subtotal row
+man it feels so good to be back on the approvedDesign branch making progress again.  This is the second time in this project that I got stuck in a spiral because I didn't understand how to pass props correctly.  I keep falling back on the idea that once I set a variable somewhere it will be available everywhere, but it is more like building IVRs where you have to pass things along ... except at least in IVRs I can still write them to a table without fucking up the performance.  Anyway EXITO The extra auto selects when >1 count in the SubModal and OR in the logic (which means it is the extra one, and >0 in the sub but later that will be used to select specific subs... those bits are the bis I'm much better at... NEXT lets in line multiply the Extras price by the SubModal count -1 and later use that to make the subtotal as another redbar
+Restructure completed.  Now props all go in the right directions and persist as are drilled from a shared parent NEXT merge git branches
+EXITO ... NEXT remove open/close and apply to onPress of swatches
+ModalDetail shows selected swatch in CutModal.  Selection in SubModal is persistent due to prop sent to CutModal.  Selecting swatches after opening from ModalDetail causes a crash.
+ModalDetail and modal_count name/price both open SubModal but with distinct memory.  NEXT send props up to CutModal OR use react context
+SubModal has correct behaviour again NEXT ModalDetail
+lets try ask askthecode why the behaviour isnt working
+restructuring ModalTheme to do receive from service and category from  ThemeType and modal_counts from ThemeList. This now works however the selection behaviour and memory of the selections made etc got broken.  Now to build back that behaviour
+broght back the names below the images in the themeCards to show corte pelo etc also for use in teh order summary NEXT subtotal of the order and finally I thnk then I can submit to cart
+failed to get the swatches to reopen the SubModal with the same behaviour and persistent memory it would only open as a separate entity with separate memory.  I'll look into it later or try do it right somewhere else and when I get it come back to this later... I cnat wait till Im almost as good in typescript as I am in SQL ... I know I need to start typing it mroe to achieve that.  I'll do that from now on, at least once a day when I get the edits I¡ll hand type them in and start learning more of the detail.  Anyway, what I actually did in the end was set up a swatch counter in ModalDetail NEXT add name of category and service selections and name of selected modalCount items this will form the order summary for the item pre-submission to the cart
+added distinct behaviour for selected swatch background colours in Sub vs Detail NEXT fix text in red bars goes on 2 rows sometimes, NEXTNEXT add subtotal counter that counts the selected colour swatches LATER I will need eventually to put these colours into a table and give them names
+Colors selected appear and dissapear in ModalDetail as selected in SubModal and are centre aligned in a centre aligned grid and BUT are persistent over screens NEXT add to cart and no persist on back -- plus back warning 'add to cart or not'
+Colors selected in SubModal now visible in ModalDetail but do not dissapear when you change screen, so that is NEXT AND THEN make it subtotal the item and make it submite to the carrito
+now allows multiple selections of colors no counter, just updates border, will be prettier with a double border but I mustnt spend time on that.  NEXT: make colour selections visible on CutModal after close of SubModal and sub total item price
+moved swatch grid style to own component.  NEXT add counter (with optional +/- because will be needed for lines) to SubModal, put text at bottom of submodal 'extra color = 6€' allow multiple selections, highlight selected items, each new selection raises the counter but theres no sub total price counter just an items counter and the items becomes highlighted then you have to click OK to exit and the colours selected appear as swatches below the order list, keep extra colores in the CutModal so they can also click on that
+colour patches now clickable, on click close sub and remember hexcode of colour clicked
+updated 10 colour patches to actual colours and renamed gridStyles = cardGridStyle to make way for patchGridStyle
+added title & 10 colour patches and used my fonts in SubModal
+finished ThemeList logic, now does not deselect on reselect
+made font sizes dynamic too and then renamed some stuff LATER I should make these an instance like in dimensions so they are all calcd once and eventually do the same with all the API calls ... also I should make a proper TODO file rather than all these notes in commit messages, perhaps I can get ask teh code to do that for me
+extended the dynamic dimensions into the SubModal is now mostly everywhere, will find the last spots and clean them up as time goes by, also added some aliases NEXT: lets work out how to make teh fonts dynamic
+updated CutModal to fit space between header and footer, not fully pleased with it as it relies on a bottom margin but that might just be what it is
+updated MainScreen children to use dimensions.ts -- interestingly stackNavigator if sent height doesnt seem to know what to do with it and it has to be applied later at MCentralSection ... I'm sure there is a way of defining that size and shape earlier and avoiding this as then you could see all the dims on the same page in the same file ... anyway, some of what I am doing now will be more useful later so should ot spend too much time on it but good ot be able to at least control one aspect of this whole language
+added dimensions.ts with constructor for a singleton instance to calc and cache the values
+added a dimensions.ts to precalc relative dims, applied to gridStyle and SubModal NEXT RedBars should be below images not incroaching upon them, I need a total price for item, that is summing the additional colours or lines and the additional colours or lines need to show a xN value, set up the SubModal layout and funcitonality and finally get to add to cart ... man, I'm gonna be so pumped when I eventually get to add to cart!
+submodal launches based on column modal_counts.sub >0 NEXT Do all the sub modal things ... make it the right size and shape etc ... also check that it is a modal not clear why it appears the way it does so I should first play around with its size
+renamed subsmodal to AdvertModal and added new SubModal to be launche based on column modal_counts.sub = 1 or 2, which is what is NEXT
+things are going well today and fairly quickly ... ThemeList redbars are no clickable and the currently selected bar is red while the others are black with red border.  NEXT add modal_counts.logic logic THEN +0- controls
+added logic and quantity to apiCalls, types, etc.  NEXT Implement logic and quantity
+hooked up apiCalls to service and category lists reducing boilerplate. NEXT return to ThemeList additional functionality i.e. red bars change colours, +0- selectors, añadir al carrito
+hooked up apiCalls to ThemeList.  NEXT same for service and category lists
+added apiCalls and images/index.ts to reduce boilerplate.  NEXT:  Iplement apiCalls in service, category and theme lists
+modal_counts name & price now 1 per red bar  NEXT: Add quantity control, with quantity limit from modal counts table THEN: multiply price by quantity AND THEN: apply law of excluded middle where appropriate, requires info from the table new table column
+print all modal counts results as list.  NEXT Adjust layout of modal counts list to fit per row.  THEN add quatity counter, limited by quantity limit in modal_counts table.  AND THEN add sub modals for colour selection.  ALSO I think I'm gonna need them each to have their own red bar thingy, will make everything easier
+added api to modal_counts to display name and price in red bar.  NEXT: print as list, currently only shows top 1 result in red bar
+added api to modal_counts to display name and price in red bar.  NEXT: print as list, currently only shows top 1 result in red bar
+Added CutModal full screen red with close button.  NEXT: Add circle for counter then log item count in circle and order review list in modal
+bob
+added cart icon to bottomSection.  NEXT:  Add white circle with black border to place over cart, where later the number of items will appear
+Red bar no shows names in capitals not codes in lowercase, centralised, bar same width as images, images same size and position, cards reduced height to accomodate redbar at same height as names in previus screens
+moved red service de category bar below images on CutModal.
+updated ThemeList to select services and categories where code = variable sent by userpress.  NEXT: look back at the MVP document
+now serviceCode is also passed to ThemeList (albeit both categoryCode and serviceCode are sent by component mining with the props, so that should be fixed later).  NEXT: Use serviceCode and categoryCode to filter ThemeList images with the word de in between
+CutModal receives categoryCode and displays it in a bar at the top of ModalList.  NEXT: Also pass through serviceCode to ModalList.
+finally got the size and shape and alignment of all the cards to match up. NEXT: get it to show the right images based on what images were clicked ... maybe start with that in a different component that has nothing else going on
+working on ThemeList. NEXT: add card border and contain, reduce to 2 images while maintaining the format, show correct images
+resolved repo in repo issue, made minor aesthetic improvements to Modal.  Stripped down modal to only show 2 place kittens in an attempt to build the format / layout from scratch.  NEXT: either sort modal layout or sort modal onPress ... pick one!
+minor changes
+ignore embeded repo directory, move CutModal below TopSection
+MPVCutModal has basic ugly elements
+preparing for MVPCutModal
+preparing for MVPCutModal
+added FAQ answer to starter plan onPress ... and I really hate all this hardcoding
+added HelpModal.  Most sizes are hard coded I dont want to use hard or dynamic I want to use variables and have them updated at boot from a one time dynamic measurement
+adjusting controls section position
+added client fonts, serviceList updated to match categoryList.  NEXT: cancel / back button, categorise current price list for MVP, write up all required elements for MVP
+set up full size emulator, made some aesthetic adjustments to fit new screen size
+switched from placekittens to hardcoded local jpgs bundled in the app & 3 per row.  NEXT: move row down in component, this can be done by making another component above bottom for the anuncios and then centre align the 1 row of 3 to the list grid content &  make cards rectangular
+listSection = black, listCard.border = white -- looks so much doper
+removed unwanted components, updated top section black, MOGANS, statusbar = translucent, moved grid layout out of List content files to grid file, added a text styles and grid styl file
+Met with client, agreed overall design, agreed Cat & Ser screen layout.  This branch will be used to implement the initial changes: add real images, make background white, remove side bar and header, add adverts banner, etc. (see mock-up)
+added ListCard to CategoryList.  Next: Merge Branch - MakeCatFilterOptional with master and push to public repo.  NEW BRANCH: CurModal1
+serviceList uses new ListCard. Next: appl ListCard to ServiceList
+hardcodedDefault if set.use, if ''.all if null.filterbyServiceCategory
+added default variable for category filter, can manually input a category and override true categroy clicked
+trying to put the service_category field back in services
+Added basic modal 'cutModal' launches on press of any service in any category.  Next consider the required modals
+Back only visible when stack >1. NEXT: Create modal for confirming select service and placing in the bottom section
+made back button functional.  Next: Back only visible when stack >1
+CatScreen onPress navs to SerScreen and displays correct Cat of Ser
+minor aesthetic changes if bad go to previous commit
+imported stackNav to MlistSection to display Category or Service dby NAv state.  Deleted NavContext as Mlist is a child of both Cat and Ser screens so can recieve NavStack directly: TESTED OK.  Next: Make CatScreen image onClick nav to SerScreen
+StackNav chooses Category or Service screen: TESTED OK.  Next: Send nav status to MlistSection to render Category or Service List
+Aesthetic changes to tsx files.  New plan -- Next: Integrate StackNavigator with MListSection
+Stable version.  Next: Integrate StackNavigator with MainScreen component
+Layout of categories and services proven by manually assigning to MListSection.  Next steps analyse bad chat from last night and generate a new instruction for chatgpt to add navigation
+Dealing with some bullshit JS error by disabling the Extensions in VS Code
+Updated StackNav to use CatScreen and SerScreen
+Created CatScreen and SerScreen and renamed all SerCat as just Cat
+removed all navigation, put back and header image in header section again -- next steps: make folder for content put servicecatlist and serlist in there and back button and header image, then in screens have CatScreen and SerScreen which are either parents of or copies of CentralSection
+ServiceList now contains both contents list/grid and back button
+New structure implemented, back button and header now like catList and serList.  Next implement nav onClick Back & Back visible when stack >1
+rename Main to List again, I suck
+Added branding image, adjusted back button image, made back button clickable (HeaderSection)
+The image shifts over the text in header so its there but not visible, damn I'm dumb
+renamed AppNav as StackNav in more places, so gay
+Changed header style and image method to match other sections and lists
+main consists of top central and bottom sections, central consists of header, left and list.  Header to be used for back button, currently not visible
+fixed: not filtering by category (also updated endpoint)
+created back button component BBack currently unused (black on grey)
+Navigation from Categories to Service filtered by clicked category. Next task: Add back button that removes servicesScreen from navigation stack
+fixed auto format of stack.navigator to not show header
+installed gesture handler - to resolve error after updated mainscreen and app.tsx
+Added basic AppNavigator
+fixing the click on category screen
+all other branches can be ignored / deleted. Master now contains two screens categories and services, only categories is visible / in use, both have clickable images.  No navigation yet.
+Initial commit

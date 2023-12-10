@@ -163,30 +163,18 @@ const ThemeList: React.FC<ThemeListProps> = ({
 
   return (
     <View style={{ backgroundColor: 'black', justifyContent: 'center' }}>
-      {modalCounts.map(modalCount => (
-        <TouchableOpacity
-          key={modalCount.id}
-          onPress={() => handleModalCountPress(modalCount.id, modalCount.logic, modalCount.sub)}
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            backgroundColor: isModalCountSelected(modalCount) ? '#AD8457' : 'black',
-            alignSelf: 'center',
-            width: screenWidth * 0.55,
-            marginVertical: 10,
-            borderColor: '#AD8457',
-            borderWidth: 1
-          }}
-        >
-          <Text style={[styles.txtList, { flex: 4.2, textAlign: 'left', paddingLeft: 10 }]}>
-            {modalCount.name.toUpperCase()}
-          </Text>
-          <Text style={[styles.txtList, { flex: 1, textAlign: 'right', paddingRight: 10 }]}>
-            {calculatedPrices[modalCount.id] ? `${calculatedPrices[modalCount.id].totalPrice}€` : ''}
-          </Text>
-        </TouchableOpacity>
-      ))}
+    {modalCounts.map(modalCount => (
+      <Buttons.ListButton
+        key={modalCount.id}
+        name={modalCount.name.toUpperCase()}
+        price={calculatedPrices[modalCount.id] ? `${calculatedPrices[modalCount.id].totalPrice}€` : ''}
+        style={{
+          backgroundColor: isModalCountSelected(modalCount) ? '#AD8457' : 'black',
+          // Additional styling here if needed
+        }}
+        onPress={() => handleModalCountPress(modalCount.id, modalCount.logic, modalCount.sub)}
+      />
+    ))}
 
       {/* Use ListButton for displaying subtotal */}
       <Buttons.ListButton
