@@ -1,4 +1,6 @@
 // In ../main/assets/images/index.ts
+export { default as BANImage } from './BAN.jpg';
+
 export { default as HEDImage } from './HED.jpg';
 export { default as FCEImage } from './FCE.jpg';
 export { default as BRDImage } from './BRD.jpg';
