@@ -4,7 +4,6 @@ import { View, StyleSheet, ViewStyle, ActivityIndicator } from 'react-native';
 import ThemeType from '../modals/ThemeType';
 import ThemeList from '../../content/ThemeList';
 import { Category, Service, Theme } from '../../config/types';
-import SDims from '../../config/dimensions';
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: 'black' },
@@ -69,14 +68,14 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
 
   return (
     <View style={[styles.container, style ]}>
-      <View style={{ height: 550 }}>
+      <View style={{ height: 620 }}>
         <ThemeType 
           themes={[...services, ...Categories]}
           onServiceNameChange={onServiceNameChange}
           onCategoryNameChange={onCategoryNameChange}
         />
       </View>
-      <View style={{ height: 330 }}>
+      <View style={{ height: 310 }}>
         <ThemeList 
           categoryCode={categoryCode}
           selectedServiceCode={selectedServiceCode}

@@ -113,11 +113,13 @@ const handleModalCountsChange = (counts: any[]) => {
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: SDims.Height20p }}>
+      <View style={{
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: SDims.Height20p }}>
         <View style={{
-          height: SDims.Height70p,
-          width: SDims.Width90p,
-          
+          height: SDims.Height80p,
+          width: SDims.Width90p,  
           flexDirection: 'column',
           backgroundColor: 'black',
         }}>

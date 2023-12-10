@@ -1,7 +1,6 @@
 // ModalDetail.tsx
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import SDims from '../../config/dimensions';
 import SwatchGridStyle from '../../config/swatchGridStyle';
 import Fonts from '../../config/fonts';
 import SubModal from '../modals/SubModal';
@@ -28,7 +27,7 @@ const ModalDetail: React.FC<ModalDetailProps> = ({
     <View style={{ height: 90 }}>
       {selectedColors.length > 0 && (
         <Text style={Fonts.txtCard}>
-          Selected Colors: {selectedColors.length}
+          Tus selecciones
         </Text>
       )}
       <SwatchGridStyle
