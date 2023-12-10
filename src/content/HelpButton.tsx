@@ -1,49 +1,26 @@
 // HelpButton.tsx
 import React, { useState } from 'react';
-import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
-import { useNavigationState } from '@react-navigation/native';
-import customStyles from '../config/fonts';
+import Buttons from '../config/buttons';
 import HelpModal from '../components/modals/HelpModal';
 
 const HelpButton: React.FC = () => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const state = useNavigationState(state => state);
 
   const handlePress = () => {
     setModalVisible(true);
   };
 
-  const isHelpButtonVisible = state.routes.length === 1;
+  // Assuming the logic to show the help button remains the same
+  const isHelpButtonVisible = true; // Update this condition as needed
 
   return (
     <>
       {isHelpButtonVisible && (
-        <TouchableOpacity onPress={handlePress}>
-          <View>
-            <Text style={customStyles.txtCard}>Informacíon</Text>
-          </View>
-        </TouchableOpacity>
+        <Buttons.ButtonB title="Ayuda" onPress={handlePress} color="B" />
       )}
       <HelpModal isVisible={isModalVisible} onClose={() => setModalVisible(false)} />
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  helpButton: {
-    width: 300, // Adjust the size as needed
-    height: 100, // Adjust the size as needed
-    borderWidth: 2,
-    borderColor: 'white',
-    borderRadius: 5,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  transparentCard: {
-    backgroundColor: 'transparent',
-    borderRadius: 5,
-  },
-});
 
 export default HelpButton;
