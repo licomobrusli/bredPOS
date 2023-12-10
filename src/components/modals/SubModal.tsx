@@ -15,7 +15,7 @@ interface SubModalProps {
 const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors, setSelectedColors }) => {
     const selectedSwatchStyle = { 
         backgroundColor: 'black',
-        borderColor: 'white',
+        borderColor: '#AD8457',
         borderWidth: 5,
     };
     const colorsRowOne = ['#1e57a4', '#00afaa', '#3aa935', '#e62d39', '#d40658'];
@@ -41,7 +41,7 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
                 height: SDims.HeightCentralSection * .65,
                 width: SDims.Width90p,
                 backgroundColor: 'black',
-                borderColor: 'red',
+                borderColor: '#AD8457',
                 borderWidth: 1,
                 justifyContent: 'center',
                 alignItems: 'center'
@@ -70,7 +70,7 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
                         onSelectColor={handleSelectColor}
                         selectedColors={selectedColors ?? []}
                         selectedSwatchStyle={{
-                            borderColor: 'white',
+                            borderColor: '#AD8457',
                             borderWidth: 5,
                         }}
                     />

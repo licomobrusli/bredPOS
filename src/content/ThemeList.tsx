@@ -171,11 +171,11 @@ const ThemeList: React.FC<ThemeListProps> = ({
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            backgroundColor: isModalCountSelected(modalCount) ? 'red' : 'black',
+            backgroundColor: isModalCountSelected(modalCount) ? '#AD8457' : 'black',
             alignSelf: 'center',
             width: screenWidth * 0.55,
             marginVertical: 10,
-            borderColor: 'red',
+            borderColor: '#AD8457',
             borderWidth: 1
           }}
         >

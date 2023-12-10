@@ -27,7 +27,7 @@ const ThemeCard: React.FC<ThemeCardProps> = ({ style, imageUrl, serviceName, onP
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: '#AD8457',
     borderRadius: 5,
     overflow: 'hidden',
     backgroundColor: 'transparent',

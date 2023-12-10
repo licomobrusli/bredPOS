@@ -17,13 +17,13 @@ interface listButtonProps {
 const styles = StyleSheet.create({
   // button styles
   buttonA: {
-    paddingVertical: 40,
+    paddingVertical: 20,
     paddingHorizontal: 40,
     backgroundColor: '#AD8457',
     borderRadius: 10,
   },
   ListButton: {
-    paddingVertical: 40,
+    paddingVertical: 20,
     paddingHorizontal: 40,
     backgroundColor: '#AD8457',
     borderRadius: 10,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     alignSelf: 'center',
-    width: SDims.Width50p,
+    width: SDims.Width50p + SDims.Width5p,
   },
   
   // button text styles

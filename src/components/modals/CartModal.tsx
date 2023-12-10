@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   selectedSwatchStyle: {
-    borderColor: 'white',
+    borderColor: '#AD8457',
     borderWidth: 5,
     margin: 10,
     height: SDims.Height5p * .5,

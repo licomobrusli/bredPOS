@@ -34,21 +34,22 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCo
   };        
       
   return (
-    <View style={{ flex: 1,
+    <View style={{ width: SDims.Width50p + SDims.Width5p,
       flexDirection: 'row',
-      justifyContent: 'flex-end',
-      alignItems: 'flex-start',
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center',
       backgroundColor: 'black',
        }}>
       <TouchableOpacity onPress={handleAddToCart} style={{  }}>
-        <View style={{flexDirection: 'column', borderColor: 'red', borderWidth: 1, padding: 50 }}>
-          <Text style={fonts.txtProductCard}>AÑADIR</Text>
-          <Text style={fonts.txtProductCard}>AL</Text>
-          <Text style={fonts.txtProductCard}>CARRITO</Text>
+        <View style={{flexDirection: 'column', borderColor: '#AD8457', borderWidth: 1, padding: 50 }}>
+          <Text style={fonts.txtButtonA}>AÑADIR</Text>
+          <Text style={fonts.txtButtonA}>AL</Text>
+          <Text style={fonts.txtButtonA}>CARRITO</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={onClose} style={{ padding: SDims.Width5p, paddingTop: SDims.Width10p }}>
-        <Text style={fonts.txtModalCounts}>CANCELAR</Text>
+        <Text style={fonts.txtButtonA}>CANCELAR</Text>
       </TouchableOpacity>
 
       <Modal visible={isColorModalVisible} transparent={true}>
@@ -58,7 +59,7 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCo
             height: SDims.HeightCentralSection * .65,
             width: SDims.Width90p,
             backgroundColor: 'black',
-            borderColor: 'red',
+            borderColor: '#AD8457',
             borderWidth: 1,
             justifyContent: 'center',
             alignItems: 'center'

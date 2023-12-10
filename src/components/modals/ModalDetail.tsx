@@ -36,7 +36,7 @@ const ModalDetail: React.FC<ModalDetailProps> = ({
         onSelectColor={handleSwatchPress}
         selectedColors={selectedColors}
         selectedSwatchStyle={{
-          borderColor: 'white',
+          borderColor: '#AD8457',
           borderWidth: 5,
         }}
       />
