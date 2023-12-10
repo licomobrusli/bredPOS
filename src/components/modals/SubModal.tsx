@@ -42,7 +42,7 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
                 width: SDims.Width90p,
                 backgroundColor: 'black',
                 borderColor: '#AD8457',
-                borderWidth: 1,
+                borderWidth: 2,
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>

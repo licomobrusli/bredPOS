@@ -45,7 +45,7 @@ const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChan
           width: SDims.Width90p,
           backgroundColor: 'black',
           borderColor: 'red',
-          borderWidth: 1,
+          borderWidth: 2,
           justifyContent: 'center',
           alignItems: 'center'
         }}>

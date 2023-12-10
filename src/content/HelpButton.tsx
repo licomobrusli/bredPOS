@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   helpButton: {
     width: 300, // Adjust the size as needed
     height: 100, // Adjust the size as needed
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'white',
     borderRadius: 5,
     overflow: 'hidden',

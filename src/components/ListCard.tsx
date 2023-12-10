@@ -25,7 +25,7 @@ const ListCard: React.FC<ListCardProps> = ({ style, imageUrl, categoryName, serv
 
 const styles = StyleSheet.create({
   card: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#AD8457',
     borderRadius: 5,
     overflow: 'hidden',

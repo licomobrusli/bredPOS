@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   
   itemContainer: {
     borderColor: 'red',
-    borderWidth: 1,
+    borderWidth: 2,
     padding: 1,
   },
 });

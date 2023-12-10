@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
   image: {
     height: '80%',
     resizeMode: 'contain',
-    borderColor: 'white',
-    borderWidth: 1,
+    borderColor: '#AD8457',
+    borderWidth: 2,
   },
 });
 

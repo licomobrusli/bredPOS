@@ -54,6 +54,7 @@ const CategoryList = () => {
           height: cardGridStyle.imageHeight * 1.5,
           marginLeft,
           marginBottom: cardGridStyle.gap,
+          backgroundColor: 'black',
         }}
         imageUrl={item.imageUrl}
         categoryName={item.name} // Pass the category name here

@@ -32,7 +32,7 @@ const ThemeListItem: React.FC<ThemeListItemProps> = ({
           width: screenWidth * 0.55,
           marginVertical: 5,
           borderColor: 'red',
-          borderWidth: 1,
+          borderWidth: 2,
         }}
       >
         <Text
