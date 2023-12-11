@@ -1,17 +1,17 @@
+// ListCard.tsx
 import React from 'react';
-import { StyleSheet, StyleProp, ViewStyle, TouchableOpacity, Image, Text } from 'react-native';
+import { StyleSheet, ViewStyle, TouchableOpacity, Image, Text } from 'react-native';
 import customStyles from '../config/fonts';
 
 interface ListCardProps {
-  style?: StyleProp<ViewStyle>;
-  imageUrl: any;
-  categoryName?: string;  // Made optional
-  serviceName?: string;  // New optional prop for service name
+  style?: ViewStyle;
+  imageUrl: string | { uri: string };
+  categoryName?: string;
+  serviceName?: string;
   onPress: () => void;
 }
 
 const ListCard: React.FC<ListCardProps> = ({ style, imageUrl, categoryName, serviceName, onPress }) => {
-  // Determine if the imageUrl is a local image or a remote URL
   const imageSource = typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl;
   const displayText = serviceName?.toUpperCase() || categoryName?.toUpperCase() || 'N/A';
 
