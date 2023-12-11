@@ -1,13 +1,14 @@
 // CartModal.tsx
 import React, { useState } from 'react';
-import { Modal, View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { Modal, View, Image, Text, StyleSheet } from 'react-native';
 import { useCart } from '../../config/CartContext';
 import fonts from '../../config/fonts';
-import SwatchGridStyle from '../../config/swatchGridStyle';
 import SubModal from './SubModal';
 import SubModalB from './SubModalB';
 import SDims from '../../config/dimensions';
 import Buttons from '../../config/buttons';
+import { EDTImage } from '../../main/assets/images';
+
 
 interface CartModalProps {
   visible: boolean;
@@ -96,38 +97,36 @@ const calculatePrices = (newCartItems: any[]) => {
     <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
       {cartItems.map((item, index) => (
-  <View key={index} style={styles.itemContainer}>
+        <View key={index} style={styles.itemContainer}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Buttons.ButtonA title="Quitar" onPress={() => handleDelete(index)} color='B' />
-                <View style={styles.rowContainer}>
-              <Text style={[fonts.txtButtonA]}>
-                {item.selectedService?.name} de {item.selectedCategory?.name}
-              </Text>
-              {item.modalCountsDetails.map((detail, detailIndex) => (
+              <View style={styles.rowContainer}>
+                <Text style={[fonts.txtButtonA]}>
+                  {item.selectedService?.name} de {item.selectedCategory?.name}
+                </Text>
+                {item.modalCountsDetails.map((detail, detailIndex) => (
                 detail.name === "Sub total" && (
-              <Text key={detailIndex} style={fonts.txtButtonA}>{` = `}
-                {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
-              </Text>
-            )
-          ))}
-        </View>
-          {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
-          <Buttons.ButtonA title="Mostrar detalles" onPress={() => openModal(item.modalCountsDetails[0].sub, { colors: item.selectedColors }, index)} color='B' />
-          )}
-          </View>
-            <SwatchGridStyle
-                colors={item.selectedColors} 
-                onSelectColor={() => {}} 
-                selectedColors={item.selectedColors} 
-                selectedSwatchStyle={styles.selectedSwatchStyle}
+                  <Text key={detailIndex} style={fonts.txtButtonA}>{` - `}
+                    {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
+                  </Text>
+                    )
+                  ))}
+                </View>
+                {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
+              <Buttons.ButtonA 
+                onPress={() => openModal(item.modalCountsDetails[0].sub, { colors: item.selectedColors }, index)} 
+                color='B' 
+                image={EDTImage}
               />
+            )}
+            <Buttons.ButtonA title="X" onPress={() => handleDelete(index)} color='B' />
           </View>
-        ))}
-        <Buttons.ContainerB>
-          <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
-          <Buttons.ButtonB title="Submit" onPress={onClose} color='A' />
-        </Buttons.ContainerB>
-        {modalType === 'subModal' && selectedItemIndex !== null && (
+        </View>
+      ))}
+      <Buttons.ContainerB>
+        <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
+        <Buttons.ButtonB title="Submit" onPress={onClose} color='A' />
+      </Buttons.ContainerB>
+      {modalType === 'subModal' && selectedItemIndex !== null && (
           <SubModal
             isVisible={true}
             onClose={updateCartItems}
@@ -155,19 +154,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
   },
-  selectedSwatchStyle: {
-    borderColor: '#AD8457',
-    borderWidth: 5,
-    margin: 10,
-    height: SDims.Height5p * .5,
-    width: SDims.Height5p * .5,
-  },
   
   itemContainer: {
-    padding: 10,
+    width: SDims.Width50p + SDims.Width5p,
+    padding: 20,
+    alignItems: 'stretch',
+    backgroundColor: 'black',
   },
 
   rowContainer: {
+    paddingVertical: 20,
+    paddingRight: 60,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

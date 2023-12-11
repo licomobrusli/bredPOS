@@ -1,5 +1,6 @@
+// buttons.tsx
 import React, { FC } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 import fonts from '../config/fonts';
 import SDims from '../config/dimensions';
 
@@ -9,7 +10,8 @@ const COLOR_A = '#AD8457';
 const COLOR_B = 'black';
 
 interface ButtonAProps {
-  title: string;
+  title?: string;
+  image?: any;
   onPress: () => void;
   color: 'A' | 'B';
 }
@@ -42,6 +44,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  imageStyle: {
+    width: 50,  // Set your desired width
+    height: 50,  // Set your desired height
+    resizeMode: 'contain'  // This ensures the image scales correctly
   },
 
   buttonB: {
@@ -104,11 +112,11 @@ const styles = StyleSheet.create({
 
 });
 
-const ButtonA: FC<ButtonAProps> = ({ title, onPress, color }) => {
+const ButtonA: FC<ButtonAProps> = ({ title, image, onPress, color }) => {
   const backgroundColor = color === 'A' ? COLOR_A : COLOR_B;
   return (
     <TouchableOpacity style={[styles.buttonA, { backgroundColor }]} onPress={onPress}>
-      <Text style={styles.buttonAText}>{title}</Text>
+      {image ? <Image source={image} style={styles.imageStyle} /> : <Text style={styles.buttonAText}>{title}</Text>}
     </TouchableOpacity>
   );
 };
