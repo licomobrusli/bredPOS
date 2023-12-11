@@ -95,21 +95,25 @@ const calculatePrices = (newCartItems: any[]) => {
   return (
     <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
-        {cartItems.map((item, index) => (
-          <View key={index} style={styles.itemContainer}>
-            <Text style={[fonts.txtButtonA]}>
-              {item.selectedService?.name} de {item.selectedCategory?.name}
-            </Text>
-            {item.modalCountsDetails.map((detail, detailIndex) => (
-              <Text key={detailIndex} style={fonts.txtButtonA}>
-                {detail.name}: {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
-              </Text>
-            ))}
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
-                <Buttons.ButtonA title="Edit" onPress={() => openModal(item.modalCountsDetails[0].sub, { colors: item.selectedColors }, index)} />
-              )}
-              <SwatchGridStyle
+      {cartItems.map((item, index) => (
+  <View key={index} style={styles.itemContainer}>
+    <View style={styles.rowContainer}>
+      <Text style={[fonts.txtButtonA]}>
+        {item.selectedService?.name} de {item.selectedCategory?.name}
+      </Text>
+      {item.modalCountsDetails.map((detail, detailIndex) => (
+        detail.name === "Sub total" && (
+          <Text key={detailIndex} style={fonts.txtButtonA}>
+            {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
+          </Text>
+        )
+      ))}
+    </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
+              <Buttons.ButtonA title="Edit" onPress={() => openModal(item.modalCountsDetails[0].sub, { colors: item.selectedColors }, index)} />
+            )}
+            <SwatchGridStyle
                 colors={item.selectedColors} 
                 onSelectColor={() => {}} 
                 selectedColors={item.selectedColors} 
@@ -171,6 +175,12 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     borderWidth: 2,
     padding: 1,
+  },
+
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
 
