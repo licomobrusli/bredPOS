@@ -186,8 +186,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Space between child elements
     alignItems: 'center', // Align items vertically in the center
     backgroundColor: 'black',
-    borderColor: '#AD8457',
-    borderWidth: 2,
   },
 
   rowContainer: {
