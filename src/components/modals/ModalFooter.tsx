@@ -10,9 +10,10 @@ interface ModalFooterProps {
   onAddToCart?: () => void;
   modalCountsDetails: any[];
   selectedColors: string[];
+  navigation: any;
 }
 
-const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCountsDetails, selectedColors }) => {
+const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCountsDetails, selectedColors, navigation }) => {
   console.log("ModalFooter rendering", { modalCountsDetails });
   const [isColorModalVisible, setColorModalVisible] = useState(false);
   const handleAddToCart = () => {
@@ -30,6 +31,7 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCo
         // If 'sub' is not greater than 0 or colors are selected, add to cart and close the modal
         onAddToCart && onAddToCart();
         onClose(); // Close the modal after adding to cart
+        navigation.navigate('CategoryScreen');
       }
     }
   };        
@@ -40,9 +42,9 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCo
         <Buttons.ButtonB title="Añadir al carrito" onPress={handleAddToCart} color='A' />
         <Modal visible={isColorModalVisible} transparent={true}>
         <TouchableWithoutFeedback onPress={() => setColorModalVisible(false)}>
-          <View style={{ marginTop: 1060,
+          <View style={{ marginTop: 1190,
             alignSelf: 'center',
-            height: SDims.HeightCentralSection * .65,
+            height: SDims.HeightCentralSection * .7,
             width: SDims.Width90p,
             backgroundColor: 'black',
             borderColor: '#AD8457',

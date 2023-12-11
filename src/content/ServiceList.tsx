@@ -8,8 +8,13 @@ import CutModal from '../components/modals/CutModal';
 import ListCard from '../components/ListCard';
 import { cardGridStyle } from '../config/cardGridStyle'; // Update the import path
 import { fetchServices } from '../config/apiCalls'; // Import your API calls
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
-const ServiceList: React.FC = () => {
+interface ServiceListProps {
+  navigation: NavigationProp<ParamListBase>;
+}
+
+const ServiceList: React.FC<ServiceListProps> = (props) => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -86,6 +91,7 @@ const ServiceList: React.FC = () => {
         selectedCategory={selectedCategory}
         selectedModalCounts={[]}
         modalCountsDetails={[]}
+        navigation={props.navigation}
       />
       {loading ? (
         <Text>Loading...</Text>

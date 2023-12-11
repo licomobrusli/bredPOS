@@ -5,12 +5,12 @@ import { useRoute } from '@react-navigation/native';
 import ServiceList from '../content/ServiceList';
 import CategoryList from '../content/CategoryList';
 
-const MlistSection: React.FC<{ style?: ViewStyle }> = ({ style }) => {
+const MlistSection: React.FC<{ navigation: any; style?: ViewStyle }> = ({ navigation, style }) => {
   const route = useRoute();
 
   return (
     <View style={[styles.container, style]}>
-      {route.name === 'CategoryScreen' ? <CategoryList /> : <ServiceList />}
+      {route.name === 'CategoryScreen' ? <CategoryList /> : <ServiceList navigation={navigation} />}
     </View>
   );
 };

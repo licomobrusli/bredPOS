@@ -19,6 +19,7 @@ interface CutModalProps {
   selectedCategory: Category | null;
   selectedModalCounts: string[];
   modalCountsDetails: any[];
+  navigation: any;
 }
 
 const CutModal: React.FC<CutModalProps> = ({
@@ -28,6 +29,7 @@ const CutModal: React.FC<CutModalProps> = ({
   selectedService,
   selectedCategory,
   selectedModalCounts,
+  navigation,
 }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [modalCountsDetails, setModalCountsDetails] = useState<any[]>([]);
@@ -150,6 +152,7 @@ const handleModalCountsChange = (counts: any[]) => {
               onAddToCart={handleAddToCart} 
               modalCountsDetails={modalCountsDetails}
               selectedColors={selectedColors}
+              navigation={navigation}
             />
           </View>
         </View>

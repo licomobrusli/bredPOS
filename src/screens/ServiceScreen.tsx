@@ -2,11 +2,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import McentralSection from '../components/McentralSection';
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
-const ServiceScreen: React.FC = () => {
+interface ServiceScreenProps {
+  navigation: NavigationProp<ParamListBase>;
+}
+
+const ServiceScreen: React.FC<ServiceScreenProps> = (props) => {
   return (
     <View style={styles.container}>
-      <McentralSection />
+      <McentralSection navigation={props.navigation} />
     </View>
   );
 };
