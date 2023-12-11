@@ -120,10 +120,12 @@ const handleModalCountsChange = (counts: any[]) => {
         alignItems: 'center',
         marginTop: SDims.Height20p }}>
         <View style={{
-          height: SDims.Height80p,
+          height: SDims.Height70p + SDims.Height5p + SDims.Width5p,
           width: SDims.Width90p,  
           flexDirection: 'column',
           backgroundColor: 'black',
+          borderColor: '#AD8457',
+          borderWidth: 2,
         }}>
           <View style={{ flex: .6 }}>
             <ModalTheme

@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
   },
 
   imageStyle: {
-    width: 50,  // Set your desired width
+    width: 30,  // Set your desired width
     height: 50,  // Set your desired height
-    resizeMode: 'contain'  // This ensures the image scales correctly
+    resizeMode: 'stretch'
   },
 
   buttonB: {

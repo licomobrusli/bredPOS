@@ -94,7 +94,12 @@ const calculatePrices = (newCartItems: any[]) => {
   };
 
   return (
-    <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onClose}
+    >
       <View style={styles.modalContainer}>
       {cartItems.map((item, index) => (
         <View key={index} style={styles.itemContainer}>
@@ -103,29 +108,41 @@ const calculatePrices = (newCartItems: any[]) => {
                 <Text style={[fonts.txtButtonA]}>
                   {item.selectedService?.name} de {item.selectedCategory?.name}
                 </Text>
-                {item.modalCountsDetails.map((detail, detailIndex) => (
-                detail.name === "Sub total" && (
+                  {item.modalCountsDetails.map((detail, detailIndex) => (
+                  detail.name === "Sub total" && (
                   <Text key={detailIndex} style={fonts.txtButtonA}>{` - `}
                     {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
                   </Text>
                     )
                   ))}
                 </View>
-                {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
-              <Buttons.ButtonA 
-                onPress={() => openModal(item.modalCountsDetails[0].sub, { colors: item.selectedColors }, index)} 
-                color='B' 
-                image={EDTImage}
-              />
-            )}
-            <Buttons.ButtonA title="X" onPress={() => handleDelete(index)} color='B' />
-          </View>
+                <View style={styles.buttonAContainer}>
+                  <Buttons.ButtonA title="X" onPress={() => handleDelete(index)} color='B' />
+                  {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
+                  <Buttons.ButtonA 
+                    onPress={() => openModal(item.modalCountsDetails[0].sub, { colors: item.selectedColors }, index)} 
+                    color='B' 
+                    image={EDTImage}
+                  />
+                  )}
+                </View>
+            </View>
         </View>
       ))}
+      <View
+        style={{
+          flexDirection: 'row',
+          marginTop: SDims.Height20p,
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+        }}
+      >
       <Buttons.ContainerB>
         <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
         <Buttons.ButtonB title="Submit" onPress={onClose} color='A' />
       </Buttons.ContainerB>
+      </View>
+
       {modalType === 'subModal' && selectedItemIndex !== null && (
           <SubModal
             isVisible={true}
@@ -149,22 +166,45 @@ const calculatePrices = (newCartItems: any[]) => {
 
 const styles = StyleSheet.create({
   modalContainer: {
-    flex: 1,
+    marginTop: SDims.Height20p,
+    height: SDims.Height70p + SDims.Height5p + SDims.Width5p,
+    width: SDims.Width90p,
+    alignSelf: 'center',
+    animationType: 'fade',
+    transparent: true,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
+    borderColor: '#AD8457',
+    borderWidth: 2,
   },
   
   itemContainer: {
     width: SDims.Width50p + SDims.Width5p,
     padding: 20,
-    alignItems: 'stretch',
+    flexDirection: 'row', // Change to row for horizontal layout
+    justifyContent: 'space-between', // Space between child elements
+    alignItems: 'center', // Align items vertically in the center
     backgroundColor: 'black',
+    borderColor: '#AD8457',
+    borderWidth: 2,
   },
 
   rowContainer: {
     paddingVertical: 20,
-    paddingRight: 60,
+    flex: 1, // Take up available space
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start', // Align content to the start
+  },
+
+  buttonAContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end', // Align buttons to the end (right)
+  },
+
+  controlContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
