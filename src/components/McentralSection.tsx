@@ -17,11 +17,11 @@ const McentralSection: React.FC = () => {
       <View style={{ height: SDims.HeightCentralSection * .5 }}>
         <MlistSection />
       </View>
-      <View style={{  height: SDims.HeightCentralSection * .25, backgroundColor: 'black' }}>
-        <McentralControlsSection />
-      </View>
       <View style={{ height: SDims.HeightCentralSection * .25, backgroundColor: 'black' }}>
         <MadvertSection />
+      </View>
+      <View style={{  height: SDims.HeightCentralSection * .25, backgroundColor: 'black' }}>
+        <McentralControlsSection />
       </View>
     </View>
   );

@@ -27,7 +27,7 @@ const ModalDetail: React.FC<ModalDetailProps> = ({
     <View style={{ height: 90 }}>
       {selectedColors.length > 0 && (
         <Text style={Fonts.txtCard}>
-          Tus selecciones
+          Colores seleccionados
         </Text>
       )}
       <SwatchGridStyle

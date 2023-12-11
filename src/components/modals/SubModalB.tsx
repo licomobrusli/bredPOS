@@ -39,29 +39,29 @@ const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChan
 
   return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>
-      <View style={{ marginTop: 1060, alignItems: 'center' }}>
+      <View style={{ marginTop: 1190, alignItems: 'center' }}>
         <View style={{
-          height: SDims.HeightCentralSection * .65,
+          height: SDims.HeightCentralSection * .7,
           width: SDims.Width90p,
           backgroundColor: 'black',
-          borderColor: 'red',
+          borderColor: '#AD8457',
           borderWidth: 2,
           justifyContent: 'center',
           alignItems: 'center'
         }}>
-          <Text style={fonts.txtButtonA}>COUNTER CONTROL</Text>
+          <Text style={fonts.txtCard}>Numero de lineas</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity onPress={handleDecrement}>
-              <Text style={fonts.txtButtonA}>-</Text>
+              <Text style={fonts.txtBanner}>-</Text>
             </TouchableOpacity>
-            <Text style={fonts.txtButtonA}>{counter}</Text>
+            <Text style={fonts.txtBanner}> {counter} </Text>
             <TouchableOpacity onPress={handleIncrement}>
-              <Text style={fonts.txtButtonA}>+</Text>
+              <Text style={fonts.txtBanner}>+</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={onClose}>
             <View>
-              <Text style={fonts.txtButtonA}>Cerrar</Text>
+              <Text style={fonts.txtCard}>Cerrar</Text>
             </View>
           </TouchableOpacity>
         </View>

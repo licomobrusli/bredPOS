@@ -16,6 +16,15 @@ const adaptiveFontSize = (baseSize: number) => {
 };
 
 const fonts = StyleSheet.create({
+  txtBanner: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontFamily: 'WorkSansSemiBold',
+    fontSize: adaptiveFontSize(160),
+    letterSpacing: adaptiveFontSize(4),
+    color: 'white',
+  },
+  
   txtButtonA: {
     textAlign: 'center',
     textAlignVertical: 'center',
