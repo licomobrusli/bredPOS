@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import fonts from '../config/fonts';
 import SDims from '../config/dimensions';
 
@@ -11,12 +11,17 @@ const COLOR_B = 'black';
 interface ButtonAProps {
   title: string;
   onPress: () => void;
+  color: 'A' | 'B';
 }
 
 interface ButtonBProps {
   title: string;
   onPress: () => void;
   color: 'A' | 'B';
+}
+
+interface ContainerBProps {
+  children: React.ReactNode;
 }
 
 interface listButtonProps {
@@ -38,6 +43,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   buttonB: {
     flexDirection: 'column',
     padding: 12,
@@ -49,6 +55,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  containerB: {
+    width: SDims.Width50p + SDims.Width5p,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      alignSelf: 'center',
+      backgroundColor: 'black'
+  },
+
   ListButton: {
     margin: 5,
     paddingVertical: 20,
@@ -57,7 +73,6 @@ const styles = StyleSheet.create({
     borderColor: '#AD8457',
     borderWidth: 2,
     borderRadius: 10,
-    // update these styles
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -89,9 +104,10 @@ const styles = StyleSheet.create({
 
 });
 
-const ButtonA: FC<ButtonAProps> = ({ title, onPress }) => {
+const ButtonA: FC<ButtonAProps> = ({ title, onPress, color }) => {
+  const backgroundColor = color === 'A' ? COLOR_A : COLOR_B;
   return (
-    <TouchableOpacity style={styles.buttonA} onPress={onPress}>
+    <TouchableOpacity style={[styles.buttonA, { backgroundColor }]} onPress={onPress}>
       <Text style={styles.buttonAText}>{title}</Text>
     </TouchableOpacity>
   );
@@ -106,6 +122,16 @@ const ButtonB: FC<ButtonBProps> = ({ title, onPress, color }) => {
   );
 };
 
+const ContainerB: FC<ContainerBProps> = ({ children }) => {
+  return (
+    <View style={styles.containerB}>
+      {children}
+    </View>
+  );
+};
+
+
+
 const ListButton: FC<listButtonProps> = ({ name, price, onPress = () => {}, style }) => {
   return (
     <TouchableOpacity style={[styles.ListButton, style]} onPress={onPress}>
@@ -118,6 +144,7 @@ const ListButton: FC<listButtonProps> = ({ name, price, onPress = () => {}, styl
 const Buttons = {
   ButtonA,
   ButtonB,
+  ContainerB,
   ListButton,
 };
 

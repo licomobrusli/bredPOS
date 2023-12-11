@@ -34,18 +34,11 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCo
     }
   };        
       
-  return (
-    <View style={{ 
-      width: SDims.Width50p + SDims.Width5p,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      alignSelf: 'center',
-      backgroundColor: 'black'
-    }}>
-      <Buttons.ButtonB title="Cancelar" onPress={onClose} color='B' />
-      <Buttons.ButtonB title="Añadir al carrito" onPress={handleAddToCart} color='A' />
-      <Modal visible={isColorModalVisible} transparent={true}>
+    return (
+      <Buttons.ContainerB>
+        <Buttons.ButtonB title="Cancelar" onPress={onClose} color='B' />
+        <Buttons.ButtonB title="Añadir al carrito" onPress={handleAddToCart} color='A' />
+        <Modal visible={isColorModalVisible} transparent={true}>
         <TouchableWithoutFeedback onPress={() => setColorModalVisible(false)}>
           <View style={{ marginTop: 1060,
             alignSelf: 'center',
@@ -61,7 +54,7 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCo
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-    </View>
+    </Buttons.ContainerB>
   );
 };
 

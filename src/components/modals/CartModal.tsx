@@ -97,36 +97,36 @@ const calculatePrices = (newCartItems: any[]) => {
       <View style={styles.modalContainer}>
       {cartItems.map((item, index) => (
   <View key={index} style={styles.itemContainer}>
-    <View style={styles.rowContainer}>
-      <Text style={[fonts.txtButtonA]}>
-        {item.selectedService?.name} de {item.selectedCategory?.name}
-      </Text>
-      {item.modalCountsDetails.map((detail, detailIndex) => (
-        detail.name === "Sub total" && (
-          <Text key={detailIndex} style={fonts.txtButtonA}>
-            {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
-          </Text>
-        )
-      ))}
-    </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
-              <Buttons.ButtonA title="Edit" onPress={() => openModal(item.modalCountsDetails[0].sub, { colors: item.selectedColors }, index)} />
-            )}
+              <Buttons.ButtonA title="Quitar" onPress={() => handleDelete(index)} color='B' />
+                <View style={styles.rowContainer}>
+              <Text style={[fonts.txtButtonA]}>
+                {item.selectedService?.name} de {item.selectedCategory?.name}
+              </Text>
+              {item.modalCountsDetails.map((detail, detailIndex) => (
+                detail.name === "Sub total" && (
+              <Text key={detailIndex} style={fonts.txtButtonA}>{` = `}
+                {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
+              </Text>
+            )
+          ))}
+        </View>
+          {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
+          <Buttons.ButtonA title="Mostrar detalles" onPress={() => openModal(item.modalCountsDetails[0].sub, { colors: item.selectedColors }, index)} color='B' />
+          )}
+          </View>
             <SwatchGridStyle
                 colors={item.selectedColors} 
                 onSelectColor={() => {}} 
                 selectedColors={item.selectedColors} 
                 selectedSwatchStyle={styles.selectedSwatchStyle}
               />
-              <Buttons.ButtonA title="X" onPress={() => handleDelete(index)} />
-            </View>
           </View>
         ))}
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Buttons.ButtonA title="Submit" onPress={onClose} />
-          <Buttons.ButtonA title="Close" onPress={onClose} />
-        </View>
+        <Buttons.ContainerB>
+          <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
+          <Buttons.ButtonB title="Submit" onPress={onClose} color='A' />
+        </Buttons.ContainerB>
         {modalType === 'subModal' && selectedItemIndex !== null && (
           <SubModal
             isVisible={true}
@@ -163,24 +163,14 @@ const styles = StyleSheet.create({
     width: SDims.Height5p * .5,
   },
   
-  cartButton: {
-    paddingVertical: 40,
-    paddingHorizontal: 40,
-    backgroundColor: '#AD8457',
-    borderRadius: 10,
-    ...fonts.txtButtonA, // Spread the font style here
-  },
-  
   itemContainer: {
-    borderColor: 'red',
-    borderWidth: 2,
-    padding: 1,
+    padding: 10,
   },
 
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
 });
 
