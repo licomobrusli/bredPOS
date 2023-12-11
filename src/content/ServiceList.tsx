@@ -52,17 +52,16 @@ const ServiceList: React.FC = () => {
     const marginLeft = isFirstColumn ? cardGridStyle.margin : cardGridStyle.gap;
   
     if (isPlaceholder) {
-      return <View style={{ backgroundColor: 'black', width: cardGridStyle.imageWidth, height: cardGridStyle.imageHeight, marginLeft, marginBottom: cardGridStyle.gap }} />;
+      return <View style={{
+        backgroundColor: 'black',
+        width: cardGridStyle.imageWidth,
+        height: cardGridStyle.imageHeight,
+        marginBottom: cardGridStyle.gap
+      }} />;
     }
   
     return (
       <ListCard
-        style={{
-          width: cardGridStyle.imageWidth,
-          height: cardGridStyle.imageHeight * 1.5,
-          marginLeft,
-          marginBottom: cardGridStyle.gap,
-        }}
         imageUrl={item.imageUrl}
         serviceName={item.name}
         onPress={() => onImagePress(item)}
@@ -73,7 +72,10 @@ const ServiceList: React.FC = () => {
   const keyExtractor = (item: Service | null, index: number) => item ? item.code.toString() : `placeholder-${index}`;
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: cardGridStyle.margin }}>
+    <View style={{ 
+      flex: 1,
+      backgroundColor: 'black',
+    }}>
       <CutModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -96,7 +98,9 @@ const ServiceList: React.FC = () => {
           keyExtractor={keyExtractor}
           numColumns={3}
           columnWrapperStyle={{ justifyContent: 'center' }}
-          style={{ marginTop: cardGridStyle.margin, marginLeft: cardGridStyle.margin, marginRight: cardGridStyle.margin *2 }}
+          style={{
+            marginTop: cardGridStyle.margin,
+             }}
         />
       )}
     </View>

@@ -16,7 +16,10 @@ const MlistSection: React.FC<{ style?: ViewStyle }> = ({ style }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: 'black' }
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'black' }
 });
 
 export default MlistSection;

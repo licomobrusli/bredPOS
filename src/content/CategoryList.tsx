@@ -41,23 +41,25 @@ const CategoryList = () => {
 
   const renderItem = ({ item, index }: { item: Category | null; index: number }) => {
     const isPlaceholder = item === null;
-    const marginLeft = index % 2 === 0 ? cardGridStyle.margin : cardGridStyle.gap;
   
     if (isPlaceholder) {
-      return <View style={{ backgroundColor: 'black', width: cardGridStyle.imageWidth, height: cardGridStyle.imageHeight, marginLeft, marginBottom: cardGridStyle.gap }} />;
+      return <View style={{
+        flexDirection: 'row', alignItems: 'center',
+        backgroundColor: 'black',
+        width: cardGridStyle.imageWidth,
+        height: cardGridStyle.imageHeight,
+        marginBottom: cardGridStyle.gap
+      }} />;
     }
   
+    function onImagePress(item: Category): void {
+      throw new Error('Function not implemented.');
+    }
+
     return (
       <ListCard
-        style={{
-          width: cardGridStyle.imageWidth,
-          height: cardGridStyle.imageHeight * 1.5,
-          marginLeft,
-          marginBottom: cardGridStyle.gap,
-          backgroundColor: 'black',
-        }}
         imageUrl={item.imageUrl}
-        categoryName={item.name} // Pass the category name here
+        categoryName={item.name}
         onPress={() => onCategoryPress(item)}
       />
     );
@@ -74,7 +76,9 @@ const CategoryList = () => {
           keyExtractor={keyExtractor}
           numColumns={3}
           columnWrapperStyle={{ justifyContent: 'center' }}
-          style={{ marginTop: cardGridStyle.margin, marginLeft: cardGridStyle.margin, marginRight: cardGridStyle.margin *2 }}
+          style={{
+            marginTop: cardGridStyle.margin,
+          }}
         />
       )}
     </View>
