@@ -21,6 +21,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [calculatedPrices, setCalculatedPrices] = useState<{ [key: string]: { unitPrice: number; quantity: number; totalPrice: number; } }>({});
+  const clearCart = () => setCartItems([]);
 
   const openModal = (sub: number, itemDetails: any, index: number) => {
     setSelectedColors(itemDetails.colors);
@@ -138,9 +139,10 @@ const calculatePrices = (newCartItems: any[]) => {
         }}
       >
       <Buttons.ContainerB>
-        <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
-        <Buttons.ButtonB title="Submit" onPress={onClose} color='A' />
-      </Buttons.ContainerB>
+          <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
+          {/* Update onPress for the Submit button */}
+          <Buttons.ButtonB title="Submit" onPress={() => { onClose(); clearCart(); }} color='A' />
+        </Buttons.ContainerB>
       </View>
 
       {modalType === 'subModal' && selectedItemIndex !== null && (

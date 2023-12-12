@@ -23,7 +23,8 @@ interface ModalThemeProps {
   // Add these props to show in console logs
   selectedService: Service | null;
   selectedCategory: Category | null;
-  selectedModalCounts: string[]; // Add this prop
+  selectedModalCounts: string[];
+  modalCountsDetails: any[];
 }
 
 const ModalTheme: React.FC<ModalThemeProps> = ({
@@ -39,6 +40,7 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
   selectedCategory,
   selectedModalCounts,
   onModalCountsChange,
+  modalCountsDetails
 }) => {
   const [Categories, setCategories] = useState<Theme[]>([]);
   const [services, setServices] = useState<Theme[]>([]);
@@ -67,14 +69,6 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
     setIsLoading(false);
   }, [selectedCategory, selectedService]);
 
-  console.log('categoryCode:', categoryCode);
-  console.log('selectedServiceCode:', selectedServiceCode);
-  console.log('onSelectColor:', onSelectColor);
-  console.log('selectedColors:', selectedColors);
-  console.log('setSelectedColors:', setSelectedColors);
-  console.log('selectedModalCounts:', selectedModalCounts);
-  console.log('onModalCountsChange:', onModalCountsChange);
-  
   return (
     <View style={[styles.container, style ]}>
       <View style={{ height: SDims.Width50p }}>
@@ -93,6 +87,7 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
           setSelectedColors={setSelectedColors}
           selectedModalCounts={selectedModalCounts}
           onModalCountsChange={onModalCountsChange}
+          modalCountsDetails={modalCountsDetails} // This is where it should be passed
         />
       </View>
     </View>

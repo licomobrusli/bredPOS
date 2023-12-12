@@ -141,6 +141,7 @@ const handleModalCountsChange = (counts: any[]) => {
               selectedCategory={selectedCategory}
               selectedModalCounts={selectedModalCounts}
               onModalCountsChange={handleModalCountsChange}
+              modalCountsDetails={modalCountsDetails}
             />
           </View>
           <View style={{ flex: .2 }}>

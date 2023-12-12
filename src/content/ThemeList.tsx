@@ -15,6 +15,7 @@ interface ThemeListProps {
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
   onModalCountsChange: (modalCounts: { name: string; price: string; unitPrice: number; sub: number }[]) => void;
   selectedModalCounts: string[];
+  modalCountsDetails: any[]; // Add this prop
 }
 
 interface PriceDetails {
@@ -28,7 +29,7 @@ interface CalculatedPrices {
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({
-  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange
+  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange, modalCountsDetails
 }) => {
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
@@ -36,6 +37,12 @@ const ThemeList: React.FC<ThemeListProps> = ({
   const [subtotal, setSubtotal] = useState<number>(0);
   const [calculatedPrices, setCalculatedPrices] = useState<CalculatedPrices>({} as CalculatedPrices);
   const [counter, setCounter] = useState(1);
+
+  if (modalCountsDetails[0]) {
+    console.log('bobobob:', modalCountsDetails[0].price, 'bibi', modalCountsDetails[0].unitPrice);
+  } else {
+    console.log('modalCountsDetails is undefined or empty.');
+  }
 
   useEffect(() => {
     const loadData = async () => {
