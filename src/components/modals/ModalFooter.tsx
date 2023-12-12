@@ -13,16 +13,21 @@ interface ModalFooterProps {
   navigation: any;
 }
 
-const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCountsDetails, selectedColors, navigation }) => {
-  console.log("ModalFooter rendering", { modalCountsDetails });
+const ModalFooter: React.FC<ModalFooterProps> = (props) => {
+  const { onClose, onAddToCart, modalCountsDetails, selectedColors, navigation } = props;
   const [isColorModalVisible, setColorModalVisible] = useState(false);
   const handleAddToCart = () => {
     if (modalCountsDetails.length > 0) {
       const firstDetail = modalCountsDetails[0];
   
-      // Log the details
-      console.log('Detail Sub:', firstDetail.sub);
-      console.log('Selected Colors:', selectedColors);
+      // Log all the details
+      console.log({'log AddtoCart':
+        isColorModalVisible,
+        modalCountsDetails,
+        firstDetail,
+        selectedColors,
+        props, // log all the props
+      });
   
       // If 'sub' is greater than 0 and no colors are selected, show the color modal
       if (firstDetail.sub === 2 && selectedColors.length === 0) {

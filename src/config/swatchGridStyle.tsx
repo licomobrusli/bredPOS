@@ -28,8 +28,6 @@
                 {colors.map(color => {
                     const isSelected = selectedColors.includes(color);
 
-                    console.log(`Color: ${color}, Is Selected: ${isSelected}`);
-
                     let style = { borderColor: '#AD8457'
                         , backgroundColor: color
                     };

@@ -81,7 +81,6 @@ index cbbd3fb..e95227d 100644
 @@ -26,6 +29,7 @@ const ServiceList: React.FC = () => {
  
    const onImagePress = (service: Service) => {
-     console.log('Service pressed!', service);
 +    setModalVisible(true); // Toggle modal visibility
    };
  

@@ -60,8 +60,6 @@ class SDims {
     constructor() {
         this.screenHeight = Dimensions.get('window').height;
         this.screenWidth = Dimensions.get('window').width;
-        console.log("screenHeight: " + this.screenHeight);
-        console.log("screenWidth: " + this.screenWidth);
 
         // initialise all properties
 
