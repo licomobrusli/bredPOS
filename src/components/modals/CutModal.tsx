@@ -125,7 +125,7 @@ const handleModalCountsChange = (counts: any[]) => {
           flexDirection: 'column',
           backgroundColor: 'black',
           borderColor: '#AD8457',
-          borderWidth: 2,
+          borderWidth: SDims.D2px,
         }}>
           <View style={{ flex: .6 }}>
             <ModalTheme

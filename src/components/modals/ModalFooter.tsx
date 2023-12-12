@@ -42,13 +42,13 @@ const ModalFooter: React.FC<ModalFooterProps> = ({ onClose, onAddToCart, modalCo
         <Buttons.ButtonB title="Añadir al carrito" onPress={handleAddToCart} color='A' />
         <Modal visible={isColorModalVisible} transparent={true}>
         <TouchableWithoutFeedback onPress={() => setColorModalVisible(false)}>
-          <View style={{ marginTop: 1190,
+          <View style={{ marginTop: SDims.Height49p,
             alignSelf: 'center',
             height: SDims.HeightCentralSection * .7,
             width: SDims.Width90p,
             backgroundColor: 'black',
             borderColor: '#AD8457',
-            borderWidth: 2,
+            borderWidth: SDims.D2px,
             justifyContent: 'center',
             alignItems: 'center'
           }}>

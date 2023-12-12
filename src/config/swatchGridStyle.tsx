@@ -31,7 +31,6 @@
                     console.log(`Color: ${color}, Is Selected: ${isSelected}`);
 
                     let style = { borderColor: '#AD8457'
-                        , borderWidth: 0
                         , backgroundColor: color
                     };
 

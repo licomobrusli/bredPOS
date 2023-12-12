@@ -1,4 +1,4 @@
-
+// Cart.tsx
 import React, { useState } from 'react';
 
 const Cart = () => {

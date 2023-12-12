@@ -4,6 +4,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
 import { ModalCount } from '../config/types';
 import styles from '../config/fonts';
+import SDims from '../config/dimensions';
 
 interface ThemeListItemProps {
   modalCount: ModalCount;
@@ -30,9 +31,9 @@ const ThemeListItem: React.FC<ThemeListItemProps> = ({
           backgroundColor: isSelected ? 'red' : 'black',
           alignSelf: 'center',
           width: screenWidth * 0.55,
-          marginVertical: 5,
+          marginVertical: SDims.D5px,
           borderColor: 'red',
-          borderWidth: 2,
+          borderWidth: SDims.D2px,
         }}
       >
         <Text
@@ -41,7 +42,7 @@ const ThemeListItem: React.FC<ThemeListItemProps> = ({
             {
               flex: 4.2,
               textAlign: 'left',
-              paddingLeft: 10,
+              paddingLeft: SDims.D10px,
             },
           ]}
         >
@@ -53,7 +54,7 @@ const ThemeListItem: React.FC<ThemeListItemProps> = ({
             {
               flex: 1,
               textAlign: 'right',
-              paddingRight: 10,
+              paddingRight: SDims.D10px,
             },
           ]}
         >

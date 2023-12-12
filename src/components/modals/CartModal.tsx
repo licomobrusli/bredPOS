@@ -176,12 +176,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     borderColor: '#AD8457',
-    borderWidth: 2,
+    borderWidth: SDims.D2px,
   },
   
   itemContainer: {
     width: SDims.Width50p + SDims.Width5p,
-    padding: 20,
+    padding: SDims.D20px,
     flexDirection: 'row', // Change to row for horizontal layout
     justifyContent: 'space-between', // Space between child elements
     alignItems: 'center', // Align items vertically in the center
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
 
   rowContainer: {
-    paddingVertical: 20,
+    paddingVertical: SDims.D20px,
     flex: 1, // Take up available space
     flexDirection: 'row',
     alignItems: 'center',

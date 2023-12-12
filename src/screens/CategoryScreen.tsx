@@ -3,10 +3,10 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import McentralSection from '../components/McentralSection'; // Adjust the import path as necessary
 
-const CategoryScreen: React.FC = () => {
+const CategoryScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <McentralSection />
+      <McentralSection navigation={navigation} />
     </View>
   );
 };

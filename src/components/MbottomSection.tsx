@@ -20,7 +20,7 @@ const MbottomSection: React.FC = () => {
       justifyContent: 'center'
     }}>
       <TouchableOpacity onPress={toggleModal}>
-        <Image source={SHP} style={{ width: 200, height: 200 }} />
+        <Image source={SHP} style={{ width: SDims.D200px, height: SDims.D200px }} />
       </TouchableOpacity>
       {modalVisible && (
         <CartModal 

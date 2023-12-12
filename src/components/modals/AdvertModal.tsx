@@ -1,6 +1,7 @@
 // AdvertModal.tsx
 import React from 'react';
 import { Modal, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import SDims from '../../config/dimensions';
 
 // Import the image directly
 import PRCImage from '../../main/assets/images/STR.jpg';
@@ -37,9 +38,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end' 
   },
   image: { 
-    marginTop: 120,
-    width: 1375, // Fixed width for testing
-    height: 1420, // Fixed height for testing
+    marginTop: SDims.D100px + SDims.D20px,
+    width: SDims.Width90p, 
+    height: SDims.Width100p,
     resizeMode: 'contain' 
   }
 });

@@ -1,6 +1,7 @@
 // HelpModal.tsx
 import React from 'react';
 import { Modal, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import SDims from '../../config/dimensions';
 
 // Import the image directly
 import PRCImage from '../../main/assets/images/PRC.jpg';
@@ -37,9 +38,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center' 
   },
   image: { 
-    marginTop: 120,
-    width: 2400, // Fixed width for testing
-    height: 1600, // Fixed height for testing
+    marginTop: SDims.D100px + SDims.D20px,
+    width: SDims.Width100p, // Fixed width for testing
+    height: SDims.Height100p, // Fixed height for testing
     resizeMode: 'contain' 
   }
 });

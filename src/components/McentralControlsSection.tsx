@@ -4,6 +4,7 @@ import { View, StyleSheet, ViewStyle } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import BackButton from '../content/BackButton';
 import HelpButton from '../content/HelpButton';
+import SDims from '../config/dimensions';
 
 const McentralControls: React.FC<{ style?: ViewStyle }> = ({ style }) => {
   const route = useRoute();
@@ -17,11 +18,11 @@ const McentralControls: React.FC<{ style?: ViewStyle }> = ({ style }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 200,
+    height: SDims.D200px,
     backgroundColor: 'black',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    padding: 5,
+    padding: SDims.D5px,
     justifyContent: 'center',
   }
 });

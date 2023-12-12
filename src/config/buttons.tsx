@@ -36,28 +36,28 @@ interface listButtonProps {
 const styles = StyleSheet.create({
   // button styles
   buttonA: {
-    paddingVertical: 20,
-    paddingHorizontal: 40,
+    paddingVertical: SDims.D20px,
+    paddingHorizontal: SDims.D40px,
     backgroundColor: '#AD8457',
     borderColor: '#AD8457', 
-    borderWidth: 2,
-    borderRadius: 10,
+    borderWidth: SDims.D2px,
+    borderRadius: SDims.D10px,
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   imageStyle: {
-    width: 30,  // Set your desired width
-    height: 50,  // Set your desired height
+    width: SDims.D30px,  // Set your desired width
+    height: SDims.D50px,  // Set your desired height
     resizeMode: 'stretch'
   },
 
   buttonB: {
     flexDirection: 'column',
-    padding: 12,
+    padding: SDims.D12px,
     borderColor: '#AD8457', 
-    borderWidth: 2,
-    borderRadius: 10, 
+    borderWidth: SDims.D2px,
+    borderRadius: SDims.D10px, 
     height: SDims.Height10p,
     width: SDims.Width1_4f,
     alignItems: 'center',
@@ -74,13 +74,13 @@ const styles = StyleSheet.create({
   },
 
   ListButton: {
-    margin: 5,
-    paddingVertical: 20,
-    paddingHorizontal: 40,
+    margin: SDims.D5px,
+    paddingVertical: SDims.D20px,
+    paddingHorizontal: SDims.D40px,
     backgroundColor: '#AD8457',
     borderColor: '#AD8457',
-    borderWidth: 2,
-    borderRadius: 10,
+    borderWidth: SDims.D2px,
+    borderRadius: SDims.D10px,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -102,12 +102,12 @@ const styles = StyleSheet.create({
   name: {
     flex: 4.2,
     textAlign: 'left',
-    paddingLeft: 10,
+    paddingLeft: SDims.D10px,
   },
   price: {
     flex: 1,
     textAlign: 'right',
-    paddingRight: 10,
+    paddingRight: SDims.D10px,
   },
 
 });

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ViewStyle, Image, TouchableOpacity } from 'react-native';
 import SubsModal from './modals/AdvertModal'; // Adjust the import path as necessary
+import SDims from '../config/dimensions';
 
 const Madvert: React.FC<{ style?: ViewStyle }> = ({ style }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -29,7 +30,7 @@ const Madvert: React.FC<{ style?: ViewStyle }> = ({ style }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 500,
+    height: SDims.D100px * 5,
     backgroundColor: 'black',
     alignSelf: 'center'
   },
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     height: '80%',
     resizeMode: 'contain',
     borderColor: '#AD8457',
-    borderWidth: 2,
+    borderWidth: SDims.D2px,
   },
 });
 

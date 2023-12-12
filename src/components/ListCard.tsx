@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, ViewStyle, TouchableOpacity, Image, Text } from 'react-native';
 import customStyles from '../config/fonts';
 import { cardGridStyle } from '../config/cardGridStyle'; // Import cardGridStyle for common styling
+import SDims from '../config/dimensions';
 
 interface ListCardProps {
   imageUrl: string | { uri: string };
@@ -26,8 +27,8 @@ const ListCard: React.FC<ListCardProps> = ({ imageUrl, categoryName, serviceName
 const styles = StyleSheet.create({
   card: {
     borderColor: '#AD8457',
-    borderWidth: 2,
-    borderRadius: 5,
+    borderWidth: SDims.D2px,
+    borderRadius: SDims.D5px,
     marginHorizontal: cardGridStyle.margin * 0.5,
     marginTop: cardGridStyle.margin * 0.5,
     width: cardGridStyle.imageWidth,
@@ -38,8 +39,8 @@ const styles = StyleSheet.create({
     height: '66%',
     alignSelf: 'center',
     resizeMode: 'contain',
-    marginTop: 33,
-    marginBottom: 33,
+    marginTop: SDims.Width2dot5p,
+    marginBottom: SDims.Width2dot5p,
   },
 });
 

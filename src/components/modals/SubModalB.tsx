@@ -39,13 +39,13 @@ const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChan
 
   return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>
-      <View style={{ marginTop: 1190, alignItems: 'center' }}>
+      <View style={{ marginTop: SDims.Height49p, alignItems: 'center' }}>
         <View style={{
           height: SDims.HeightCentralSection * .7,
           width: SDims.Width90p,
           backgroundColor: 'black',
           borderColor: '#AD8457',
-          borderWidth: 2,
+          borderWidth: SDims.D2px,
           justifyContent: 'center',
           alignItems: 'center'
         }}>

@@ -16,7 +16,7 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
     const selectedSwatchStyle = { 
         backgroundColor: 'black',
         borderColor: '#AD8457',
-        borderWidth: 5,
+        borderWidth: SDims.D5px,
     };
     const colorsRowOne = ['#1e57a4', '#00afaa', '#3aa935', '#e62d39', '#d40658'];
     const colorsRowTwo = ['#e594bf', '#f7eb63', '#ec6b1c', '#e8473e', '#452462'];
@@ -36,13 +36,13 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
     
     return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>
-        <View style={{ marginTop: 1190, alignItems: 'center' }}>
+        <View style={{ marginTop: SDims.Height49p, alignItems: 'center' }}>
             <View style={{
                 height: SDims.HeightCentralSection * .7,
                 width: SDims.Width90p,
                 backgroundColor: 'black',
                 borderColor: '#AD8457',
-                borderWidth: 2,
+                borderWidth: SDims.D2px,
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
@@ -71,7 +71,7 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
                         selectedColors={selectedColors ?? []}
                         selectedSwatchStyle={{
                             borderColor: '#AD8457',
-                            borderWidth: 5,
+                            borderWidth: SDims.D5px,
                         }}
                     />
                 </View>

@@ -4,6 +4,7 @@ import { View, Text } from 'react-native';
 import SwatchGridStyle from '../../config/swatchGridStyle';
 import Fonts from '../../config/fonts';
 import SubModal from '../modals/SubModal';
+import SDims from '../../config/dimensions';
 
 interface ModalDetailProps {
   selectedColors: string[];
@@ -36,7 +37,7 @@ const ModalDetail: React.FC<ModalDetailProps> = ({
         selectedColors={selectedColors}
         selectedSwatchStyle={{
           borderColor: '#AD8457',
-          borderWidth: 5,
+          borderWidth: SDims.D5px,
         }}
       />
       <SubModal
