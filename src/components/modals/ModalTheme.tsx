@@ -67,6 +67,14 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
     setIsLoading(false);
   }, [selectedCategory, selectedService]);
 
+  console.log('categoryCode:', categoryCode);
+  console.log('selectedServiceCode:', selectedServiceCode);
+  console.log('onSelectColor:', onSelectColor);
+  console.log('selectedColors:', selectedColors);
+  console.log('setSelectedColors:', setSelectedColors);
+  console.log('selectedModalCounts:', selectedModalCounts);
+  console.log('onModalCountsChange:', onModalCountsChange);
+  
   return (
     <View style={[styles.container, style ]}>
       <View style={{ height: SDims.Width50p }}>

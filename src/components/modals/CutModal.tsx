@@ -61,6 +61,7 @@ const CutModal: React.FC<CutModalProps> = ({
     if (visible) {
       loadExistingCartItemDetails();
     }
+    
   }, [visible, cartItems, selectedService, selectedCategory]);
 
   // Placeholder callback functions

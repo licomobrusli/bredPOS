@@ -20,15 +20,6 @@ const ModalFooter: React.FC<ModalFooterProps> = (props) => {
     if (modalCountsDetails.length > 0) {
       const firstDetail = modalCountsDetails[0];
   
-      // Log all the details
-      console.log({'log AddtoCart':
-        isColorModalVisible,
-        modalCountsDetails,
-        firstDetail,
-        selectedColors,
-        props, // log all the props
-      });
-  
       // If 'sub' is greater than 0 and no colors are selected, show the color modal
       if (firstDetail.sub === 2 && selectedColors.length === 0) {
         setColorModalVisible(true);
