@@ -1,8 +1,7 @@
 // fonts.tsx
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 // WorkSans available weights:
   // Black, ExtraBold, Bold, SemiBold, Medium, Regular (name: WorkSans), Light, ExtraLight, Thin, Hairline
-
-import { StyleSheet, Dimensions } from 'react-native';
 
 // Get screen width
 const screenWidth = Dimensions.get('window').width;
@@ -12,7 +11,8 @@ const baseScreenWidth = 1440;
 
 // Function to calculate adaptive font size
 const adaptiveFontSize = (baseSize: number) => {
-  return (screenWidth / baseScreenWidth) * baseSize;
+  const scaleFactor = PixelRatio.getFontScale(); // Gets the device font scale factor
+  return (screenWidth / baseScreenWidth) * baseSize / scaleFactor;
 };
 
 const fonts = StyleSheet.create({
@@ -49,27 +49,6 @@ const fonts = StyleSheet.create({
     fontFamily: 'WorkSansBold',
     fontSize: adaptiveFontSize(60),
     letterSpacing: adaptiveFontSize(4),
-    color: 'white',
-  },
-  
-  
-  // old stuff that needs to be replaced
-  
-  txtBrandBanner: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontFamily: 'WorkSansBlack',
-    letterSpacing: 12,
-    fontSize: adaptiveFontSize(220),
-    color: 'white',
-  },
-  txtSubBrandBanner: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontFamily: 'WorkSansBold',
-    letterSpacing: 18,
-    fontSize: adaptiveFontSize(60),
-    textTransform: 'uppercase',
     color: 'white',
   },
 });
