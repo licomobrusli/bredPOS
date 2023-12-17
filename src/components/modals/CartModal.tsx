@@ -20,6 +20,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const [modalType, setModalType] = useState<'subModal' | 'subModalB' | null>(null);
   const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [counterValue, onCounterChange] = useState<number>(0);
   const [calculatedPrices, setCalculatedPrices] = useState<{ [key: string]: { unitPrice: number; quantity: number; totalPrice: number; } }>({});
   const clearCart = () => setCartItems([]);
 
@@ -42,6 +43,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
       newCartItems[selectedItemIndex] = {
         ...newCartItems[selectedItemIndex],
         selectedColors: selectedColors,
+        counterValue: counterValue,
       };
 
       calculatePrices(newCartItems);
@@ -157,8 +159,8 @@ const calculatePrices = (newCartItems: any[]) => {
           <SubModalB
             isVisible={true}
             onClose={() => setModalType(null)}
-            onCounterChange={() => {}}
-            selectedValue={0}
+            onCounterChange={onCounterChange}
+            counterValue={counterValue}
           />
         )}
       </View>
