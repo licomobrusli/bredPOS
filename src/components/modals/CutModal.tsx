@@ -5,7 +5,7 @@ import ModalTheme from './ModalTheme';
 import ModalDetail from './ModalDetail';
 import ModalFooter from './ModalFooter';
 import SDims from '../../config/dimensions';
-import SubModal from './SubModal';
+// import SubModal from './SubModal';
 import { Category, Service } from '../../config/types';
 import { useCart } from '../../config/CartContext'; 
 
@@ -161,14 +161,16 @@ const handleModalCountsChange = (counts: any[]) => {
           </View>
         </View>
       </View>
-      {isSubModalVisible && (
+    
+{/*     MARKED FOR DELETION******************************************************  
+        {isSubModalVisible && (
         <SubModal
           isVisible={isSubModalVisible}
           onClose={() => setIsSubModalVisible(false)}
           selectedColors={selectedColors}
           setSelectedColors={setSelectedColors}
         />
-      )}
+      )} */}
     </Modal>
   );
 };

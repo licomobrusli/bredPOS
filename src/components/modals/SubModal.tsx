@@ -24,16 +24,16 @@ const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors,
     const handleSelectColor = (color: string) => {
         let updatedSelectedColors = [...selectedColors];
         const colorIndex = updatedSelectedColors.indexOf(color);
-      
+        
         if (colorIndex >= 0) {
-          updatedSelectedColors.splice(colorIndex, 1);
+            updatedSelectedColors.splice(colorIndex, 1);
         } else {
-          updatedSelectedColors.push(color);
+            updatedSelectedColors.push(color);
         }
-      
+        
         setSelectedColors(updatedSelectedColors);
-      };
-    
+        };
+
     return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>
         <View style={{ marginTop: SDims.Height49p, alignItems: 'center' }}>

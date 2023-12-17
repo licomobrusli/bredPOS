@@ -29,7 +29,7 @@ interface CalculatedPrices {
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({
-  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange, modalCountsDetails
+  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange
 }) => {
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
@@ -37,12 +37,6 @@ const ThemeList: React.FC<ThemeListProps> = ({
   const [subtotal, setSubtotal] = useState<number>(0);
   const [calculatedPrices, setCalculatedPrices] = useState<CalculatedPrices>({} as CalculatedPrices);
   const [counter, setCounter] = useState(1);
-
-  if (modalCountsDetails[0]) {
-    console.log('bobobob:', modalCountsDetails[0].price, 'bibi', modalCountsDetails[0].unitPrice);
-  } else {
-    console.log('modalCountsDetails is undefined or empty.');
-  }
 
   useEffect(() => {
     const loadData = async () => {
@@ -53,6 +47,8 @@ const ThemeList: React.FC<ThemeListProps> = ({
         console.error('Error:', error);
       }
     };
+
+    console.log('ModalCountsData', categoryCode, selectedServiceCode);
 
     loadData();
   }, [categoryCode, selectedServiceCode]);
@@ -65,11 +61,6 @@ const ThemeList: React.FC<ThemeListProps> = ({
       if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
         const unitPrice = modalCount.price;
         let quantity = modalCount.logic === 'OR' ? selectedColors.length - 1 : 1;
-
-        // Special handling for 'Basic design'
-        if (modalCount.name === 'Basic design') {
-          quantity = counter;  // Use counter value for 'Basic design'
-        }
 
         const totalPrice = unitPrice * quantity;
         newCalculatedPrices[modalCount.id] = { unitPrice, quantity, totalPrice };
@@ -134,6 +125,8 @@ const ThemeList: React.FC<ThemeListProps> = ({
         logic: modalCount.logic
       };
     });
+
+    console.log('Selected ModalCounts:', selectedCounts);
 
     const subtotalItem = {
       name: "Sub total",
