@@ -32,10 +32,10 @@ const CutModal: React.FC<CutModalProps> = ({
   navigation,
 }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [counterValue, setCounterValue] = useState<number>(0); // New state for SubModalB
   const [modalCountsDetails, setModalCountsDetails] = useState<any[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-
   const { cartItems, addToCart, updateCartItem } = useCart();
 
   useEffect(() => {
@@ -48,11 +48,13 @@ const CutModal: React.FC<CutModalProps> = ({
 
       if (existingCartItem) {
         setSelectedColors(existingCartItem.selectedColors);
+        setCounterValue(existingCartItem.counterValue); // Set the counter value for SubModalB
         setModalCountsDetails(existingCartItem.modalCountsDetails);
         setIsEditing(true); // Set editing mode to true
       } else {
         // Reset for new item
         setSelectedColors([]);
+        setCounterValue(0); // Reset counter value for SubModalB
         setModalCountsDetails([]);
         setIsEditing(false); // Set editing mode to false
       }
@@ -92,6 +94,7 @@ const handleModalCountsChange = (counts: any[]) => {
       selectedCategory,
       selectedService,
       selectedColors,
+      counterValue,
       modalCountsDetails
     };
     if (isEditing) {
@@ -133,8 +136,10 @@ const handleModalCountsChange = (counts: any[]) => {
               categoryCode={categoryCode}
               selectedServiceCode={selectedService ? selectedService.code : ''}
               onSelectColor={setSelectedColors}
-              setSelectedColors={setSelectedColors}
               selectedColors={selectedColors}
+              setSelectedColors={setSelectedColors}
+              counterValue={counterValue} // Passing counterValue to ModalTheme
+              setCounterValue={setCounterValue} // Passing setCounterValue to ModalTheme
               onServiceNameChange={onServiceNameChange}
               onCategoryNameChange={onCategoryNameChange}
               selectedService={selectedService}

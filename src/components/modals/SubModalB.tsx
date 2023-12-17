@@ -1,5 +1,5 @@
 // SubModalB.tsx
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import SDims from '../../config/dimensions';
 import fonts from '../../config/fonts';
@@ -8,32 +8,18 @@ interface SubModalBProps {
   isVisible: boolean;
   onClose: () => void;
   onCounterChange: (count: number) => void;
-  selectedValue: number;
+  counterValue: number;
 }
 
-const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChange, selectedValue }) => {
-  const [counter, setCounter] = useState(selectedValue);
-
-  // Update the counter when selectedValue changes
-  useEffect(() => {
-    setCounter(selectedValue);
-  }, [selectedValue]);
+const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChange, counterValue }) => {
 
   const handleIncrement = () => {
-    setCounter(prevCounter => {
-      const newCounter = prevCounter + 1;
-      onCounterChange(newCounter);
-      return newCounter;
-    });
+    onCounterChange(counterValue + 1);
   };
 
   const handleDecrement = () => {
-    if (counter > 1) {
-      setCounter(prevCounter => {
-        const newCounter = prevCounter - 1;
-        onCounterChange(newCounter);
-        return newCounter;
-      });
+    if (counterValue > 1) {
+      onCounterChange(counterValue - 1);
     }
   };
 
@@ -54,7 +40,7 @@ const SubModalB: React.FC<SubModalBProps> = ({ isVisible, onClose, onCounterChan
             <TouchableOpacity onPress={handleDecrement}>
               <Text style={fonts.txtBanner}>-</Text>
             </TouchableOpacity>
-            <Text style={fonts.txtBanner}> {counter} </Text>
+            <Text style={fonts.txtBanner}> {counterValue} </Text>
             <TouchableOpacity onPress={handleIncrement}>
               <Text style={fonts.txtBanner}>+</Text>
             </TouchableOpacity>

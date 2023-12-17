@@ -6,6 +6,7 @@ interface CartItem {
     selectedCategory: Category | null;
     selectedService: Service | null;
     selectedColors: string[];
+    counterValue: number;
     modalCountsDetails: any[]; // Define a more specific type if possible
 }
 

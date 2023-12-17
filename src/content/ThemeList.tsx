@@ -195,7 +195,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
             isVisible={isSubModalVisible}
             onClose={closeSubModal}
             onCounterChange={setCounter}
-            selectedValue={counter}
+            counterValue={counter}
           />
         )
       )}

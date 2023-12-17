@@ -17,6 +17,8 @@ interface ModalThemeProps {
   onSelectColor: (colors: string[]) => void;
   selectedColors: string[];
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
+  counterValue: number; // Add this prop
+  setCounterValue: React.Dispatch<React.SetStateAction<number>>; // Add this prop
   onServiceNameChange: (name: string) => void;
   onCategoryNameChange: (name: string) => void;
   onModalCountsChange: (details: any[]) => void;
