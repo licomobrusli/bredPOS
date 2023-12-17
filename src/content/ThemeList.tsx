@@ -12,6 +12,8 @@ interface ThemeListProps {
   selectedServiceCode: string;
   onSelectColor: (colors: string[]) => void;
   selectedColors: string[];
+  onCounterChange: (count: number) => void; // Add this prop
+  counterValue: number; // Add this prop
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
   onModalCountsChange: (modalCounts: { name: string; price: string; unitPrice: number; sub: number }[]) => void;
   selectedModalCounts: string[];
@@ -29,14 +31,13 @@ interface CalculatedPrices {
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({
-  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, onModalCountsChange
+  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, counterValue, onCounterChange, onModalCountsChange
 }) => {
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const [subtotal, setSubtotal] = useState<number>(0);
   const [calculatedPrices, setCalculatedPrices] = useState<CalculatedPrices>({} as CalculatedPrices);
-  const [counter, setCounter] = useState(1);
 
   useEffect(() => {
     const loadData = async () => {
@@ -70,7 +71,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
   
     setCalculatedPrices(newCalculatedPrices);
     setSubtotal(newSubtotal);
-  }, [modalCounts, selectedModalCounts, selectedColors, counter]);
+  }, [modalCounts, selectedModalCounts, selectedColors, counterValue]);
 
   useEffect(() => {
     // Ensure at least one 'NOT' item is selected if present
@@ -194,8 +195,8 @@ const ThemeList: React.FC<ThemeListProps> = ({
           <SubModalB
             isVisible={isSubModalVisible}
             onClose={closeSubModal}
-            onCounterChange={setCounter}
-            counterValue={counter}
+            onCounterChange={onCounterChange}
+            counterValue={counterValue}
           />
         )
       )}

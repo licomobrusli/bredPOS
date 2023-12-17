@@ -32,7 +32,7 @@ const CutModal: React.FC<CutModalProps> = ({
   navigation,
 }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
-  const [counterValue, setCounterValue] = useState<number>(0); // New state for SubModalB
+  const [counterValue, setCounterValue] = useState<number>(1); // New state for SubModalB
   const [modalCountsDetails, setModalCountsDetails] = useState<any[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -54,7 +54,7 @@ const CutModal: React.FC<CutModalProps> = ({
       } else {
         // Reset for new item
         setSelectedColors([]);
-        setCounterValue(0); // Reset counter value for SubModalB
+        setCounterValue(1); // Reset counter value for SubModalB
         setModalCountsDetails([]);
         setIsEditing(false); // Set editing mode to false
       }

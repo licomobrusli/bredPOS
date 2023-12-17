@@ -36,6 +36,8 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
   onSelectColor,
   selectedColors,
   setSelectedColors,
+  counterValue, // Add this prop
+  setCounterValue, // Add this prop
   onServiceNameChange,
   onCategoryNameChange,
   selectedService,
@@ -87,6 +89,8 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
           onSelectColor={onSelectColor}
           selectedColors={selectedColors}
           setSelectedColors={setSelectedColors}
+          onCounterChange={setCounterValue} // Passing setCounterValue to ThemeList
+          counterValue={counterValue} // Passing counterValue to ThemeList
           selectedModalCounts={selectedModalCounts}
           onModalCountsChange={onModalCountsChange}
           modalCountsDetails={modalCountsDetails} // This is where it should be passed
