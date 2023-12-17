@@ -10,6 +10,7 @@ interface ModalFooterProps {
   onAddToCart?: () => void;
   modalCountsDetails: any[];
   selectedColors: string[];
+  counterValue: number;
   navigation: any;
 }
 

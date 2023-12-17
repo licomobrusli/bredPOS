@@ -20,13 +20,20 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const [modalType, setModalType] = useState<'subModal' | 'subModalB' | null>(null);
   const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
-  const [counterValue, onCounterChange] = useState<number>(0);
+  const [counterValue, onCounterChange] = useState<number>(7);
   const [calculatedPrices, setCalculatedPrices] = useState<{ [key: string]: { unitPrice: number; quantity: number; totalPrice: number; } }>({});
   const clearCart = () => setCartItems([]);
 
   const openModal = (sub: number, itemDetails: any, index: number) => {
+    console.log("Opening modal with item details:", itemDetails); // Check the itemDetails content
     setSelectedColors(itemDetails.colors);
     setSelectedItemIndex(index);
+
+    // Set counterValue based on the selected item
+    if (itemDetails.counterValue !== undefined) {
+      console.log("Setting counterValue to:", itemDetails.counterValue); // Check the passed counterValue
+      onCounterChange(itemDetails.counterValue);
+    }
 
     if (sub === 2) {
       setModalType('subModal');
@@ -123,7 +130,12 @@ const calculatePrices = (newCartItems: any[]) => {
                   <Buttons.ButtonA title="X" onPress={() => handleDelete(index)} color='B' />
                   {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
                   <Buttons.ButtonA 
-                    onPress={() => openModal(item.modalCountsDetails[0].sub, { colors: item.selectedColors }, index)} 
+                    onPress={() => openModal(
+                      item.modalCountsDetails[0].sub,
+                      {
+                        colors: item.selectedColors,
+                        counterValue: item.counterValue 
+                      }, index)} 
                     color='B' 
                     image={EDTImage}
                   />

@@ -160,6 +160,7 @@ const handleModalCountsChange = (counts: any[]) => {
               onAddToCart={handleAddToCart} 
               modalCountsDetails={modalCountsDetails}
               selectedColors={selectedColors}
+              counterValue={counterValue}
               navigation={navigation}
             />
           </View>
