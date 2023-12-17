@@ -59,10 +59,19 @@ const ThemeList: React.FC<ThemeListProps> = ({
     let newSubtotal = 0;
   
     modalCounts.forEach(modalCount => {
-      if (selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)) {
+      if (selectedModalCounts.includes(modalCount.id) || 
+          (modalCount.logic === 'OR' && selectedColors.length > 1) ||
+          (modalCount.logic === 'NOT' && modalCount.name === 'basic design')) {
+        
         const unitPrice = modalCount.price;
-        let quantity = modalCount.logic === 'OR' ? selectedColors.length - 1 : 1;
-
+        let quantity = 1; // Default quantity
+  
+        if (modalCount.logic === 'OR') {
+          quantity = selectedColors.length - 1;
+        } else if (modalCount.logic === 'NOT' && modalCount.name === 'Basic design') {
+          quantity = counterValue; // Special case handling
+        }
+  
         const totalPrice = unitPrice * quantity;
         newCalculatedPrices[modalCount.id] = { unitPrice, quantity, totalPrice };
         newSubtotal += totalPrice;
@@ -72,7 +81,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     setCalculatedPrices(newCalculatedPrices);
     setSubtotal(newSubtotal);
   }, [modalCounts, selectedModalCounts, selectedColors, counterValue]);
-
+  
   useEffect(() => {
     // Ensure at least one 'NOT' item is selected if present
     const notItems = modalCounts.filter((modalCount) => modalCount.logic === 'NOT');
@@ -146,7 +155,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
   // Update useEffect to call this function
   useEffect(() => {
     logSelectedModalCounts();
-  }, [selectedColors, modalCounts, selectedModalCounts, subtotal]);
+  }, [selectedColors, counterValue, modalCounts, selectedModalCounts, subtotal]);
 
   const isModalCountSelected = (modalCount: ModalCount) => {
     if (modalCount.logic === 'OR') {
@@ -195,8 +204,8 @@ const ThemeList: React.FC<ThemeListProps> = ({
           <SubModalB
             isVisible={isSubModalVisible}
             onClose={closeSubModal}
-            onCounterChange={onCounterChange}
             counterValue={counterValue}
+            onCounterChange={onCounterChange}
           />
         )
       )}
