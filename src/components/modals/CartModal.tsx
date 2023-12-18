@@ -45,19 +45,22 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   };
 
   const updateCartItems = () => {
-    if (selectedItemIndex !== null) {
-      const newCartItems = [...cartItems];
-      newCartItems[selectedItemIndex] = {
-        ...newCartItems[selectedItemIndex],
-        selectedColors: selectedColors,
-        counterValue: counterValue,
-      };
+  if (selectedItemIndex !== null) {
+    const newCartItems = [...cartItems];
+    const selectedItem = newCartItems[selectedItemIndex];
 
-      calculatePrices(newCartItems);
-      setCartItems(newCartItems);
-      setModalType(null);
-    }
-  };  
+    // Update the selected item with the latest selectedColors and counterValue
+    selectedItem.selectedColors = selectedColors;
+    selectedItem.counterValue = counterValue;  // Update the counterValue for the selected item
+
+    // Recalculate the prices with the updated item details
+    calculatePrices(newCartItems);
+
+    // Update the cart items in the state
+    setCartItems(newCartItems);
+    setModalType(null);
+  }
+}; 
 
 interface ModalCountDetail {
   logic: string;
