@@ -58,14 +58,16 @@ const ThemeList: React.FC<ThemeListProps> = ({
   
     modalCounts.forEach(modalCount => {
       if (selectedModalCounts.includes(modalCount.id) || 
-          (modalCount.logic === 'OR' && selectedColors.length > 1) ||
+          (modalCount.logic === 'OR') ||
           (modalCount.logic === 'NOT' && modalCount.name === 'Basic design')) {
         
         const unitPrice = modalCount.price;
         let quantity = 1; // Default quantity
   
-        if (modalCount.logic === 'OR') {
+        if (modalCount.logic === 'OR' && selectedColors.length > 0) {
           quantity = selectedColors.length - 1;
+        } else if (modalCount.logic === 'OR' && selectedColors.length < 1) {
+          quantity = selectedColors.length;
         } else if (modalCount.logic === 'NOT' && modalCount.name === 'Basic design') {
           quantity = counterValue; // Special case handling
         }
