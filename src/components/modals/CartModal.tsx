@@ -25,13 +25,11 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const clearCart = () => setCartItems([]);
 
   const openModal = (sub: number, itemDetails: any, index: number) => {
-    console.log("Opening modal with item details:", itemDetails); // Check the itemDetails content
     setSelectedColors(itemDetails.colors);
     setSelectedItemIndex(index);
 
     // Set counterValue based on the selected item
     if (itemDetails.counterValue !== undefined) {
-      console.log("Setting counterValue to:", itemDetails.counterValue); // Check the passed counterValue
       onCounterChange(itemDetails.counterValue);
     }
 
@@ -79,14 +77,17 @@ const calculatePrices = (newCartItems: any[]) => {
 
         let quantity = 1; // Default quantity
         let totalPrice = 0;
-
+        console.log("detail:", detail); // Check the detail content
         if (detail.logic === 'OR') {
           quantity = Math.max(selectedColors.length - 1, 0);
           totalPrice = detail.unitPrice * quantity;
           itemSubtotal += totalPrice;
         } else if (detail.logic === 'NOT' && detail.name === 'Basic design') {
           quantity = counterValue; // Set quantity to counterValue for the special case
-          console.log("Setting quantity to:", quantity); // Check the quantity value
+          totalPrice = detail.unitPrice * quantity;
+          itemSubtotal += totalPrice;
+        } else if (detail.logic === 'NOT' && detail.name != 'Basic design') {
+          quantity = 1;
           totalPrice = detail.unitPrice * quantity;
           itemSubtotal += totalPrice;
         } else if (detail.name !== "Sub total") {
@@ -184,7 +185,7 @@ const calculatePrices = (newCartItems: any[]) => {
         {modalType === 'subModalB' && (
           <SubModalB
             isVisible={true}
-            onClose={() => setModalType(null)}
+            onClose={updateCartItems}
             onCounterChange={onCounterChange}
             counterValue={counterValue}
           />

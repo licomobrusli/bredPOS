@@ -49,8 +49,6 @@ const ThemeList: React.FC<ThemeListProps> = ({
       }
     };
 
-    console.log('ModalCountsData', categoryCode, selectedServiceCode);
-
     loadData();
   }, [categoryCode, selectedServiceCode]);
 
@@ -124,7 +122,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
 
   const logSelectedModalCounts = () => {
     const selectedCounts = modalCounts.filter((modalCount: ModalCount) =>
-      selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR' && selectedColors.length > 1)
+      selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR')
     ).map(modalCount => {
       const priceDetail = calculatedPrices[modalCount.id];
       return {
@@ -135,8 +133,6 @@ const ThemeList: React.FC<ThemeListProps> = ({
         logic: modalCount.logic
       };
     });
-
-    console.log('Selected ModalCounts:', selectedCounts);
 
     const subtotalItem = {
       name: "Sub total",
