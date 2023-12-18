@@ -74,14 +74,25 @@ const calculatePrices = (newCartItems: any[]) => {
 
       item.modalCountsDetails.forEach((detail: ModalCountDetail, detailIndex: number) => {
 
+        let quantity = 1; // Default quantity
+        let totalPrice = 0;
+
         if (detail.logic === 'OR') {
-          const quantity = Math.max(selectedColors.length - 1, 0);
-          const totalPrice = detail.unitPrice * quantity;
+          quantity = Math.max(selectedColors.length - 1, 0);
+          totalPrice = detail.unitPrice * quantity;
           itemSubtotal += totalPrice;
-          item.modalCountsDetails[detailIndex] = { ...detail, price: `${totalPrice.toFixed(0)}€` };
+        } else if (detail.logic === 'NOT' && detail.name === 'Basic design') {
+          quantity = counterValue; // Set quantity to counterValue for the special case
+          console.log("Setting quantity to:", quantity); // Check the quantity value
+          totalPrice = detail.unitPrice * quantity;
+          itemSubtotal += totalPrice;
         } else if (detail.name !== "Sub total") {
           const nonOrPrice = parseFloat(detail.price.split('€')[0]);
           itemSubtotal += isNaN(nonOrPrice) ? 0 : nonOrPrice;
+        }
+
+        if (detail.name !== "Sub total") {
+          item.modalCountsDetails[detailIndex] = { ...detail, price: `${totalPrice.toFixed(0)}€` };
         }
       });
 
