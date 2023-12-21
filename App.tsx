@@ -4,8 +4,7 @@ import { View } from 'react-native';
 import MainScreen from './src/components/MainScreen';
 import 'react-native-gesture-handler';
 import { CartProvider } from './src/config/CartContext';
-import { requestInitialPermissions } from './src/config/permissions'; // Adjust the path as necessary
-
+import { requestInitialPermissions } from './src/config/permissions';
 const App: React.FC = () => {
 
   useEffect(() => {
