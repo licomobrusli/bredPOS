@@ -142,7 +142,6 @@ const calculatePrices = (newCartItems: any[]) => {
                   ))}
                 </View>
                 <View style={styles.buttonAContainer}>
-                  <Buttons.ButtonA title="X" onPress={() => handleDelete(index)} color='B' />
                   {item.modalCountsDetails.length > 0 && item.modalCountsDetails[0].sub !== 0 && (
                   <Buttons.ButtonA 
                     onPress={() => openModal(
@@ -155,6 +154,7 @@ const calculatePrices = (newCartItems: any[]) => {
                     image={EDTImage}
                   />
                   )}
+                  <Buttons.ButtonA title="X" onPress={() => handleDelete(index)} color='B' />
                 </View>
             </View>
         </View>
