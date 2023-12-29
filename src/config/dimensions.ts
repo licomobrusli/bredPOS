@@ -26,6 +26,8 @@ class SDims {
     Height20p: number; HeightTopSection: number;
     Height30p: number;
     Height40p: number;
+    Height47p: number;
+    Height48p: number;
     Height49p: number;
     Height50p: number;
     Height60p: number;
@@ -86,6 +88,8 @@ class SDims {
         this.Height20p = this.screenHeight * 0.2; this.HeightTopSection = this.screenHeight * 0.2;
         this.Height30p = this.screenHeight * 0.3;
         this.Height40p = this.screenHeight * 0.4;
+        this.Height47p = this.screenHeight * 0.47;
+        this.Height48p = this.screenHeight * 0.48;
         this.Height49p = this.screenHeight * 0.49;
         this.Height50p = this.screenHeight * 0.5;
         this.Height60p = this.screenHeight * 0.6;
