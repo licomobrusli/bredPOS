@@ -1,6 +1,6 @@
 // printOS.tsx
 import * as React from "react";
-import { StyleSheet, View, Button } from "react-native";
+import { StyleSheet, Modal, Text, TouchableOpacity, View, Button } from "react-native";
 import { USBPrinter } from "react-native-thermal-receipt-printer";
 import { LogBox } from 'react-native';
 
@@ -8,12 +8,17 @@ LogBox.ignoreLogs([
   'new NativeEventEmitter()', // Suppresses the specific warnings
 ]);
 
-export default function PrintOS() {
+interface PrintOSProps {
+  visible: boolean;
+  onClose: () => void;
+}
+
+// Include the props in your function component
+export default function PrintOS({ visible, onClose }: PrintOSProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
   const defaultPrinter = {
     device_id: 2003, 
     device_name: "/dev/bus/usb/002/003",
-    // Ensure these are integers
     product_id: 30016,
     vendor_id: 1155
   };
@@ -23,7 +28,6 @@ export default function PrintOS() {
       try {
         setLoading(true);
         await USBPrinter.init();
-        // Use type assertion to specify types
         await USBPrinter.connectPrinter(defaultPrinter.vendor_id as unknown as string, defaultPrinter.product_id as unknown as string);
       } catch (err) {
         console.warn(err);
@@ -43,13 +47,23 @@ export default function PrintOS() {
   };
 
   return (
-    <View style={styles.container}>
-      <Button
-        disabled={loading}
-        title="Print sample"
-        onPress={handlePrint}
-      />
-    </View>
+    <Modal
+      transparent={true}
+      visible={visible}
+      onRequestClose={onClose}
+    >
+      <View style={styles.container}>
+        <Button
+          disabled={loading}
+          title="Print sample"
+          onPress={handlePrint}
+        />
+        {/* Add a button or touchable opacity to close the modal */}
+        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+          <Text>Close</Text>
+        </TouchableOpacity>
+      </View>
+    </Modal>
   );
 }
 
@@ -58,5 +72,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 16,
+    backgroundColor: 'rgba(0,0,0,0.5)', // Semi-transparent background
+  },
+  closeButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#ddd',
+    alignSelf: 'center',
   },
 });

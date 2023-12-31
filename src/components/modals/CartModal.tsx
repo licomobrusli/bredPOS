@@ -1,6 +1,6 @@
 // CartModal.tsx
-import React, { useState } from 'react';
-import { Modal, View, Image, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Modal, View, Text, StyleSheet } from 'react-native';
 import { useCart } from '../../config/CartContext';
 import fonts from '../../config/fonts';
 import SubModal from './SubModal';
@@ -9,6 +9,7 @@ import SDims from '../../config/dimensions';
 import Buttons from '../../config/buttons';
 import { EDTImage } from '../../main/assets/images';
 
+import PrintOS from '../../config/printOS';
 
 interface CartModalProps {
   visible: boolean;
@@ -22,6 +23,8 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [counterValue, onCounterChange] = useState<number>(7);
   const [calculatedPrices, setCalculatedPrices] = useState<{ [key: string]: { unitPrice: number; quantity: number; totalPrice: number; } }>({});
+  const [printOSVisible, setPrintOSVisible] = useState(false); // State to control PrintOS modal visibility
+
   const clearCart = () => setCartItems([]);
 
   const openModal = (sub: number, itemDetails: any, index: number) => {
@@ -118,6 +121,22 @@ const calculatePrices = (newCartItems: any[]) => {
     setCartItems(newCartItems);
   };
 
+  const handleManualPrint = () => {
+    // When the Manual Print button is pressed, show the PrintOS modal
+    setPrintOSVisible(true);
+  };
+
+  useEffect(() => {
+    if (visible) { // Only log when the modal is opened
+      console.log("Cart Items:", JSON.stringify(cartItems, null, 2));
+      console.log("Selected Item Index:", selectedItemIndex);
+      console.log("Selected Colors:", JSON.stringify(selectedColors, null, 2));
+      console.log("Counter Value:", counterValue);
+      console.log("Calculated Prices:", JSON.stringify(calculatedPrices, null, 2));
+      console.log("PrintOS Modal Visible:", printOSVisible);
+    }
+  }, [visible, cartItems, selectedItemIndex, selectedColors, counterValue, calculatedPrices, printOSVisible]); // Only re-run the effect if these values change
+  
   return (
     <Modal
       animationType="fade"
@@ -167,12 +186,18 @@ const calculatePrices = (newCartItems: any[]) => {
           justifyContent: 'flex-end',
         }}
       >
-      <Buttons.ContainerB>
+        <Buttons.ContainerB>
           <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
-          {/* Update onPress for the Submit button */}
           <Buttons.ButtonB title="Submit" onPress={() => { onClose(); clearCart(); }} color='A' />
+          <Buttons.ButtonB title="Manual Print" onPress={handleManualPrint} color='B' />
         </Buttons.ContainerB>
       </View>
+
+        {/* PrintOS Modal */}
+        <PrintOS
+          visible={printOSVisible}
+          onClose={() => setPrintOSVisible(false)}
+        />
 
       {modalType === 'subModal' && selectedItemIndex !== null && (
           <SubModal
