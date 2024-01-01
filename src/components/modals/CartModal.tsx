@@ -138,18 +138,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
     return Math.round(totalPrice); // Return the total price formatted rounded to whole numbers
   };
 
-  useEffect(() => {
-  if (visible) { // Only log when the modal is opened
-    console.log("Cart Items:", JSON.stringify(cartItems, null, 2));
-    console.log("Selected Item Index:", selectedItemIndex);
-    console.log("Selected Colors:", JSON.stringify(selectedColors, null, 2));
-    console.log("Counter Value:", counterValue);
-    console.log("Calculated Prices:", JSON.stringify(calculatedPrices, null, 2));
-    console.log("PrintOS Modal Visible:", printOSVisible);
-  }
-  }, [visible, cartItems, selectedItemIndex, selectedColors, counterValue, calculatedPrices, printOSVisible]); // Only re-run the effect if these values change
 
-  
   useEffect(() => {
     if (visible) { // Only log when the modal is opened
       cartItems.forEach((item) => {
@@ -177,13 +166,13 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
         // Logging the required information
         if (selectedCategory) {
           console.log(`Selected Category Name: ${selectedCategory.name}`);
-        }
-        console.log(`Modal Counts Name: ${firstModalCount.name}`);
-        console.log(`Details: ${details}`);
-        console.log(`Subtotal Price: ${subtotalModalCount.price}`);
-      });
-    }
-  }, [visible, cartItems]); // Dependency array for useEffect
+              }
+              console.log(`Modal Counts Name: ${firstModalCount.name}`);
+              console.log(`Details: ${details}`);
+              console.log(`Subtotal Price: ${subtotalModalCount.price}`);
+            });
+          }
+        }, [visible, cartItems]); // Dependency array for useEffect
   
   return (
     <Modal
@@ -243,6 +232,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
         <PrintOS
           visible={printOSVisible}
           onClose={() => setPrintOSVisible(false)}
+          cartItems={[]}
         />
 
         {modalType === 'subModal' && selectedItemIndex !== null && (

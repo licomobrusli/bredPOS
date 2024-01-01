@@ -11,10 +11,11 @@ LogBox.ignoreLogs([
 interface PrintOSProps {
   visible: boolean;
   onClose: () => void;
+  cartItems: any[];
 }
 
 // Include the props in your function component
-export default function PrintOS({ visible, onClose }: PrintOSProps) {
+export default function PrintOS({ visible, onClose, cartItems }: PrintOSProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
   const defaultPrinter = {
     device_id: 2003, 
@@ -40,7 +41,21 @@ export default function PrintOS({ visible, onClose }: PrintOSProps) {
 
   const handlePrint = async () => {
     try {
-      await USBPrinter.printText("<C>sample text: if it's 3 in the afternoon and you ain't high ... go fuck yourself</C>\n");
+      // Iterate through each cartItem and construct the print text
+      let printText = '';
+      cartItems.forEach(item => {
+        // Ensure the required properties exist
+        if(item.selectedCategory && item.firstModalCount && item.details && item.subtotalModalCount) {
+          printText += `<C>${item.selectedCategory.name}, ${item.firstModalCount.name}, ${item.details}, ${item.subtotalModalCount.price}</C>\n`;
+        }
+      });
+
+      // Print the constructed text
+      if(printText) {
+        await USBPrinter.printText(printText);
+      } else {
+        console.log("No items to print");
+      }
     } catch (err) {
       console.warn(err);
     }
