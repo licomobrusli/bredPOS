@@ -41,16 +41,39 @@ export default function PrintOS({ visible, onClose, cartItems }: PrintOSProps) {
 
   const handlePrint = async () => {
     try {
-      // Iterate through each cartItem and construct the print text
+      console.log("handlePrint called with cartItems:", cartItems);
       let printText = '';
-      cartItems.forEach(item => {
-        // Ensure the required properties exist
-        if(item.selectedCategory && item.firstModalCount && item.details && item.subtotalModalCount) {
-          printText += `<C>${item.selectedCategory.name}, ${item.firstModalCount.name}, ${item.details}, ${item.subtotalModalCount.price}</C>\n`;
+      cartItems.forEach((item, index) => {
+        const firstModalCount = item.modalCountsDetails[0];
+        const subtotalModalCount = item.modalCountsDetails[item.modalCountsDetails.length - 1];
+      
+        let details;
+        switch (firstModalCount.sub) {
+          case 0:
+            details = null;
+            break;
+          case 1:
+            details = item.counterValue;
+            break;
+          case 2:
+            details = item.selectedColors.length > 0 ? item.selectedColors.join(", ") : "No Colors";
+            break;
+          default:
+            details = "Undefined";
+        }
+      
+        if(item.selectedCategory && firstModalCount && details !== undefined && subtotalModalCount) {
+          printText += `<C>${item.selectedCategory.name}, ${firstModalCount.name}, ${details}, ${subtotalModalCount.price}</C>\n`;
+          if (index !== cartItems.length - 1) {
+            // Add a double line break if it's not the last item
+            printText += '\n';
+          }
         }
       });
+      
 
       // Print the constructed text
+      console.log("Constructed printText:", printText);
       if(printText) {
         await USBPrinter.printText(printText);
       } else {

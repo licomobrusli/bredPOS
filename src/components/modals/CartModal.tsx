@@ -121,7 +121,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   };
 
   const handleManualPrint = () => {
-    // When the Manual Print button is pressed, show the PrintOS modal
+    console.log("handleManualPrint called, cartItems:", cartItems);
     setPrintOSVisible(true);
   };
 
@@ -232,7 +232,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
         <PrintOS
           visible={printOSVisible}
           onClose={() => setPrintOSVisible(false)}
-          cartItems={[]}
+          cartItems={cartItems}
         />
 
         {modalType === 'subModal' && selectedItemIndex !== null && (
