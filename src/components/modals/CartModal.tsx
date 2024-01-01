@@ -139,6 +139,18 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   };
 
   useEffect(() => {
+  if (visible) { // Only log when the modal is opened
+    console.log("Cart Items:", JSON.stringify(cartItems, null, 2));
+    console.log("Selected Item Index:", selectedItemIndex);
+    console.log("Selected Colors:", JSON.stringify(selectedColors, null, 2));
+    console.log("Counter Value:", counterValue);
+    console.log("Calculated Prices:", JSON.stringify(calculatedPrices, null, 2));
+    console.log("PrintOS Modal Visible:", printOSVisible);
+  }
+  }, [visible, cartItems, selectedItemIndex, selectedColors, counterValue, calculatedPrices, printOSVisible]); // Only re-run the effect if these values change
+
+  
+  useEffect(() => {
     if (visible) { // Only log when the modal is opened
       cartItems.forEach((item) => {
         // Destructuring for easier access to properties
@@ -148,12 +160,18 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   
         // Determine what to put in the details column based on the logic field
         let details;
-        if (firstModalCount.logic === "NOT") {
-          details = null; // Logic = 0 (NOT), details is null
-        } else if (firstModalCount.logic === "OR" && counterValue) {
-          details = counterValue; // Logic = 1 (OR), details is the counter value
-        } else if (firstModalCount.sub === 2 && selectedColors.length > 0) {
-          details = selectedColors.join(", "); // Logic = 2, details are the selected colors
+        switch (firstModalCount.sub) {
+          case 0:
+            details = null; // sub = 0, details is null
+            break;
+          case 1:
+            details = counterValue; // sub = 1, details is the counter value
+            break;
+          case 2:
+            details = selectedColors.length > 0 ? selectedColors.join(", ") : "No Colors"; // sub = 2, details are the selected colors
+            break;
+          default:
+            details = "Undefined"; // Fallback for unexpected sub values
         }
   
         // Logging the required information
