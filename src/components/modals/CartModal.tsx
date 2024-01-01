@@ -125,17 +125,48 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
     setPrintOSVisible(true);
   };
 
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    cartItems.forEach(item => {
+      item.modalCountsDetails.forEach((detail) => {
+        if (detail.name === "Sub total") {
+          const price = parseFloat(detail.price.split('€')[0]);
+          totalPrice += isNaN(price) ? 0 : price;
+        }
+      });
+    });
+    return Math.round(totalPrice); // Return the total price formatted rounded to whole numbers
+  };
+
   useEffect(() => {
     if (visible) { // Only log when the modal is opened
-      console.log("Cart Items:", JSON.stringify(cartItems, null, 2));
-      console.log("Selected Item Index:", selectedItemIndex);
-      console.log("Selected Colors:", JSON.stringify(selectedColors, null, 2));
-      console.log("Counter Value:", counterValue);
-      console.log("Calculated Prices:", JSON.stringify(calculatedPrices, null, 2));
-      console.log("PrintOS Modal Visible:", printOSVisible);
+      cartItems.forEach((item) => {
+        // Destructuring for easier access to properties
+        const { selectedCategory, modalCountsDetails, counterValue, selectedColors } = item;
+        const firstModalCount = modalCountsDetails[0];
+        const subtotalModalCount = modalCountsDetails[modalCountsDetails.length - 1];
+  
+        // Determine what to put in the details column based on the logic field
+        let details;
+        if (firstModalCount.logic === "NOT") {
+          details = null; // Logic = 0 (NOT), details is null
+        } else if (firstModalCount.logic === "OR" && counterValue) {
+          details = counterValue; // Logic = 1 (OR), details is the counter value
+        } else if (firstModalCount.sub === 2 && selectedColors.length > 0) {
+          details = selectedColors.join(", "); // Logic = 2, details are the selected colors
+        }
+  
+        // Logging the required information
+        if (selectedCategory) {
+          console.log(`Selected Category Name: ${selectedCategory.name}`);
+        }
+        console.log(`Modal Counts Name: ${firstModalCount.name}`);
+        console.log(`Details: ${details}`);
+        console.log(`Subtotal Price: ${subtotalModalCount.price}`);
+      });
     }
-  }, [visible, cartItems, selectedItemIndex, selectedColors, counterValue, calculatedPrices, printOSVisible]); // Only re-run the effect if these values change
-
+  }, [visible, cartItems]); // Dependency array for useEffect
+  
   return (
     <Modal
       animationType="fade"
@@ -145,7 +176,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
     >
       <View style={styles.modalContainer}>
         <View style={styles.totalRow}>
-          <Text style={fonts.txtCard}>Total</Text>
+          <Text style={fonts.txtCard}>TOTAL {calculateTotalPrice()}€</Text>
         </View>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
           {cartItems.map((item, index) => (
@@ -232,11 +263,11 @@ const styles = StyleSheet.create({
   },
 
   totalRow: {
-    width: '100%',
+    width: SDims.Width50p + SDims.Width5p,
     padding: SDims.D20px,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'row',
     backgroundColor: 'black',
+    top: SDims.Height5p,
   },
 
   scrollView: {
@@ -277,7 +308,7 @@ const styles = StyleSheet.create({
     width: '100%', // Ensure it spans the full width
     alignContent: 'center',
     alignSelf: 'center',
-    padding: SDims.D20px,
+    bottom: SDims.Height5p,
   },
 });
 
