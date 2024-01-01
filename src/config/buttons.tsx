@@ -65,9 +65,7 @@ const styles = StyleSheet.create({
   },
 
   containerB: {
-    width: SDims.Width50p + SDims.Width5p,
       flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
       alignSelf: 'center',
       backgroundColor: 'black'
