@@ -37,10 +37,15 @@ const McentralSection: React.FC<{ navigation: any }> = ({ navigation }) => {
          }}>
         <Text style={[customStyles.txtBanner]}>{centralText}</Text>
       </View>
-      <View style={{ height: SDims.HeightCentralSection * .5 }}>
+      <View style={{ height: SDims.HeightCentralSection * .42 }}>
         <MlistSection navigation={navigation} />
       </View>
-      <View style={{ height: SDims.HeightCentralSection * .25, backgroundColor: 'black' }}>
+      <View style={{ 
+        height: SDims.HeightCentralSection * .325,
+        width: SDims.Width80p + SDims.Width5p,
+        alignSelf: 'center',
+        backgroundColor: 'black',
+      }}>
         <MadvertSection />
       </View>
       <View style={{  height: SDims.HeightCentralSection * .25, backgroundColor: 'black' }}>
