@@ -35,7 +35,7 @@ const McentralSection: React.FC<{ navigation: any }> = ({ navigation }) => {
         alignSelf: 'center',
         justifyContent: 'flex-end',
          }}>
-        <Text style={[customStyles.txtCard, { textTransform: 'uppercase', color: '#AD8457', fontSize: 60 }]}>{centralText}</Text>
+        <Text style={[customStyles.txtBanner]}>{centralText}</Text>
       </View>
       <View style={{ height: SDims.HeightCentralSection * .5 }}>
         <MlistSection navigation={navigation} />

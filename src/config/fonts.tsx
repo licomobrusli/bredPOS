@@ -20,9 +20,10 @@ const fonts = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     fontFamily: 'WorkSansSemiBold',
-    fontSize: adaptiveFontSize(160),
+    fontSize: adaptiveFontSize(80),
     letterSpacing: adaptiveFontSize(4),
-    color: 'white',
+    color: '#AD8457',
+    textTransform: 'uppercase',
   },
   
   txtButtonA: {
