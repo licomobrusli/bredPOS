@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext } from 'react';
 import { Category, Service } from '../config/types';
 
 interface CartItem {
-    selectedCategory: Category | null;
+    selectedCategory: Category;
     selectedService: Service | null;
     selectedColors: string[];
     counterValue: number;

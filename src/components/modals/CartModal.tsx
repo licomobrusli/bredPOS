@@ -9,6 +9,7 @@ import SDims from '../../config/dimensions';
 import Buttons from '../../config/buttons';
 import { EDTImage } from '../../main/assets/images';
 import PrintOS from '../../config/printOS';
+import { CartItem, SelectedCategory } from '../../config/types';
 
 interface CartModalProps {
   visible: boolean;

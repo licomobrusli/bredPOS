@@ -38,3 +38,20 @@ export interface ModalCount {
   logic: string;
   sub: number
 }
+
+export interface ModalCountDetail {
+  name: string;
+  sub: number;
+  price: number;
+}
+
+export interface SelectedCategory {
+  name: string;
+}
+
+export interface CartItem {
+  selectedCategory: SelectedCategory;
+  modalCountsDetails: ModalCountDetail[];
+  counterValue?: number; // Adjust based on actual usage
+  selectedColors?: string[];
+}
