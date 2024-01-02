@@ -9,7 +9,6 @@ import SDims from '../../config/dimensions';
 import Buttons from '../../config/buttons';
 import { EDTImage } from '../../main/assets/images';
 import PrintOS from '../../config/printOS';
-import { CartItem, SelectedCategory } from '../../config/types';
 
 interface CartModalProps {
   visible: boolean;
@@ -183,8 +182,25 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
       onRequestClose={onClose}
     >
       <View style={styles.modalContainer}>
-        <View style={styles.totalRow}>
-          <Text style={fonts.txtCard}>TOTAL {calculateTotalPrice()}€</Text>
+        <View style={{ 
+          marginTop: SDims.Height5p,
+          flexDirection: 'row',
+       }}>
+          <View style={{ 
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: SDims.Width40p,
+           }}>
+            <Text style={fonts.txtCard}>TOTAL </Text>
+            <Text style={fonts.txtCard}>--- </Text>
+          </View>
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            width: SDims.Width10p + SDims.Width5p,
+          }}>
+            <Text style={fonts.txtCard}>{calculateTotalPrice()}€</Text>
+          </View>
         </View>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
           {cartItems.map((item, index) => (
