@@ -10,7 +10,7 @@ const McentralControls: React.FC<{ style?: ViewStyle }> = ({ style }) => {
   const route = useRoute();
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container]}>
       {route.name === 'CategoryScreen' ? <HelpButton /> : <BackButton />}
     </View>
   );
@@ -18,11 +18,11 @@ const McentralControls: React.FC<{ style?: ViewStyle }> = ({ style }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: SDims.D200px,
+    width: SDims.Width80p + SDims.Width5p,
+    alignSelf: 'center',
     backgroundColor: 'black',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    padding: SDims.D5px,
     justifyContent: 'center',
   }
 });

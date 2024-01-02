@@ -22,9 +22,12 @@ const Madvert: React.FC<{ style?: ViewStyle }> = ({ style }) => {
         <Image
           source={require('../main/assets/images/SUBS.jpg')}
           style={{
+            width: SDims.Width80p + SDims.Width5p,
             height: SDims.Height20p,
             alignSelf: 'center',
             resizeMode: 'contain',
+            borderColor: '#AD8457',
+            borderWidth: SDims.D2px,
           }}
         />
       </TouchableOpacity>
