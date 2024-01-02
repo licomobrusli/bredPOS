@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center' 
   },
   image: { 
-    marginTop: SDims.D100px + SDims.D20px,
-    width: SDims.Width100p, // Fixed width for testing
-    height: SDims.Height100p, // Fixed height for testing
+    marginTop: SDims.Height10p * .8,
+    width: SDims.Width100p + SDims.Width5p,
+    height: SDims.Height100p + SDims.Height5p,
     resizeMode: 'contain' 
   }
 });
