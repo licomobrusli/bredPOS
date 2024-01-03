@@ -2,7 +2,7 @@
 import React, { createContext, useState, useContext } from 'react';
 import { Category, Service } from '../config/types';
 
-interface CartItem {
+export interface CartItem {
     selectedCategory: Category;
     selectedService: Service | null;
     selectedColors: string[];

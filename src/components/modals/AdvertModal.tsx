@@ -38,10 +38,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end' 
   },
   image: { 
-    marginTop: SDims.D100px + SDims.D20px,
-    width: SDims.Width90p, 
-    height: SDims.Width100p,
-    resizeMode: 'contain' 
+    width: SDims.Width80p + SDims.Width5p, 
+    marginBottom: SDims.Height20p + SDims.Width5p,
+    resizeMode: 'contain',
+    borderColor: '#AD8457',
+    borderWidth: SDims.D2px,
+    padding: SDims.D200px + SDims.D60px,
   }
 });
 

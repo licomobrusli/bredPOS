@@ -212,9 +212,11 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
                   </Text>
                   {item.modalCountsDetails.map((detail, detailIndex) => (
                     detail.name === "Sub total" && (
-                      <Text key={detailIndex} style={fonts.txtButtonA}>{` - `}
+                      <View key={detailIndex} style={{ justifyContent: 'flex-end' }}>
+                    <Text key={detailIndex} style={fonts.txtButtonA}>
                         {calculatedPrices[detail.name] ? `${calculatedPrices[detail.name].totalPrice}€` : detail.price}
-                      </Text>
+                    </Text>
+                    </View>
                     )
                   ))}
                 </View>
@@ -296,37 +298,30 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
-    flex: 1,
-    width: '100%',
+    width: SDims.Width60p,
+    alignSelf: 'center',
   },
-
   scrollViewContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
-
   itemContainer: {
-    width: SDims.Width50p + SDims.Width5p,
     padding: SDims.D20px,
-    flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: 'row',
     backgroundColor: 'black',
   },
 
-  rowContainer: {
-    paddingVertical: SDims.D20px,
-    flex: 1, // Take up available space
+rowContainer: {
+    width: SDims.Width30p + SDims.Width5p,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start', // Align content to the start
+    justifyContent: 'space-between',
   },
 
   buttonAContainer: {
+    width: SDims.Width20p,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end', // Align buttons to the end (right)
+    justifyContent: 'flex-end',
   },
 
   buttonContainer: {
