@@ -4,9 +4,6 @@ import { View, Text } from 'react-native';
 import SwatchGridStyle from '../../config/swatchGridStyle';
 import Fonts from '../../config/fonts';
 import SubModal from '../modals/SubModal';
-// consider adding submodalB to this component
-// can show No. of lines, in this case and be clickable to open the SubModalB as it does subModal now for colors
-import SubModalB from './SubModalB';
 import SDims from '../../config/dimensions';
 
 interface ModalDetailProps {

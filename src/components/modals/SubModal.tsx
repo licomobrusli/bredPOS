@@ -1,39 +1,47 @@
-// SubModal.tsx
-import React from 'react';
+import React, { useContext } from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import SDims from '../../config/dimensions';
 import fonts from '../../config/fonts';
 import SwatchGridStyle from '../../config/swatchGridStyle';
+import swatchColorsContext from '../../config/swatchColorsContext';
+import { SwatchColorData } from '../../config/types'; // Correct the path as needed
 
 interface SubModalProps {
   isVisible: boolean;
   onClose: () => void;
-  selectedColors: string[]; // Add this line
+  selectedColors: string[];
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const SubModal: React.FC<SubModalProps> = ({ isVisible, onClose, selectedColors, setSelectedColors }) => {
-    const selectedSwatchStyle = { 
-        backgroundColor: 'black',
-        borderColor: '#AD8457',
-        borderWidth: SDims.D5px,
-    };
-    const colorsRowOne = ['#1e57a4', '#00afaa', '#3aa935', '#e62d39', '#d40658'];
-    const colorsRowTwo = ['#e594bf', '#f7eb63', '#ec6b1c', '#e8473e', '#452462'];
+  // Access and type the swatch colors data from context
+  const swatchColorsData = useContext(swatchColorsContext) as SwatchColorData[] || [];
 
-    const handleSelectColor = (color: string) => {
-        let updatedSelectedColors = [...selectedColors];
-        const colorIndex = updatedSelectedColors.indexOf(color);
-        
-        if (colorIndex >= 0) {
-            updatedSelectedColors.splice(colorIndex, 1);
-        } else {
-            updatedSelectedColors.push(color);
-        }
-        
-        setSelectedColors(updatedSelectedColors);
-        };
+  // Sort the swatch colors by their codes and map them to their hex values
+  const sortedColors = swatchColorsData.sort((a, b) => a.code.localeCompare(b.code)).map(color => color.image_path);
 
+  // Assuming there are exactly 10 colors, split them into two rows
+  const colorsRowOne = sortedColors.slice(0, 5);
+  const colorsRowTwo = sortedColors.slice(5, 10);
+
+  const selectedSwatchStyle = { 
+      backgroundColor: 'black',
+      borderColor: '#AD8457',
+      borderWidth: SDims.D5px,
+  };
+
+  const handleSelectColor = (color: string) => {
+      let updatedSelectedColors = [...selectedColors];
+      const colorIndex = updatedSelectedColors.indexOf(color);
+      
+      if (colorIndex >= 0) {
+          updatedSelectedColors.splice(colorIndex, 1);
+      } else {
+          updatedSelectedColors.push(color);
+      }
+      
+      setSelectedColors(updatedSelectedColors);
+  };
     return (
     <Modal visible={isVisible} onRequestClose={onClose} transparent>
         <View style={{ marginTop: SDims.Height48p, alignItems: 'center' }}>

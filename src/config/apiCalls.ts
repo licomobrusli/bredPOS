@@ -1,6 +1,5 @@
 // apiCalls.ts
-import api from '../services/api'; // Adjust the import path according to your project structure
-import { Theme, ModalCount, Category, Service } from '../config/types'; // Adjust the import path for your types
+import api from '../services/api';
 import { HEDImage, FCEImage, BRDImage, CUTImage, COLImage, DSNImage } from '../main/assets/images'; // Update the import path and method according to your project
 
 // Fetch Categories (used in both ThemeList and CategoryList)
@@ -65,5 +64,16 @@ export const fetchModalCounts = async (params: { categoryCode: string, serviceCo
     }));
   } catch (error) {
     throw new Error('Error fetching modal counts');
+  }
+};
+
+
+// Fetch Modal Selects with optional category code, service code, and code start (new)
+export const fetchModalSelects = async (params: { categoryCode?: string, serviceCode?: string, code?: string }) => {
+  try {
+    const response = await api.get('/modal_selects/', { params });
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching modal selects');
   }
 };

@@ -55,3 +55,10 @@ export interface CartItem {
   counterValue?: number; // Adjust based on actual usage
   selectedColors?: string[];
 }
+
+export type SwatchColorData = {
+  id: number;
+  code: string;
+  name: string;
+  image_path: string;
+};
