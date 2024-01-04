@@ -24,7 +24,7 @@ const MbottomSection: React.FC = () => {
       <TouchableOpacity onPress={toggleModal}>
         <Image source={SHP} style={{ width: SDims.D200px + SDims.D20px, height: SDims.D200px }} />
       </TouchableOpacity>
-      <CartCounter size={95} onPress={toggleModal} />
+      <CartCounter size={80} onPress={toggleModal} />
       {modalVisible && (
         <CartModal 
           visible={modalVisible} 

@@ -22,7 +22,8 @@ const CartCounter: React.FC<CartCounterProps> = ({ size, onPress }) => {
     <TouchableOpacity onPress={onPress}>
       <View style={{
         position: 'absolute',
-        top: -220,
+        top: -175,
+        left: -10,
         width: size,
         height: size,
         borderRadius: size / 2,
