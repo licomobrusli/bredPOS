@@ -20,6 +20,7 @@ const MbottomSection: React.FC = () => {
       alignItems: 'center',
       justifyContent: 'center',
       position: 'relative',
+      bottom: SDims.D60px,
     }}>
       <TouchableOpacity onPress={toggleModal}>
         <Image source={SHP} style={{ width: SDims.D200px + SDims.D20px, height: SDims.D200px }} />
