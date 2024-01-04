@@ -4,7 +4,7 @@ import { View, Image, TouchableOpacity } from 'react-native';
 import SHP from './../main/assets/images/SHP.jpg';
 import CartModal from '../components/modals/CartModal';
 import SDims from '../config/dimensions';
-import CartCounter from '../content/CartCounter';  // Import the new component
+import CartCounter from '../content/CartCounter';  // Ensure the correct import path
 
 const MbottomSection: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -19,12 +19,12 @@ const MbottomSection: React.FC = () => {
       backgroundColor: 'black',
       alignItems: 'center',
       justifyContent: 'center',
-      position: 'relative',  // Needed for absolute positioning of CartCounter
+      position: 'relative',
     }}>
       <TouchableOpacity onPress={toggleModal}>
         <Image source={SHP} style={{ width: SDims.D200px + SDims.D20px, height: SDims.D200px }} />
       </TouchableOpacity>
-      <CartCounter size={95} />
+      <CartCounter size={95} onPress={toggleModal} />
       {modalVisible && (
         <CartModal 
           visible={modalVisible} 

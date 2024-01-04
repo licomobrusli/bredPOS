@@ -1,39 +1,40 @@
 // CartCounter.tsx
 import React from 'react';
-import { View, Text } from 'react-native';
-import { useCart } from '../config/CartContext';  // Adjust the import path as necessary
-import SDims from '../config/dimensions'
+import { View, Text, TouchableOpacity } from 'react-native';  // Import TouchableOpacity
+import { useCart } from '../config/CartContext';
+import SDims from '../config/dimensions';
 import fonts from '../config/fonts';
 
 interface CartCounterProps {
-  size: number;  // The size of the counter circle
+  size: number;
+  onPress: () => void;  // Add onPress prop
 }
 
-const CartCounter: React.FC<CartCounterProps> = ({ size }) => {
+const CartCounter: React.FC<CartCounterProps> = ({ size, onPress }) => {
   const { cartItems } = useCart();
   const itemCount = cartItems.length;
 
-  // Don't render the counter if there are no items
   if (itemCount === 0) {
     return null;
   }
 
   return (
-    <View style={{
-      position: 'absolute',  // Position over the cart image
-      right: SDims.Width40p + (SDims.Width5p * .8),  // Adjust as necessary
-      top: 10,    // Adjust as necessary
-      width: size,
-      height: size,
-      borderRadius: size / 2,  // Makes it a circle
-      backgroundColor: '#AD8457',
-      borderWidth: 10,
-      borderColor: 'black',
-      alignItems: 'center',
-      flexDirection: 'column',
-    }}>
-      <Text style={[ fonts.txtCard ]}>{itemCount}</Text>
-    </View>
+    <TouchableOpacity onPress={onPress}>
+      <View style={{
+        position: 'absolute',
+        top: -220,
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+        backgroundColor: '#AD8457',
+        borderWidth: 10,
+        borderColor: 'black',
+        alignItems: 'center',
+        flexDirection: 'column',
+      }}>
+        <Text style={[fonts.txtCard]}>{itemCount}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 
