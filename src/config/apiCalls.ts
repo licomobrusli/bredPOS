@@ -103,8 +103,8 @@ export const createOrderItem = async (orderItemData: {
   unit_price: number,
   item_count: number,
   item_price: number,
-  est_start: string,
-  est_duration: number,
+  est_start?: string,
+  est_duration?: number,
 }) => {
   try {
     const response = await api.post('/create_order_item/', orderItemData);

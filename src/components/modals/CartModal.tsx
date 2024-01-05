@@ -10,7 +10,7 @@ import Buttons from '../../config/buttons';
 import { EDTImage } from '../../main/assets/images';
 import PrintOS from '../../config/printOS';
 import SubmitButton from '../../content/SubmitButton';
-import { createOrder } from '../../config/apiCalls'; // Update with the correct path
+import { createOrder, createOrderItem } from '../../config/apiCalls'; // Update with the correct path
 
 interface CartModalProps {
   visible: boolean;
@@ -67,27 +67,49 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const handleSubmitOrder = async () => {
     try {
       // Calculate total item count and price
-      const itemCount = cartItems.length;
-      const orderPrice = calculateTotalPrice(); // Use the existing calculateTotalPrice function
-
+      const orderPrice = calculateTotalPrice();
+  
       // Create order data
       const orderData = {
-        item_count: itemCount,
+        item_count: cartItems.length,
         order_price: orderPrice,
-        // est_start and est_duration are left undefined, so they'll be null in the API call
       };
-
-      // Call the API to create a new order
-      await createOrder(orderData);
-
+  
+      // Call the API to create a new order and retrieve the new order ID
+      const orderResponse = await createOrder(orderData);
+      const newOrderID = orderResponse.id; // Now you have the new order ID to use
+  
+      cartItems.forEach(async (item) => {
+        item.modalCountsDetails.forEach(async (detail) => {
+          if (detail.name !== "Sub total") {
+            // Remove the currency symbol and parse the price and unit price as floats.
+            const price = parseFloat(detail.price.replace('€', ''));
+            const unitPrice = parseFloat(detail.unitPrice.toString().replace('€', ''));
+  
+            // Calculate the item_count. If the unit price is zero or not a number, handle it gracefully.
+            let itemCount = unitPrice ? price / unitPrice : 0;
+  
+            // Create order item data
+            const orderItemData = {
+              order: newOrderID,
+              item_name: detail.name,
+              unit_price: unitPrice,
+              item_count: itemCount,
+              item_price: price,
+            };
+  
+            await createOrderItem(orderItemData); // Create an order item
+          }
+        });
+      });
+  
       clearCart(); // Clear the cart after order is created
       onClose(); // Close the modal
     } catch (error) {
       console.error('Error creating new order', error);
-      // Optionally, handle the error (e.g., show an error message to the user)
     }
   };
-
+  
   interface ModalCountDetail {
     logic: string;
     unitPrice: number;
