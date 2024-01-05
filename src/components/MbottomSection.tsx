@@ -4,7 +4,7 @@ import { View, Image, TouchableOpacity } from 'react-native';
 import SHP from './../main/assets/images/SHP.jpg';
 import CartModal from '../components/modals/CartModal';
 import SDims from '../config/dimensions';
-import CartCounter from '../content/CartCounter';  // Ensure the correct import path
+import CartCounter from '../content/CartCounter';
 
 const MbottomSection: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -13,13 +13,16 @@ const MbottomSection: React.FC = () => {
     setModalVisible(!modalVisible);
   };
 
+  console.log("toggleModal function:", toggleModal);
+
   return (
     <View style={{
       height: SDims.Height10p,
       backgroundColor: 'black',
       alignItems: 'center',
+      alignSelf: 'center',
       justifyContent: 'center',
-      position: 'relative',
+      position: 'absolute',
       bottom: SDims.D60px,
     }}>
       <TouchableOpacity onPress={toggleModal}>
