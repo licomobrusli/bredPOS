@@ -20,8 +20,6 @@ export const requestInitialPermissions = async () => {
       console.log("Storage permission for printer denied");
       // Handle the denial appropriately
     } else {
-      console.log("Storage permission granted");
-      // Permissions are granted
     }
   } catch (err) {
     console.warn("Error requesting printer permissions", err);

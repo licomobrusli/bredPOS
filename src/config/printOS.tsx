@@ -48,9 +48,7 @@ export default function PrintOS({ visible, onClose, cartItems }: PrintOSProps) {
   }, []);
 
   const handlePrint = async () => {
-    try {
-      console.log("handlePrint called with cartItems:", cartItems);
-  
+    try {  
       // Sort and group items by selectedCategory.name
       const groupedItems = cartItems
         .sort((a, b) => (a.selectedCategory.name > b.selectedCategory.name ? 1 : -1))
@@ -113,7 +111,6 @@ export default function PrintOS({ visible, onClose, cartItems }: PrintOSProps) {
     }
   
       // Print the constructed text
-      console.log("Constructed printText:", printText);
       if (printText) {
         await USBPrinter.printBill(printText);
       } else {

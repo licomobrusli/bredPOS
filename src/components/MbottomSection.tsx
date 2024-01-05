@@ -13,8 +13,6 @@ const MbottomSection: React.FC = () => {
     setModalVisible(!modalVisible);
   };
 
-  console.log("toggleModal function:", toggleModal);
-
   return (
     <View style={{
       height: SDims.Height10p,

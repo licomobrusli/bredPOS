@@ -9,6 +9,7 @@ import SDims from '../../config/dimensions';
 import Buttons from '../../config/buttons';
 import { EDTImage } from '../../main/assets/images';
 import PrintOS from '../../config/printOS';
+import SubmitButton from '../../content/SubmitButton';
 
 interface CartModalProps {
   visible: boolean;
@@ -79,7 +80,6 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
 
           let quantity = 1; // Default quantity
           let totalPrice = 0;
-          console.log("detail:", detail); // Check the detail content
           if (detail.logic === 'OR') {
             quantity = Math.max(selectedColors.length - 1, 0);
             totalPrice = detail.unitPrice * quantity;
@@ -121,7 +121,6 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   };
 
   const handleManualPrint = () => {
-    console.log("handleManualPrint called, cartItems:", cartItems);
     setPrintOSVisible(true);
   };
 
@@ -242,7 +241,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
         <View style={styles.buttonContainer}>
           <Buttons.ContainerB>
             <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
-            <Buttons.ButtonB title="Submit" onPress={() => { onClose(); clearCart(); }} color='A' />
+            <SubmitButton onClose={onClose} clearCart={clearCart} color='A' />
             <Buttons.ButtonB title="Manual Print" onPress={handleManualPrint} color='B' />
           </Buttons.ContainerB>
         </View>
