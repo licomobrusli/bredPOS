@@ -78,7 +78,6 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
       };
 
       // Call the API to create a new order
-      console.log(orderData)
       await createOrder(orderData);
 
       clearCart(); // Clear the cart after order is created
@@ -165,12 +164,8 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
 
 
   useEffect(() => {
-    if (visible) { // Only log when the modal is opened
-      // Calculate the total price of items in the cart, this is only here to serve the console.log below
-      const totalPrice = calculateTotalPrice();
-      console.log(`orders: item_count: ${cartItems.length}, order_price: ${totalPrice}€`); 
+    if (visible) { 
       // console log of modalCount.code, Unit Price, counter value or count of number of colors from detail field, and subtotal price
-      
       cartItems.forEach((item) => {
         item.modalCountsDetails.forEach((detail) => {
           if (detail.name !== "Sub total") {
