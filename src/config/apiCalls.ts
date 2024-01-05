@@ -77,3 +77,34 @@ export const fetchModalSelects = async (params: { categoryCode?: string, service
     throw new Error('Error fetching modal selects');
   }
 };
+
+// Function to create a new order
+export const createOrder = async (orderData: {
+  item_count: number, 
+  order_price?: number, 
+  est_start?: string,
+  est_duration?: number,
+}) => {
+  try {
+    const response = await api.post('/orders/', orderData); // Ensure this endpoint is correct
+    return response.data;
+  } catch (error) {
+    throw new Error('Error creating new order');
+  }
+};
+
+// Function to create a new order item
+export const createOrderItem = async (orderItemData: {
+  order: number,
+  item_name: string,
+  unit_price: number,
+  item_count: number,
+  item_price: number,
+}) => {
+  try {
+    const response = await api.post('/order_items/', orderItemData); // Ensure this endpoint is correct
+    return response.data;
+  } catch (error) {
+    throw new Error('Error creating new order item');
+  }
+};

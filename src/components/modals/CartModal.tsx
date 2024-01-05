@@ -142,13 +142,20 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
     if (visible) { // Only log when the modal is opened
       // Calculate the total price of items in the cart, this is only here to serve the console.log below
       const totalPrice = calculateTotalPrice();
-      console.log(`Cart Summary: Number of items: ${cartItems.length}, Total price: ${totalPrice}€`);
+      console.log(`orders: item_count: ${cartItems.length}, order_price: ${totalPrice}€`); 
       // console log of modalCount.code, Unit Price, counter value or count of number of colors from detail field, and subtotal price
       
       cartItems.forEach((item) => {
         item.modalCountsDetails.forEach((detail) => {
           if (detail.name !== "Sub total") {
-            console.log(`Detail: ${detail.name}, Unit Price: ${detail.unitPrice}€, Price: ${detail.price}`);
+            // Remove the currency symbol and parse the price and unit price as floats.
+            const price = parseFloat(detail.price.replace('€', ''));
+            const unitPrice = parseFloat(detail.unitPrice.toString().replace('€', ''));
+            
+            // Calculate the item_count. If the unit price is zero or not a number, handle it gracefully.
+            let itemCount = unitPrice ? price / unitPrice : 0;
+      
+            console.log(`item_name: ${detail.name}, unit_price: ${unitPrice}€, item_count: ${itemCount}, item_price: ${price}€`);
           }
         });
         // Destructuring for easier access to properties
