@@ -88,6 +88,8 @@ export const createOrder = async (orderData: {
 }) => {
   try {
     const response = await api.post('/create_order/', orderData);
+    const newOrderId = response.data.id;
+    console.log('newOrderId', newOrderId);
     return response.data;
   } catch (error) {
     throw new Error('Error creating new order');
@@ -105,7 +107,7 @@ export const createOrderItem = async (orderItemData: {
   est_duration: number,
 }) => {
   try {
-    const response = await api.post('/order_items/', orderItemData); // Ensure this endpoint is correct
+    const response = await api.post('/create_order_item/', orderItemData);
     return response.data;
   } catch (error) {
     throw new Error('Error creating new order item');
