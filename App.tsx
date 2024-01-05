@@ -5,7 +5,8 @@ import 'react-native-gesture-handler';
 import { CartProvider } from './src/config/CartContext';
 import { requestInitialPermissions } from './src/config/permissions';
 import ImmersiveMode from 'react-native-immersive-mode';
-import SwatchColorsProvider from './src/config/swatchColorsProvider'; // Import the SwatchColorsProvider
+import SwatchColorsProvider from './src/config/swatchColorsProvider';
+import CategoriesProvider from './src/config/categoriesProvider';
 
 const App: React.FC = () => {
 
@@ -17,11 +18,13 @@ const App: React.FC = () => {
 
   return (
     <View style={{ flex: 1 }}>
+      <CategoriesProvider>
       <SwatchColorsProvider>
         <CartProvider>
           <MainScreen />
         </CartProvider>
       </SwatchColorsProvider>
+      </CategoriesProvider>
     </View>
   );
 };
