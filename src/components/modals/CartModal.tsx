@@ -140,12 +140,22 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
 
   useEffect(() => {
     if (visible) { // Only log when the modal is opened
+      // Calculate the total price of items in the cart, this is only here to serve the console.log below
+      const totalPrice = calculateTotalPrice();
+      console.log(`Cart Summary: Number of items: ${cartItems.length}, Total price: ${totalPrice}€`);
+      // console log of modalCount.code, Unit Price, counter value or count of number of colors from detail field, and subtotal price
+      
       cartItems.forEach((item) => {
+        item.modalCountsDetails.forEach((detail) => {
+          if (detail.name !== "Sub total") {
+            console.log(`Detail: ${detail.name}, Unit Price: ${detail.unitPrice}€, Price: ${detail.price}`);
+          }
+        });
         // Destructuring for easier access to properties
         const { selectedCategory, modalCountsDetails, counterValue, selectedColors } = item;
         const firstModalCount = modalCountsDetails[0];
         const subtotalModalCount = modalCountsDetails[modalCountsDetails.length - 1];
-  
+        
         // Determine what to put in the details column based on the logic field
         let details;
         switch (firstModalCount.sub) {
@@ -161,18 +171,10 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
           default:
             details = "Undefined"; // Fallback for unexpected sub values
         }
-  
-        // Logging the required information
-        if (selectedCategory) {
-          console.log(`Selected Category Name: ${selectedCategory.name}`);
-              }
-              console.log(`Modal Counts Name: ${firstModalCount.name}`);
-              console.log(`Details: ${details}`);
-              console.log(`Subtotal Price: ${subtotalModalCount.price}`);
-            });
-          }
-        }, [visible, cartItems]); // Dependency array for useEffect
-  
+      });
+    }
+  }, [visible, cartItems]);
+
   return (
     <Modal
       animationType="fade"
