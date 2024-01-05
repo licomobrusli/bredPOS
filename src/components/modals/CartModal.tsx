@@ -10,6 +10,7 @@ import Buttons from '../../config/buttons';
 import { EDTImage } from '../../main/assets/images';
 import PrintOS from '../../config/printOS';
 import SubmitButton from '../../content/SubmitButton';
+import { createOrder } from '../../config/apiCalls'; // Update with the correct path
 
 interface CartModalProps {
   visible: boolean;
@@ -60,6 +61,31 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
       // Update the cart items in the state
       setCartItems(newCartItems);
       setModalType(null);
+    }
+  };
+
+  const handleSubmitOrder = async () => {
+    try {
+      // Calculate total item count and price
+      const itemCount = cartItems.length;
+      const orderPrice = calculateTotalPrice(); // Use the existing calculateTotalPrice function
+
+      // Create order data
+      const orderData = {
+        item_count: itemCount,
+        order_price: orderPrice,
+        // est_start and est_duration are left undefined, so they'll be null in the API call
+      };
+
+      // Call the API to create a new order
+      console.log(orderData)
+      await createOrder(orderData);
+
+      clearCart(); // Clear the cart after order is created
+      onClose(); // Close the modal
+    } catch (error) {
+      console.error('Error creating new order', error);
+      // Optionally, handle the error (e.g., show an error message to the user)
     }
   };
 
@@ -158,6 +184,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
             console.log(`item_name: ${detail.name}, unit_price: ${unitPrice}€, item_count: ${itemCount}, item_price: ${price}€`);
           }
         });
+
         // Destructuring for easier access to properties
         const { selectedCategory, modalCountsDetails, counterValue, selectedColors } = item;
         const firstModalCount = modalCountsDetails[0];
@@ -250,7 +277,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
         <View style={styles.buttonContainer}>
           <Buttons.ContainerB>
             <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
-            <SubmitButton onClose={onClose} clearCart={clearCart} color='A' />
+            <SubmitButton onClose={onClose} onPress={handleSubmitOrder} clearCart={clearCart} color='A' />
             <Buttons.ButtonB title="Manual Print" onPress={handleManualPrint} color='B' />
           </Buttons.ContainerB>
         </View>

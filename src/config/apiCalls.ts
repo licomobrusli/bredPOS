@@ -1,6 +1,7 @@
 // apiCalls.ts
 import api from '../services/api';
 import { HEDImage, FCEImage, BRDImage, CUTImage, COLImage, DSNImage } from '../main/assets/images'; // Update the import path and method according to your project
+import { connect } from 'http2';
 
 // Fetch Categories (used in both ThemeList and CategoryList)
 export const fetchCategories = async (categoryCode?: string) => {
@@ -81,12 +82,12 @@ export const fetchModalSelects = async (params: { categoryCode?: string, service
 // Function to create a new order
 export const createOrder = async (orderData: {
   item_count: number, 
-  order_price?: number, 
+  order_price: number, 
   est_start?: string,
   est_duration?: number,
 }) => {
   try {
-    const response = await api.post('/orders/', orderData); // Ensure this endpoint is correct
+    const response = await api.post('/create_order/', orderData);
     return response.data;
   } catch (error) {
     throw new Error('Error creating new order');
@@ -100,6 +101,8 @@ export const createOrderItem = async (orderItemData: {
   unit_price: number,
   item_count: number,
   item_price: number,
+  est_start: string,
+  est_duration: number,
 }) => {
   try {
     const response = await api.post('/order_items/', orderItemData); // Ensure this endpoint is correct

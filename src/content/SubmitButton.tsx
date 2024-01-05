@@ -5,16 +5,18 @@ import Buttons from '../config/buttons';
 interface SubmitButtonProps {
   onClose: () => void;
   clearCart: () => void;
+  onPress: () => Promise<void>;
   color: string;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({ onClose, clearCart, color }) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({ onPress, clearCart, onClose, color }) => {
   return (
     <Buttons.ButtonB
       title="Submit"
-      onPress={() => {
-        onClose();
+      onPress={async () => {
+        await onPress();
         clearCart();
+        onClose();
       }}
       color={'A'}
     />
