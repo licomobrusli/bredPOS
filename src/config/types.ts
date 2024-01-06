@@ -50,7 +50,7 @@ export interface SelectedCategory {
 }
 
 export interface CartItem {
-  selectedCategory: SelectedCategory;
+  selectedCategory: SelectedCategory | null;
   modalCountsDetails: ModalCountDetail[];
   counterValue?: number; // Adjust based on actual usage
   selectedColors?: string[];
