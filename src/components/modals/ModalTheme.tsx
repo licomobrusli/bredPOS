@@ -84,6 +84,7 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
       </View>
       <View style={{ height: SDims.Height1_8f }}>
         <ThemeList 
+          selectedService={selectedService}
           categoryCode={categoryCode}
           selectedServiceCode={selectedServiceCode}
           onSelectColor={onSelectColor}

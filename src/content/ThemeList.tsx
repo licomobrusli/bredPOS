@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Dimensions, Text, TouchableOpacity } from 'react-native';
 import Buttons from '../config/buttons';
 import { fetchModalCounts } from '../config/apiCalls';
-import { ModalCount } from '../config/types';
+import { Category, Service, ModalCount } from '../config/types';
 import SubModal from '../components/modals/SubModal';
 import SubModalB from '../components/modals/SubModalB'; // Import SubModalB
 
 interface ThemeListProps {
+  selectedService: Service | null;
   categoryCode: string;
   selectedServiceCode: string;
   onSelectColor: (colors: string[]) => void;

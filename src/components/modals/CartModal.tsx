@@ -197,8 +197,6 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
             
             // Calculate the item_count. If the unit price is zero or not a number, handle it gracefully.
             let itemCount = unitPrice ? price / unitPrice : 0;
-      
-            console.log(`item_name: ${detail.name}, unit_price: ${unitPrice}€, item_count: ${itemCount}, item_price: ${price}€`);
           }
         });
 
