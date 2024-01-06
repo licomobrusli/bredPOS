@@ -15,4 +15,7 @@ export { default as STRImage } from './STR.jpg';
 export { default as PRCImage } from './PRC.jpg';
 export { default as SUBSImage } from './SUBS.jpg';
 
+export { default as tickTeal } from './tickTeal.jpg';
+export { default as tickBronze } from './tickBronze.jpg';
+
 // ... and so on for other images
