@@ -51,28 +51,23 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate fetching data from APIs (remove API calls)
-    // Instead, set Categories and Services directly from selectedService and selectedCategory
     if (selectedCategory) {
-      // Convert 'id' to string
       const categoryTheme: Theme = {
         ...selectedCategory,
-        id: selectedCategory.id.toString(),
+        id: selectedCategory.id, // Keep as the original type
       };
       setCategories([categoryTheme]);
     }
     if (selectedService) {
-      // Convert 'id' to string
       const serviceTheme: Theme = {
         ...selectedService,
-        id: selectedService.id.toString(),
+        id: selectedService.id, // Keep as the original type
       };
       setServices([serviceTheme]);
     }
-
     setIsLoading(false);
   }, [selectedCategory, selectedService]);
-
+  
   return (
     <View style={[styles.container, style ]}>
       <View style={{ height: SDims.Width50p }}>
@@ -85,6 +80,7 @@ const ModalTheme: React.FC<ModalThemeProps> = ({
       <View style={{ height: SDims.Height1_8f }}>
         <ThemeList 
           selectedService={selectedService}
+          selectedCategory={selectedCategory}
           categoryCode={categoryCode}
           selectedServiceCode={selectedServiceCode}
           onSelectColor={onSelectColor}

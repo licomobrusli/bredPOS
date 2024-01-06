@@ -21,7 +21,7 @@ export const fetchCategories = async (categoryCode?: string) => {
         default:
           imagePath = 'https://placekitten.com/200/200';
       }
-      return { id: category.id.toString(), code: category.code, imageUrl: imagePath, name: category.name };
+      return { id: Number(category.id), code: category.code, imageUrl: imagePath, name: category.name };
     });
   } catch (error) {
     throw new Error('Error fetching categories');
@@ -47,7 +47,7 @@ export const fetchServices = async (serviceCode?: string) => {
         default:
           imagePath = 'https://placekitten.com/200/200';
       }
-      return { id: service.id.toString(), code: service.code, imageUrl: imagePath, name: service.name };
+      return { id: Number(service.id), code: service.code, imageUrl: imagePath, name: service.name };
     });
   } catch (error) {
     throw new Error('Error fetching services');

@@ -1,14 +1,15 @@
 // ThemeList.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Dimensions, Text, TouchableOpacity } from 'react-native';
 import Buttons from '../config/buttons';
-import { fetchModalCounts } from '../config/apiCalls';
 import { Category, Service, ModalCount } from '../config/types';
 import SubModal from '../components/modals/SubModal';
 import SubModalB from '../components/modals/SubModalB'; // Import SubModalB
+import modalCountsContext from '../config/modalCountsContext';
 
 interface ThemeListProps {
   selectedService: Service | null;
+  selectedCategory: Category | null;
   categoryCode: string;
   selectedServiceCode: string;
   onSelectColor: (colors: string[]) => void;
@@ -32,8 +33,9 @@ interface CalculatedPrices {
 }
 
 const ThemeList: React.FC<ThemeListProps> = ({
-  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, counterValue, onCounterChange, onModalCountsChange
+  categoryCode, selectedServiceCode, selectedColors, setSelectedColors, counterValue, onCounterChange, onModalCountsChange, selectedCategory, selectedService
 }) => {
+  const contextModalCounts = useContext(modalCountsContext);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
   const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
@@ -41,17 +43,12 @@ const ThemeList: React.FC<ThemeListProps> = ({
   const [calculatedPrices, setCalculatedPrices] = useState<CalculatedPrices>({} as CalculatedPrices);
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const modalCountsData = await fetchModalCounts({ categoryCode, serviceCode: selectedServiceCode });
-        setModalCounts(modalCountsData);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    loadData();
-  }, [categoryCode, selectedServiceCode]);
+    // Filter the modal counts based on categoryCode and serviceCode
+    if (contextModalCounts) {
+      const filteredModalCounts = contextModalCounts.filter(mc => mc.category_code === (selectedCategory?.id) && mc.service_code === (selectedService?.id));
+      setModalCounts(filteredModalCounts);
+    }
+  }, [categoryCode, selectedServiceCode, contextModalCounts]);
 
   useEffect(() => {
     const newCalculatedPrices: CalculatedPrices = {};

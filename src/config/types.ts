@@ -24,7 +24,7 @@ export interface Service {
 }
 
 export interface Theme {
-  id: string;
+  id: number;
   imageUrl: string;
   code: string;
   name: string;
@@ -32,9 +32,13 @@ export interface Theme {
 
 export interface ModalCount {
   id: string;
+  code: string;
   name: string;
   price: number;
   max_quantity: number;
+  category_code: number;
+  service_code: number;
+  iamge_path: string;
   logic: string;
   sub: number
 }
