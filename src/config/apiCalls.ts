@@ -1,7 +1,6 @@
 // apiCalls.ts
 import api from '../services/api';
 import { HEDImage, FCEImage, BRDImage, CUTImage, COLImage, DSNImage } from '../main/assets/images'; // Update the import path and method according to your project
-import { connect } from 'http2';
 
 // Fetch Categories (used in both ThemeList and CategoryList)
 export const fetchCategories = async (categoryCode?: string) => {
@@ -56,7 +55,7 @@ export const fetchServices = async (serviceCode?: string) => {
 };
 
 // Fetch Modal Counts (specific to ThemeList)
-export const fetchModalCounts = async (params: { categoryCode: string, serviceCode: string }) => {
+export const fetchModalCounts = async (params?: { categoryCode?: string, serviceCode?: string }) => {
   try {
     const response = await api.get('/modal_counts/', { params });
     return response.data.map((item: any) => ({

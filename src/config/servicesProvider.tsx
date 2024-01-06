@@ -17,7 +17,6 @@ const ServicesProvider: React.FC<ServicesProviderProps> = ({ children }) => {
         // Use the correct function and parameters to fetch colors with codes starting with 'COL%'
         const data: Service[] = await fetchServices();
         setServicesData(data);
-        console.log(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }

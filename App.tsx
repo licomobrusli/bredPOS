@@ -8,6 +8,7 @@ import ImmersiveMode from 'react-native-immersive-mode';
 import SwatchColorsProvider from './src/config/swatchColorsProvider';
 import CategoriesProvider from './src/config/categoriesProvider';
 import ServicesProvider from './src/config/servicesProvider';
+import ModalCountsProvider from './src/config/modalCountsProvider';
 
 const App: React.FC = () => {
 
@@ -21,11 +22,13 @@ const App: React.FC = () => {
     <View style={{ flex: 1 }}>
       <CategoriesProvider>
       <ServicesProvider>
+      <ModalCountsProvider>
       <SwatchColorsProvider>
         <CartProvider>
           <MainScreen />
         </CartProvider>
       </SwatchColorsProvider>
+      </ModalCountsProvider>
       </ServicesProvider>
       </CategoriesProvider>
     </View>

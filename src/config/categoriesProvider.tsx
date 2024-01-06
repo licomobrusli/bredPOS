@@ -17,7 +17,6 @@ const CategoriesProvider: React.FC<CategoriesProviderProps> = ({ children }) => 
         // Use the correct function and parameters to fetch colors with codes starting with 'COL%'
         const data: Category[] = await fetchCategories();
         setCategoriesData(data);
-        console.log(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
