@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity, Image, Text, View } from 'react-native';
 import customStyles from '../config/fonts';
 import { cardGridStyle } from '../config/cardGridStyle';
 import SDims from '../config/dimensions';
-import { tickTeal } from '../main/assets/images';  // Import tickTeal image
+import { tealTick } from '../main/assets/images';  // Import tealTick image
 
 interface ListCardProps {
   imageUrl: string | { uri: string };
@@ -34,7 +34,7 @@ const ListCard: React.FC<ListCardProps> = ({
       {/* Conditionally render the teal tick image outside the dimmed wrapper */}
       {isInCartForCurrentCategory && (
         <View style={styles.tickContainer}>
-          <Image source={tickTeal} style={styles.tickImage} />
+          <Image source={tealTick} style={styles.tickImage} />
         </View>
       )}
     </TouchableOpacity>
@@ -65,13 +65,14 @@ const styles = StyleSheet.create({
   },
   tickContainer: {
     position: 'absolute',  // Overlay the tick on top of the card
-    top: 2,
-    right: 4,
+    top: 75,
+    right: 50,
   },
   tickImage: {
-    width: 350,  // Adjust the size as needed
-    height: 350,  // Adjust the size as needed
+    width: 350 * .75,  // Adjust the size as needed
+    height: 350 * .75,  // Adjust the size as needed
     resizeMode: 'contain',
+    opacity: 0.75,  // Adjust the opacity as needed
   },
 });
 

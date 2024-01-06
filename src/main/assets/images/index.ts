@@ -17,5 +17,7 @@ export { default as SUBSImage } from './SUBS.jpg';
 
 export { default as tickTeal } from './tickTeal.jpg';
 export { default as tickBronze } from './tickBronze.jpg';
+export { default as tealTick } from './tealTick.png';
+export { default as bronzeTick } from './bronzeTick.png';
 
 // ... and so on for other images
