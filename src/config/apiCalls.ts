@@ -30,7 +30,7 @@ export const fetchCategories = async (categoryCode?: string) => {
 };
 
 // Fetch Services (used in ThemeList and ServiceList)
-export const fetchServices = async (serviceCode: string) => {
+export const fetchServices = async (serviceCode?: string) => {
   try {
     const response = await api.get('/services/', { params: { serviceCode } });
     return response.data.map((service: any) => {
