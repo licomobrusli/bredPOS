@@ -51,10 +51,14 @@ export default function PrintOS({ visible, onClose, cartItems }: PrintOSProps) {
     try {  
       // Sort and group items by selectedCategory.name
       const groupedItems = cartItems
-        .sort((a, b) => (a.selectedCategory.name > b.selectedCategory.name ? 1 : -1))
-        .reduce((acc: Record<string, CartItem[]>, item: CartItem) => { // Explicitly type the accumulator and item
-          acc[item.selectedCategory.name] = acc[item.selectedCategory.name] || [];
-          acc[item.selectedCategory.name].push(item);
+        .filter(item => item.selectedCategory !== null) // Add this line to filter out items where selectedCategory is null
+        .sort((a, b) => (a.selectedCategory!.name > b.selectedCategory!.name ? 1 : -1)) // Use the non-null assertion operator (!) after ensuring it's not null
+        .reduce((acc: Record<string, CartItem[]>, item: CartItem) => {
+          if(item.selectedCategory !== null) { // Check that selectedCategory is not null
+            const categoryName = item.selectedCategory.name;
+            acc[categoryName] = acc[categoryName] || [];
+            acc[categoryName].push(item);
+          }
           return acc;
         }, {});
 
@@ -67,7 +71,7 @@ export default function PrintOS({ visible, onClose, cartItems }: PrintOSProps) {
         printText += `<CB>${category}</CB>\n`;
 
         // Print item details
-        items.forEach((item: CartItem) => { // Explicitly type the item here
+        items.forEach((item: CartItem) => {
           const firstModalCount = item.modalCountsDetails[0];
           const subtotalModalCount = item.modalCountsDetails[item.modalCountsDetails.length - 1];
   

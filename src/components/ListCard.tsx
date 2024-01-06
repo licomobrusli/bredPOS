@@ -10,6 +10,7 @@ interface ListCardProps {
   categoryName?: string;
   serviceName?: string;
   onPress: () => void;
+  style?: ViewStyle;
 }
 
 const ListCard: React.FC<ListCardProps> = ({ imageUrl, categoryName, serviceName, onPress }) => {
