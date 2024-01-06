@@ -13,12 +13,21 @@ const ModalCountsProvider: React.FC<ModalCountsProviderProps> = ({ children }) =
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        // Use the correct function and parameters to fetch colors with codes starting with 'COL%'
-        const data: ModalCount[] = await fetchModalCounts();
-        setModalCountsData(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      let attempts = 0;
+      const maxAttempts = 2;  // Set the number of attempts including the first try.
+
+      while (attempts < maxAttempts) {
+        try {
+          const data: ModalCount[] = await fetchModalCounts();
+          setModalCountsData(data);
+          break;  // Break out of the loop if the fetch is successful.
+        } catch (error) {
+          console.error(`Attempt ${attempts + 1} failed with error:`, error);
+          attempts++;
+          if (attempts === maxAttempts) {
+            console.error('Max MODALCOUNTS retry attempts reached. Failing gracefully.');
+          }
+        }
       }
     };
 
