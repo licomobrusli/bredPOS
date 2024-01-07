@@ -302,6 +302,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
           visible={printOSVisible}
           onClose={() => setPrintOSVisible(false)}
           cartItems={cartItems}
+          calculateTotalPrice={calculateTotalPrice}
         />
 
         {modalType === 'subModal' && selectedItemIndex !== null && (
