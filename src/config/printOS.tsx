@@ -1,13 +1,12 @@
 // printOS.tsx
 import * as React from "react";
 import { StyleSheet, Modal, Text, TouchableOpacity, View, Button } from "react-native";
+import RNQRGenerator from 'rn-qr-generator';
 import { ColumnAlignment, USBPrinter } from "react-native-thermal-receipt-printer-image-qr";
 import { LogBox } from 'react-native';
 import { CartItem } from './types'; 
 
-LogBox.ignoreLogs([
-  'new NativeEventEmitter()', // Suppresses specific warnings
-]);
+LogBox.ignoreLogs(['new NativeEventEmitter()']);
 
 type TextItem = [string, string, string];
 
@@ -15,7 +14,7 @@ interface PrintOSProps {
   visible: boolean;
   onClose: () => void;
   cartItems: CartItem[];
-  calculateTotalPrice: () => number; // Add this line to accept calculateTotalPrice as a prop
+  calculateTotalPrice: () => number;
 }
 
 export default function PrintOS({ visible, onClose, cartItems, calculateTotalPrice }: PrintOSProps) {
@@ -27,8 +26,8 @@ export default function PrintOS({ visible, onClose, cartItems, calculateTotalPri
     vendor_id: 1155
   };
 
-  const CUT_PAPER = '\x1D\x56\x01';  // Define the cut paper command
-  const ADVANCE_PAPER = '\x1B\x4A\xFF'; // Define the advance paper command
+  const CUT_PAPER = '\x1D\x56\x01';
+  const ADVANCE_PAPER = '\x1B\x4A\x40';
 
   React.useEffect(() => {
     const connectToDefaultPrinter = async () => {
@@ -45,6 +44,22 @@ export default function PrintOS({ visible, onClose, cartItems, calculateTotalPri
     connectToDefaultPrinter();
   }, []);
 
+  const generateQRCode = async (text: string): Promise<string> => {
+    try {
+      const response = await RNQRGenerator.generate({
+        value: text,
+        height: 200,
+        width: 200,
+        base64: true,
+        correctionLevel: 'L'
+      });
+      return response.base64 || '';
+    } catch (error) {
+      console.error('Error generating QR code:', error);
+      return '';
+    }
+  };
+
   const handlePrint = async () => {
     const opts = {
       encoding: 'ISO-8859-15',
@@ -55,16 +70,14 @@ export default function PrintOS({ visible, onClose, cartItems, calculateTotalPri
     };
 
     try {  
-      // Prepare the data for printing
-      const texts: TextItem[] = []; // Array of texts for each column
-      const columnWidth = [16, 23, 6]; // Adjust the width as needed
+      const texts: TextItem[] = [];
+      const columnWidth = [16, 23, 6];
       const columnAlignment = [
         ColumnAlignment.LEFT,
         ColumnAlignment.LEFT,
         ColumnAlignment.RIGHT,
       ];
 
-      // Iterate over cart items and populate the columns
       cartItems.forEach((item: CartItem) => {
         const firstModalCount = item.modalCountsDetails[0];
         const subtotalModalCount = item.modalCountsDetails[item.modalCountsDetails.length - 1];
@@ -104,15 +117,38 @@ export default function PrintOS({ visible, onClose, cartItems, calculateTotalPri
         }
         const total = calculateTotalPrice();
         await USBPrinter.printColumnsText(['TOTAL', '', `${total} E`], columnWidth, columnAlignment, [], opts);
-      } else {
-        console.log("No items to print");
+
+        const qrCodeText = 'https://shorturl.at/jmyPZ'; // Replace with your text
+        const qrCodeBase64 = await generateQRCode(qrCodeText);
+        if (qrCodeBase64) {
+          await USBPrinter.printImageBase64(qrCodeBase64, {
+            imageWidth: 150,
+            imageHeight: 150,
+          });
+        }
+
+        await USBPrinter.printText(ADVANCE_PAPER);
+        await USBPrinter.printText(CUT_PAPER);
       }
-    } catch (err) {
-      console.warn(err);
+    } catch (error) {
+      console.error('Error printing:', error);
     }
-    await USBPrinter.printText(ADVANCE_PAPER);
-    await USBPrinter.printText(CUT_PAPER);
   };
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      padding: 16,
+      backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    closeButton: {
+      marginTop: 20,
+      padding: 10,
+      backgroundColor: '#ddd',
+      alignSelf: 'center',
+    },
+  });
 
   return (
     <Modal
