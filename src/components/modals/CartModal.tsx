@@ -8,7 +8,7 @@ import SubModalB from './SubModalB';
 import SDims from '../../config/dimensions';
 import Buttons from '../../config/buttons';
 import { EDTImage } from '../../main/assets/images';
-import PrintOS from '../../config/printOS';
+import { printReceipt } from '../../config/printOS';
 import SubmitButton from '../../content/SubmitButton';
 import { createOrder, createOrderItem } from '../../config/apiCalls'; // Update with the correct path
 
@@ -24,7 +24,6 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [counterValue, onCounterChange] = useState<number>(7);
   const [calculatedPrices, setCalculatedPrices] = useState<{ [key: string]: { unitPrice: number; quantity: number; totalPrice: number; } }>({});
-  const [printOSVisible, setPrintOSVisible] = useState(false); // State to control PrintOS modal visibility
 
   const clearCart = () => setCartItems([]);
 
@@ -105,6 +104,9 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
           }
         });
       });
+
+      // Call the print function
+      await printReceipt(cartItems, calculateTotalPrice);
   
       clearCart(); // Clear the cart after order is created
       onClose(); // Close the modal
@@ -168,10 +170,6 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
     const newCartItems = [...cartItems];
     newCartItems.splice(index, 1);
     setCartItems(newCartItems);
-  };
-
-  const handleManualPrint = () => {
-    setPrintOSVisible(true);
   };
 
   const calculateTotalPrice = () => {
@@ -296,17 +294,8 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
           <Buttons.ContainerB>
             <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
             <SubmitButton onClose={onClose} onPress={handleSubmitOrder} clearCart={clearCart} color='A' />
-            <Buttons.ButtonB title="Manual Print" onPress={handleManualPrint} color='B' />
           </Buttons.ContainerB>
         </View>
-
-        {/* PrintOS Modal */}
-        <PrintOS
-          visible={printOSVisible}
-          onClose={() => setPrintOSVisible(false)}
-          cartItems={cartItems}
-          calculateTotalPrice={calculateTotalPrice}
-        />
 
         {modalType === 'subModal' && selectedItemIndex !== null && (
           <SubModal

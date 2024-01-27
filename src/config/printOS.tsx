@@ -1,48 +1,20 @@
-// printOS.tsx
-import * as React from "react";
-import { StyleSheet, Modal, Text, TouchableOpacity, View, Button } from "react-native";
+// printOS.ts
 import RNQRGenerator from 'rn-qr-generator';
 import { ColumnAlignment, USBPrinter } from "react-native-thermal-receipt-printer-image-qr";
-import { LogBox } from 'react-native';
-import { CartItem } from './types'; 
-
-LogBox.ignoreLogs(['new NativeEventEmitter()']);
+import { CartItem } from './types';
 
 type TextItem = [string, string, string];
 
-interface PrintOSProps {
-  visible: boolean;
-  onClose: () => void;
-  cartItems: CartItem[];
-  calculateTotalPrice: () => number;
-}
+const CUT_PAPER = '\x1D\x56\x01';
+const ADVANCE_PAPER = '\x1B\x4A\x40';
 
-export default function PrintOS({ visible, onClose, cartItems, calculateTotalPrice }: PrintOSProps) {
-  const [loading, setLoading] = React.useState<boolean>(false);
+export const printReceipt = async (cartItems: CartItem[], calculateTotalPrice: () => number) => {
   const defaultPrinter = {
-    device_id: 2003, 
+    device_id: 2003,
     device_name: "/dev/bus/usb/002/003",
     product_id: 30016,
     vendor_id: 1155
   };
-
-  const CUT_PAPER = '\x1D\x56\x01';
-  const ADVANCE_PAPER = '\x1B\x4A\x40';
-
-  React.useEffect(() => {
-    const connectToDefaultPrinter = async () => {
-      try {
-        setLoading(true);
-        await USBPrinter.init();
-        await USBPrinter.connectPrinter(defaultPrinter.vendor_id as unknown as string, defaultPrinter.product_id as unknown as string);
-      } catch (err) {
-        console.warn(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    connectToDefaultPrinter();
-  }, []);
 
   const generateQRCode = async (text: string): Promise<string> => {
     try {
@@ -60,7 +32,10 @@ export default function PrintOS({ visible, onClose, cartItems, calculateTotalPri
     }
   };
 
-  const handlePrint = async () => {
+  try {
+    await USBPrinter.init();
+    await USBPrinter.connectPrinter(defaultPrinter.vendor_id as unknown as string, defaultPrinter.product_id as unknown as string);
+
     const opts = {
       encoding: 'ISO-8859-15',
       codepage: 0,
@@ -69,118 +44,67 @@ export default function PrintOS({ visible, onClose, cartItems, calculateTotalPri
       fonttype: 1,
     };
 
-    try {  
-      const texts: TextItem[] = [];
-      const columnWidth = [16, 23, 6];
-      const columnAlignment = [
-        ColumnAlignment.LEFT,
-        ColumnAlignment.LEFT,
-        ColumnAlignment.RIGHT,
-      ];
+    const texts: TextItem[] = [];
+    const columnWidth = [16, 23, 6];
+    const columnAlignment = [
+      ColumnAlignment.LEFT,
+      ColumnAlignment.LEFT,
+      ColumnAlignment.RIGHT,
+    ];
 
-      cartItems.forEach((item: CartItem) => {
-        const firstModalCount = item.modalCountsDetails[0];
-        const subtotalModalCount = item.modalCountsDetails[item.modalCountsDetails.length - 1];
-        let details;
+    cartItems.forEach((item: CartItem) => {
+      const firstModalCount = item.modalCountsDetails[0];
+      const subtotalModalCount = item.modalCountsDetails[item.modalCountsDetails.length - 1];
+      let details;
 
-        if (item.selectedColors) {
-          switch (firstModalCount.sub) {
-            case 0:
-              details = '1';
-              break;
-            case 1:
-              details = item.counterValue;
-              break;
-            case 2:
-              details = item.selectedColors.length > 0 ? item.selectedColors.join(", ") : "No Colors";
-              break;
-            default:
-              details = "Undefined";
-          }
+      if (item.selectedColors) {
+        switch (firstModalCount.sub) {
+          case 0:
+            details = '1';
+            break;
+          case 1:
+            details = item.counterValue;
+            break;
+          case 2:
+            details = item.selectedColors.length > 0 ? item.selectedColors.join(", ") : "No Colors";
+            break;
+          default:
+            details = "Undefined";
         }
-
-        if (firstModalCount && details !== undefined && subtotalModalCount) {
-          const leftPart = `${firstModalCount.name}`;
-          const middlePart = `${details}`;
-          const rightPart = `${subtotalModalCount.price}`;
-
-          texts.push([leftPart, middlePart, rightPart]);
-        }
-      });
-
-      // Print the constructed data
-      if (texts.length > 0) {
-        await USBPrinter.printImage('https://i.ibb.co/m5YYKnL/Mogans-Logo-Receipt.png');
-        await USBPrinter.printColumnsText(['ARTICULO', 'DETAIL', 'PRECIO'], columnWidth, columnAlignment, [], opts);
-        for (let textSet of texts) {
-          await USBPrinter.printColumnsText(textSet, columnWidth, columnAlignment, [], opts);
-        }
-        const total = calculateTotalPrice();
-        await USBPrinter.printColumnsText(['TOTAL', '', `${total} E`], columnWidth, columnAlignment, [], opts);
-
-        const qrCodeText = 'https://shorturl.at/jmyPZ'; // Replace with your text
-        const qrCodeBase64 = await generateQRCode(qrCodeText);
-        if (qrCodeBase64) {
-          await USBPrinter.printImageBase64(qrCodeBase64, {
-            imageWidth: 150,
-            imageHeight: 150,
-          });
-        }
-
-        await USBPrinter.printText(ADVANCE_PAPER);
-        await USBPrinter.printText(CUT_PAPER);
       }
-    } catch (error) {
-      console.error('Error printing:', error);
+
+      if (firstModalCount && details !== undefined && subtotalModalCount) {
+        const leftPart = `${firstModalCount.name}`;
+        const middlePart = `${details}`;
+        const rightPart = `${subtotalModalCount.price}`;
+
+        texts.push([leftPart, middlePart, rightPart]);
+      }
+    });
+
+    // Print the constructed data
+    if (texts.length > 0) {
+      await USBPrinter.printImage('https://i.ibb.co/m5YYKnL/Mogans-Logo-Receipt.png');
+      await USBPrinter.printColumnsText(['ARTICULO', 'DETAIL', 'PRECIO'], columnWidth, columnAlignment, [], opts);
+      for (let textSet of texts) {
+        await USBPrinter.printColumnsText(textSet, columnWidth, columnAlignment, [], opts);
+      }
+      const total = calculateTotalPrice();
+      await USBPrinter.printColumnsText(['TOTAL', '', `${total} E`], columnWidth, columnAlignment, [], opts);
+
+      const qrCodeText = 'https://shorturl.at/jmyPZ'; // Replace with your text
+      const qrCodeBase64 = await generateQRCode(qrCodeText);
+      if (qrCodeBase64) {
+        await USBPrinter.printImageBase64(qrCodeBase64, {
+          imageWidth: 150,
+          imageHeight: 150,
+        });
+      }
+
+      await USBPrinter.printText(ADVANCE_PAPER);
+      await USBPrinter.printText(CUT_PAPER);
     }
-  };
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      padding: 16,
-      backgroundColor: 'rgba(0,0,0,0.5)',
-    },
-    closeButton: {
-      marginTop: 20,
-      padding: 10,
-      backgroundColor: '#ddd',
-      alignSelf: 'center',
-    },
-  });
-
-  return (
-    <Modal
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
-      <View style={styles.container}>
-        <Button
-          disabled={loading}
-          title="Print sample"
-          onPress={handlePrint}
-        />
-        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-          <Text>Close</Text>
-        </TouchableOpacity>
-      </View>
-    </Modal>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 16,
-    backgroundColor: 'rgba(0,0,0,0.5)', // Semi-transparent background
-  },
-  closeButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#ddd',
-    alignSelf: 'center',
-  },
-});
+  } catch (error) {
+    console.error('Error printing:', error);
+  }
+};
