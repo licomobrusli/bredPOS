@@ -6,7 +6,7 @@ import { CartItem } from './types';
 type TextItem = [string, string, string];
 
 const CUT_PAPER = '\x1D\x56\x01';
-const ADVANCE_PAPER = '\x1B\x4A\x40';
+const ADVANCE_PAPER = '\x1B\x4A\x10';
 
 export const printReceipt = async (cartItems: CartItem[], calculateTotalPrice: () => number, newOrderNumber: string) => {
   const defaultPrinter = {
@@ -86,6 +86,7 @@ export const printReceipt = async (cartItems: CartItem[], calculateTotalPrice: (
     if (texts.length > 0) {
       await USBPrinter.printImage('https://i.ibb.co/m5YYKnL/Mogans-Logo-Receipt.png');
       await USBPrinter.printColumnsText(['Pedido:', newOrderNumber, ''], columnWidth, columnAlignment, [], opts);
+      await USBPrinter.printText(ADVANCE_PAPER);
       await USBPrinter.printColumnsText(['ARTICULO', 'DETAIL', 'PRECIO'], columnWidth, columnAlignment, [], opts);
       for (let textSet of texts) {
         await USBPrinter.printColumnsText(textSet, columnWidth, columnAlignment, [], opts);
