@@ -8,7 +8,7 @@ type TextItem = [string, string, string];
 const CUT_PAPER = '\x1D\x56\x01';
 const ADVANCE_PAPER = '\x1B\x4A\x40';
 
-export const printReceipt = async (cartItems: CartItem[], calculateTotalPrice: () => number) => {
+export const printReceipt = async (cartItems: CartItem[], calculateTotalPrice: () => number, newOrderNumber: string) => {
   const defaultPrinter = {
     device_id: 2003,
     device_name: "/dev/bus/usb/002/003",
@@ -85,6 +85,7 @@ export const printReceipt = async (cartItems: CartItem[], calculateTotalPrice: (
     // Print the constructed data
     if (texts.length > 0) {
       await USBPrinter.printImage('https://i.ibb.co/m5YYKnL/Mogans-Logo-Receipt.png');
+      await USBPrinter.printColumnsText(['Pedido:', newOrderNumber, ''], columnWidth, columnAlignment, [], opts);
       await USBPrinter.printColumnsText(['ARTICULO', 'DETAIL', 'PRECIO'], columnWidth, columnAlignment, [], opts);
       for (let textSet of texts) {
         await USBPrinter.printColumnsText(textSet, columnWidth, columnAlignment, [], opts);
@@ -92,7 +93,7 @@ export const printReceipt = async (cartItems: CartItem[], calculateTotalPrice: (
       const total = calculateTotalPrice();
       await USBPrinter.printColumnsText(['TOTAL', '', `${total} E`], columnWidth, columnAlignment, [], opts);
 
-      const qrCodeText = 'https://shorturl.at/jmyPZ'; // Replace with your text
+      const qrCodeText = (newOrderNumber); // Replace with your text
       const qrCodeBase64 = await generateQRCode(qrCodeText);
       if (qrCodeBase64) {
         await USBPrinter.printImageBase64(qrCodeBase64, {

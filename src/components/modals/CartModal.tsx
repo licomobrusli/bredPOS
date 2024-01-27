@@ -79,8 +79,6 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
       const newOrderID = orderResponse.id; // Now you have the new order ID to use
       const newOrderNumber = orderResponse.order_number; // Now you have the new order number to use
 
-      console.log('New order number', newOrderNumber);
-  
       cartItems.forEach(async (item) => {
         item.modalCountsDetails.forEach(async (detail) => {
           if (detail.name !== "Sub total") {
@@ -106,7 +104,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
       });
 
       // Call the print function
-      await printReceipt(cartItems, calculateTotalPrice);
+      await printReceipt(cartItems, calculateTotalPrice, newOrderNumber);
   
       clearCart(); // Clear the cart after order is created
       onClose(); // Close the modal
