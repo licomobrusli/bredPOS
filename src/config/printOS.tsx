@@ -76,8 +76,11 @@ export const printReceipt = async (cartItems: CartItem[], calculateTotalPrice: (
       if (firstModalCount && details !== undefined && subtotalModalCount) {
         const leftPart = `${firstModalCount.name}`;
         const middlePart = `${details}`;
-        const rightPart = `${subtotalModalCount.price}`;
-
+        // Ensure price is treated as a string and remove the € symbol
+        const priceString = subtotalModalCount.price.toString();
+        const formattedPrice = priceString.includes('€') ? priceString.replace('€', '') : priceString;
+        const rightPart = `${parseFloat(formattedPrice).toFixed(0)}\x80`;
+        
         texts.push([leftPart, middlePart, rightPart]);
       }
     });
@@ -91,8 +94,10 @@ export const printReceipt = async (cartItems: CartItem[], calculateTotalPrice: (
       for (let textSet of texts) {
         await USBPrinter.printColumnsText(textSet, columnWidth, columnAlignment, [], opts);
       }
+      await USBPrinter.printColumnsText(['------', '', '------'], columnWidth, columnAlignment, [], opts);
       const total = calculateTotalPrice();
-      await USBPrinter.printColumnsText(['TOTAL', '', `${total} E`], columnWidth, columnAlignment, [], opts);
+      await USBPrinter.printColumnsText(['TOTAL', '', `${total}\x80`], columnWidth, columnAlignment, [], opts);
+      await USBPrinter.printColumnsText(['------', '', '------'], columnWidth, columnAlignment, [], opts);
 
       const qrCodeText = (newOrderNumber); // Replace with your text
       const qrCodeBase64 = await generateQRCode(qrCodeText);
