@@ -84,7 +84,7 @@ export const printReceipt = async (cartItems: CartItem[], calculateTotalPrice: (
 
     // Print the constructed data
     if (texts.length > 0) {
-      await USBPrinter.printImage('https://i.ibb.co/m5YYKnL/Mogans-Logo-Receipt.png');
+      await USBPrinter.printImage('https://i.ibb.co/mbkBScb/Mogans-Logo-Cut-Go.png');
       await USBPrinter.printColumnsText(['Pedido:', newOrderNumber, ''], columnWidth, columnAlignment, [], opts);
       await USBPrinter.printText(ADVANCE_PAPER);
       await USBPrinter.printColumnsText(['ARTICULO', 'DETAIL', 'PRECIO'], columnWidth, columnAlignment, [], opts);
