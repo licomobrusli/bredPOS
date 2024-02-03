@@ -11,6 +11,7 @@ import { EDTImage } from '../../main/assets/images';
 import { printReceipt } from '../../config/printOS';
 import SubmitButton from '../../content/SubmitButton';
 import { createOrder, createOrderItem } from '../../config/apiCalls'; // Update with the correct path
+import CheckAvailsModal from './CheckAvailsModal';
 
 interface CartModalProps {
   visible: boolean;
@@ -24,6 +25,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [counterValue, onCounterChange] = useState<number>(7);
   const [calculatedPrices, setCalculatedPrices] = useState<{ [key: string]: { unitPrice: number; quantity: number; totalPrice: number; } }>({});
+  const [isAvailsModalVisible, setIsAvailsModalVisible] = useState(false);
 
   const clearCart = () => setCartItems([]);
 
@@ -292,6 +294,8 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
           <Buttons.ContainerB>
             <Buttons.ButtonB title="Close" onPress={onClose} color='B' />
             <SubmitButton onClose={onClose} onPress={handleSubmitOrder} clearCart={clearCart} color='A' />
+            <Buttons.ButtonB title="Check Avails" onPress={() => setIsAvailsModalVisible(true)} color='B' />
+            <CheckAvailsModal visible={isAvailsModalVisible} onClose={() => setIsAvailsModalVisible(false)} />
           </Buttons.ContainerB>
         </View>
 
