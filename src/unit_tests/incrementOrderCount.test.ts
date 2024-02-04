@@ -26,15 +26,15 @@ describe('incrementOrderCounter', () => {
   });
   
   it('increments the counter on the same day', async () => {
-    MockDate.set('2023-01-01'); // Mock today's date
+    MockDate.set(new Date('2023-01-01').toISOString());
     mockedAsyncStorage.getItem.mockImplementation((key: string) => {
-      if (key === 'lastOrderDate') return Promise.resolve('2023-01-01');
-      if (key === 'orderCounter') return Promise.resolve('5');
-      return Promise.resolve(null);
+      const value = key === 'lastOrderDate' ? '2023-01-01' : key === 'orderCounter' ? '5' : null;
+      console.log(`getItem: key=${key}, value=${value}`);
+      return Promise.resolve(value);
     });
-
+  
     await incrementOrderCounter();
-
+  
     expect(mockedAsyncStorage.setItem).toHaveBeenCalledWith('orderCounter', '6'); // Check if counter is set to 6
   });
 
