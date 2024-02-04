@@ -89,7 +89,7 @@ export const createOrder = async (orderData: {
     const response = await api.post('/create_order/', orderData);
     return response.data;
   } catch (error) {
-    throw new Error('Error creating new order');
+    throw new Error('Error creating new order C');
   }
 };
 
@@ -108,5 +108,16 @@ export const createOrderItem = async (orderItemData: {
     return response.data;
   } catch (error) {
     throw new Error('Error creating new order item');
+  }
+};
+
+
+// new function for submitting order with items
+export const createOrderWithItems = async (orderData: any) => {
+  try {
+    const response = await api.post('/submit_order/', orderData);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error creating new order with items');
   }
 };

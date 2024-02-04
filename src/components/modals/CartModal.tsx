@@ -10,7 +10,8 @@ import Buttons from '../../config/buttons';
 import { EDTImage } from '../../main/assets/images';
 import { printReceipt } from '../../config/printOS';
 import SubmitButton from '../../content/SubmitButton';
-import { createOrder, createOrderItem } from '../../config/apiCalls'; // Update with the correct path
+import { createOrderWithItems } from '../../config/apiCalls';
+import { incrementOrderCounter } from '../../config/incrementOrderCount';
 
 interface CartModalProps {
   visible: boolean;
@@ -65,54 +66,53 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
 
   const handleSubmitOrder = async () => {
     try {
-      // Calculate total item count and price
+      const orderCounter = await incrementOrderCounter();
       const orderPrice = calculateTotalPrice();
   
-      // Create order data
+      // Prepare bulk data for the order using flatMap for concise array flattening
       const orderData = {
-        item_count: cartItems.length,
-        order_price: orderPrice,
+        order: {
+          item_count: cartItems.length,
+          order_price: orderPrice,
+          order_counter: orderCounter,
+        },
+        items: cartItems.flatMap(item =>
+          item.modalCountsDetails
+            .filter(detail => detail.name !== "Sub total")
+            .map(detail => {
+              const price = parseFloat(detail.price.replace('€', ''));
+              const unitPrice = parseFloat(detail.unitPrice.toString().replace('€', ''));
+
+              let itemCount = unitPrice ? price / unitPrice : 0; // Handle zero or NaN unit prices gracefully
+
+              return {
+                item_name: detail.name,
+                unit_price: unitPrice,
+                item_count: itemCount,
+                item_price: price,
+              };
+            })
+        )
       };
-  
-      // Call the API to create a new order and retrieve the new order ID
-      const orderResponse = await createOrder(orderData);
-      const newOrderID = orderResponse.id; // Now you have the new order ID to use
-      const newOrderNumber = orderResponse.order_number; // Now you have the new order number to use
 
-      cartItems.forEach(async (item) => {
-        item.modalCountsDetails.forEach(async (detail) => {
-          if (detail.name !== "Sub total") {
-            // Remove the currency symbol and parse the price and unit price as floats.
-            const price = parseFloat(detail.price.replace('€', ''));
-            const unitPrice = parseFloat(detail.unitPrice.toString().replace('€', ''));
-  
-            // Calculate the item_count. If the unit price is zero or not a number, handle it gracefully.
-            let itemCount = unitPrice ? price / unitPrice : 0;
-  
-            // Create order item data
-            const orderItemData = {
-              order: newOrderID,
-              item_name: detail.name,
-              unit_price: unitPrice,
-              item_count: itemCount,
-              item_price: price,
-            };
-  
-            await createOrderItem(orderItemData); // Create an order item
-          }
-        });
-      });
+      // Send a single request to the abstracted API function
+      const response = await createOrderWithItems(orderData); // Implement this function
 
-      // Call the print function
-      await printReceipt(cartItems, calculateTotalPrice, newOrderNumber);
-  
-      clearCart(); // Clear the cart after order is created
-      onClose(); // Close the modal
+      if (response.status === 'Success') {
+        // Call the print function using the order number directly from the response
+        await incrementOrderCounter();
+        await printReceipt(cartItems, calculateTotalPrice, response.order_number);
+
+        clearCart(); // Clear the cart after order is created
+        onClose(); // Close the modal
+      } else {
+        console.error('Error creating new order A', response.error);
+      }
     } catch (error) {
-      console.error('Error creating new order', error);
+      console.error('Error creating new order B', error);
     }
   };
-  
+
   interface ModalCountDetail {
     logic: string;
     unitPrice: number;
@@ -353,10 +353,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
 
-rowContainer: {
-    width: SDims.Width30p + SDims.Width5p,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  rowContainer: {
+      width: SDims.Width30p + SDims.Width5p,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
   },
 
   buttonAContainer: {
