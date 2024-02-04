@@ -14,7 +14,7 @@
   },
   "include": [
     "src/**/*"
-  ],
+, "__tests__/incrementOrderCount.test.ts"  ],
   "exclude": [
     "node_modules",
     "babel.config.js",

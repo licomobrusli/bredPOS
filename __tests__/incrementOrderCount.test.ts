@@ -1,6 +1,6 @@
 // incrementOrderCount.test.js
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { incrementOrderCounter } from '../config/incrementOrderCount';
+import { incrementOrderCounter } from '../src/config/incrementOrderCount';
 import MockDate from 'mockdate';
 
 // Define the type for the mocked AsyncStorage methods
