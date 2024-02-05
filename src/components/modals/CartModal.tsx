@@ -12,6 +12,7 @@ import { printReceipt } from '../../config/printOS';
 import SubmitButton from '../../content/SubmitButton';
 import { createOrderWithItems } from '../../config/apiCalls';
 import { incrementOrderCounter } from '../../config/incrementOrderCount';
+import moment from 'moment'; 
 
 interface CartModalProps {
   visible: boolean;
@@ -64,9 +65,18 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
     }
   };
 
+  const generateOrderNumber = (orderCounter: number) => {
+    const now = moment();
+    const franchiseCode = 'M1';
+    const dateStr = now.format('YYMMDDHH'); // Format the date similarly to strftime('%y%m%d%H')
+    const randomStr = Array.from({ length: 3 }, () => Math.floor(Math.random() * 36).toString(36)).join('').toUpperCase();
+    return `${franchiseCode}${dateStr}${orderCounter.toString().padStart(6, '0')}${randomStr}`;
+  };
+
   const handleSubmitOrder = async () => {
     try {
-      const orderCounter = await incrementOrderCounter();
+      const orderCounter = await incrementOrderCounter(); // Assuming this function returns the next order counter
+      const orderNumber = generateOrderNumber(orderCounter);
       const orderPrice = calculateTotalPrice();
   
       // Prepare bulk data for the order using flatMap for concise array flattening
@@ -74,7 +84,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
         order: {
           item_count: cartItems.length,
           order_price: orderPrice,
-          order_counter: orderCounter,
+          order_number: orderNumber,
         },
         items: cartItems.flatMap(item =>
           item.modalCountsDetails
@@ -103,13 +113,14 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
 
       if (response.status === 'Success') {
         // Call the print function using the order number directly from the response
+        console.log('Order created successfully:', response.order_number);
         await incrementOrderCounter();
         await printReceipt(cartItems, calculateTotalPrice, response.order_number);
 
         clearCart(); // Clear the cart after order is created
         onClose(); // Close the modal
       } else {
-        console.error('Error creating new order A', response.error);
+        console.error('Error creating new order A (poss. print error)', response.error);
       }
     } catch (error) {
       const e = error as Error;
