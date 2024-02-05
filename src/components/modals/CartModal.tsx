@@ -111,11 +111,11 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
       // Send a single request to the abstracted API function
       const response = await createOrderWithItems(orderData); // Implement this function
 
-      if (response.status === 'Success') {
-        // Call the print function using the order number directly from the response
+      // Check if the response is okay (you might need to adjust the condition based on your API's response structure)
+      if (response && response.order_number === orderNumber) {
         console.log('Order created successfully:', response.order_number);
         await incrementOrderCounter();
-        await printReceipt(cartItems, calculateTotalPrice, response.order_number);
+        await printReceipt(cartItems, calculateTotalPrice, orderData.order.order_number);
 
         clearCart(); // Clear the cart after order is created
         onClose(); // Close the modal
