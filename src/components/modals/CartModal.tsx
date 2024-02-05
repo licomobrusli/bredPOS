@@ -95,6 +95,9 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
         )
       };
 
+      // Log the order data to the console
+      console.log("Submitting the following order data to the API:", orderData);
+
       // Send a single request to the abstracted API function
       const response = await createOrderWithItems(orderData); // Implement this function
 
@@ -109,8 +112,9 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
         console.error('Error creating new order A', response.error);
       }
     } catch (error) {
-      console.error('Error creating new order B', error);
-    }
+      const e = error as Error;
+      console.error('Error creating new order B', e.message, e.stack);
+    }        
   };
 
   interface ModalCountDetail {

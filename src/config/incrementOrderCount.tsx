@@ -8,7 +8,7 @@ const LAST_ORDER_DATE_KEY = 'lastOrderDate';
 const getOrderCounter = async () => {
   const lastOrderDate = await AsyncStorage.getItem(LAST_ORDER_DATE_KEY);
   const currentDate = new Date().toISOString().split('T')[0]; // Convert to 'YYYY-MM-DD' format
-  
+
   console.log(`Last order date: ${lastOrderDate}, Current date: ${currentDate}`);
 
   if (lastOrderDate === currentDate) {
@@ -23,10 +23,11 @@ const getOrderCounter = async () => {
   }
 };
 
-// Function to increment the order counter
+// Function to increment the order counter and return the new value
 export const incrementOrderCounter = async () => {
   const counter = await getOrderCounter();
   const newCounter = counter + 1;
   console.log(`Incrementing counter: ${counter} -> ${newCounter}`);
   await AsyncStorage.setItem(ORDER_COUNTER_KEY, newCounter.toString());
+  return newCounter;  // Return the new counter value
 };

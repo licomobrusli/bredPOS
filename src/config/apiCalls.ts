@@ -118,6 +118,14 @@ export const createOrderWithItems = async (orderData: any) => {
     const response = await api.post('/submit_order/', orderData);
     return response.data;
   } catch (error) {
-    throw new Error('Error creating new order with items');
+    if (error instanceof Error) {
+      // If it's an instance of Error, access its `message` property
+      console.error('API Error:', error.message);
+      throw new Error(`Error creating new order with items: ${error.message}`);
+    } else {
+      // If it's not an instance of Error, it could be a different type like a string or an object
+      console.error('API Error:', error);
+      throw new Error('Error creating new order with items');
+    }
   }
 };
