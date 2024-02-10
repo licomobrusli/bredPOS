@@ -29,7 +29,6 @@ describe('incrementOrderCounter', () => {
     MockDate.set(new Date('2023-01-01').toISOString());
     mockedAsyncStorage.getItem.mockImplementation((key: string) => {
       const value = key === 'lastOrderDate' ? '2023-01-01' : key === 'orderCounter' ? '5' : null;
-      console.log(`getItem: key=${key}, value=${value}`);
       return Promise.resolve(value);
     });
   

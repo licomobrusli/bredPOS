@@ -37,7 +37,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
 }) => {
   const contextModalCounts = useContext(modalCountsContext);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
-  const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
+  const [selectedModalCounts, setSelectedModalCounts] = useState<number[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const [subtotal, setSubtotal] = useState<number>(0);
   const [calculatedPrices, setCalculatedPrices] = useState<CalculatedPrices>({} as CalculatedPrices);
@@ -89,7 +89,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     }
   }, [modalCounts, selectedModalCounts, selectedColors]);
 
-  const handleModalCountPress = (id: string, logic: string, sub: number) => {
+  const handleModalCountPress = (id: number, logic: string, sub: number) => {
     if (logic === 'OR' && sub > 0) {
       // Open SubModal when logic is 'OR' and sub > 0
       setIsSubModalVisible(true);
