@@ -100,6 +100,7 @@ const handleModalCountsChange = (counts: any[]) => {
       // Update existing item
       updateCartItem(cartItem); // Implement updateCartItem in CartContext
     } else {
+      console.log('Adding to cart cartItem:', cartItem);
       // Add new item
       addToCart(cartItem);
     }

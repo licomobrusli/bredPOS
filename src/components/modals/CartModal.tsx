@@ -201,6 +201,14 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
 
 
   useEffect(() => {
+    // Log each cart item in detail
+      cartItems.forEach((item, index) => {
+        console.log(`Cart Item ${index + 1}:`, JSON.stringify(item, null, 2));
+        console.log(`Modal Counts Details for Cart Item ${index + 1}:`);
+        item.modalCountsDetails.forEach((detail, detailIndex) => {
+            console.log(`Detail ${detailIndex + 1}:`, JSON.stringify(detail, null, 2));
+        });
+    });
     if (visible) { 
       // console log of modalCount.code, Unit Price, counter value or count of number of colors from detail field, and subtotal price
       cartItems.forEach((item) => {

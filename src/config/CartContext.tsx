@@ -7,7 +7,7 @@ export interface CartItem {
     selectedService: Service | null;
     selectedColors: string[];
     counterValue: number;
-    modalCountsDetails: any[]; // Define a more specific type if possible
+    modalCountsDetails: any[];
 }
 
 interface CartContextType {

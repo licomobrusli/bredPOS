@@ -1,6 +1,6 @@
 // ModalFooter.tsx
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Modal, TouchableWithoutFeedback } from 'react-native';
 import fonts from '../../config/fonts'; // Make sure this path is correct
 import SDims from '../../config/dimensions';
 import Buttons from '../../config/buttons';
@@ -25,6 +25,7 @@ const ModalFooter: React.FC<ModalFooterProps> = (props) => {
       if (firstDetail.sub === 2 && selectedColors.length === 0) {
         setColorModalVisible(true);
       } else {
+        console.log("Adding to cart modalCountsDetails:", { modalCountsDetails, selectedColors });
         // If 'sub' is not greater than 0 or colors are selected, add to cart and close the modal
         onAddToCart && onAddToCart();
         onClose(); // Close the modal after adding to cart

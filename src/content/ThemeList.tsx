@@ -47,6 +47,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     if (contextModalCounts) {
       const filteredModalCounts = contextModalCounts.filter(mc => mc.category_code === (selectedCategory?.id) && mc.service_code === (selectedService?.id));
       setModalCounts(filteredModalCounts);
+      console.log('Modal Counts:', filteredModalCounts);
     }
   }, [categoryCode, selectedServiceCode, contextModalCounts]);
 
@@ -75,7 +76,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
         newSubtotal += totalPrice;
       }
     });
-  
+
     setCalculatedPrices(newCalculatedPrices);
     setSubtotal(newSubtotal);
   }, [modalCounts, selectedModalCounts, selectedColors, counterValue]);
@@ -126,6 +127,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     ).map(modalCount => {
       const priceDetail = calculatedPrices[modalCount.id];
       return {
+        id: modalCount.id,
         name: modalCount.name,
         price: priceDetail ? `${priceDetail.totalPrice}€` : '',
         unitPrice: priceDetail ? priceDetail.unitPrice : 0,
@@ -135,6 +137,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     });
 
     const subtotalItem = {
+      id: 0,
       name: "Sub total",
       price: `${subtotal}€`,
       unitPrice: 0,
