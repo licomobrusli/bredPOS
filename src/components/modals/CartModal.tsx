@@ -96,7 +96,7 @@ const CartModal: React.FC<CartModalProps> = ({ visible, onClose }) => {
               let itemCount = unitPrice ? price / unitPrice : 0; // Handle zero or NaN unit prices gracefully
 
               return {
-                modal_count: detail.id,
+                modal_count: detail.code,
                 item_name: detail.name,
                 unit_price: unitPrice,
                 item_count: itemCount,

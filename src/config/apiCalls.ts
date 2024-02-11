@@ -95,7 +95,7 @@ export const createOrder = async (orderData: {
 
 // Function to create a new order item
 export const createOrderItem = async (orderItemData: {
-  modal_count: number,
+  modal_count: string,
   order: number,
   item_name: string,
   unit_price: number,

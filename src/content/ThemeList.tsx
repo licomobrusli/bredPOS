@@ -90,7 +90,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     }
   }, [modalCounts, selectedModalCounts, selectedColors]);
 
-  const handleModalCountPress = (id: string, logic: string, sub: number) => {
+  const handleModalCountPress = (code: string, logic: string, sub: number) => {
     if (logic === 'OR' && sub > 0) {
       // Open SubModal when logic is 'OR' and sub > 0
       setIsSubModalVisible(true);
@@ -101,22 +101,22 @@ const ThemeList: React.FC<ThemeListProps> = ({
       }
 
       // Ensuring exclusivity for 'NOT' logic
-      if (selectedModalCounts.length === 1 && selectedModalCounts[0] === id) {
+      if (selectedModalCounts.length === 1 && selectedModalCounts[0] === code) {
         // Do nothing if the only selected item is 'NOT'
         return;
       }
 
       setSelectedModalCounts((prevSelected) =>
-        prevSelected.includes(id)
-          ? prevSelected.filter((item) => item !== id)
-          : [id]
+        prevSelected.includes(code)
+          ? prevSelected.filter((item) => item !== code)
+          : [code]
       );
     } else {
       // Toggling selection for other logics
       setSelectedModalCounts((prevSelected) =>
-        prevSelected.includes(id)
-          ? prevSelected.filter((item) => item !== id)
-          : [...prevSelected, id]
+        prevSelected.includes(code)
+          ? prevSelected.filter((item) => item !== code)
+          : [...prevSelected, code]
       );
     }
   };

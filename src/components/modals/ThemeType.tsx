@@ -30,7 +30,7 @@ const ThemeType: React.FC<ThemeTypeProps> = ({ themes, onServiceNameChange, onCa
     );
   };
 
-  const keyExtractor = (item: Theme) => item.id;
+  const keyExtractor = (item: Theme) => item.code;
 
   return (
     <FlatList
