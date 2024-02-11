@@ -31,7 +31,6 @@ export interface Theme {
 }
 
 export interface ModalCount {
-  id: number;
   code: string;
   name: string;
   price: number;
@@ -44,7 +43,7 @@ export interface ModalCount {
 }
 
 export interface ModalCountDetail {
-  id: number;
+  code: string;
   name: string;
   sub: number;
   price: number;

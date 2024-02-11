@@ -37,7 +37,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
 }) => {
   const contextModalCounts = useContext(modalCountsContext);
   const [modalCounts, setModalCounts] = useState<ModalCount[]>([]);
-  const [selectedModalCounts, setSelectedModalCounts] = useState<number[]>([]);
+  const [selectedModalCounts, setSelectedModalCounts] = useState<string[]>([]);
   const [isSubModalVisible, setIsSubModalVisible] = useState<boolean>(false);
   const [subtotal, setSubtotal] = useState<number>(0);
   const [calculatedPrices, setCalculatedPrices] = useState<CalculatedPrices>({} as CalculatedPrices);
@@ -56,7 +56,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     let newSubtotal = 0;
   
     modalCounts.forEach(modalCount => {
-      if (selectedModalCounts.includes(modalCount.id) || 
+      if (selectedModalCounts.includes(modalCount.code) || 
           (modalCount.logic === 'OR') ||
           (modalCount.logic === 'NOT' && modalCount.name === 'Basic design')) {
         
@@ -72,7 +72,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
         }
   
         const totalPrice = unitPrice * quantity;
-        newCalculatedPrices[modalCount.id] = { unitPrice, quantity, totalPrice };
+        newCalculatedPrices[modalCount.code] = { unitPrice, quantity, totalPrice };
         newSubtotal += totalPrice;
       }
     });
@@ -84,13 +84,13 @@ const ThemeList: React.FC<ThemeListProps> = ({
   useEffect(() => {
     // Ensure at least one 'NOT' item is selected if present
     const notItems = modalCounts.filter((modalCount) => modalCount.logic === 'NOT');
-    if (notItems.length > 0 && !selectedModalCounts.some((item) => notItems.map((notItem) => notItem.id).includes(item))) {
+    if (notItems.length > 0 && !selectedModalCounts.some((item) => notItems.map((notItem) => notItem.code).includes(item))) {
       // Select the first 'NOT' item by default
-      setSelectedModalCounts((prevSelected) => [...prevSelected, notItems[0].id]);
+      setSelectedModalCounts((prevSelected) => [...prevSelected, notItems[0].code]);
     }
   }, [modalCounts, selectedModalCounts, selectedColors]);
 
-  const handleModalCountPress = (id: number, logic: string, sub: number) => {
+  const handleModalCountPress = (id: string, logic: string, sub: number) => {
     if (logic === 'OR' && sub > 0) {
       // Open SubModal when logic is 'OR' and sub > 0
       setIsSubModalVisible(true);
@@ -123,11 +123,11 @@ const ThemeList: React.FC<ThemeListProps> = ({
 
   const logSelectedModalCounts = () => {
     const selectedCounts = modalCounts.filter((modalCount: ModalCount) =>
-      selectedModalCounts.includes(modalCount.id) || (modalCount.logic === 'OR')
+      selectedModalCounts.includes(modalCount.code) || (modalCount.logic === 'OR')
     ).map(modalCount => {
-      const priceDetail = calculatedPrices[modalCount.id];
+      const priceDetail = calculatedPrices[modalCount.code];
       return {
-        id: modalCount.id,
+        code: modalCount.code,
         name: modalCount.name,
         price: priceDetail ? `${priceDetail.totalPrice}€` : '',
         unitPrice: priceDetail ? priceDetail.unitPrice : 0,
@@ -137,7 +137,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     });
 
     const subtotalItem = {
-      id: 0,
+      code: '0',
       name: "Sub total",
       price: `${subtotal}€`,
       unitPrice: 0,
@@ -160,7 +160,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
     if (modalCount.logic === 'OR') {
       return selectedColors.length > 1;
     }
-    return selectedModalCounts.includes(modalCount.id);
+    return selectedModalCounts.includes(modalCount.code);
   };
 
   const closeSubModal = () => {
@@ -173,14 +173,14 @@ const ThemeList: React.FC<ThemeListProps> = ({
     <View style={{ backgroundColor: 'black', justifyContent: 'center' }}>
     {modalCounts.map(modalCount => (
       <Buttons.ListButton
-        key={modalCount.id}
+        key={modalCount.code}
         name={modalCount.name.toUpperCase()}
-        price={calculatedPrices[modalCount.id] ? `${calculatedPrices[modalCount.id].totalPrice}€` : ''}
+        price={calculatedPrices[modalCount.code] ? `${calculatedPrices[modalCount.code].totalPrice}€` : ''}
         style={{
           backgroundColor: isModalCountSelected(modalCount) ? '#AD8457' : 'black',
           // Additional styling here if needed
         }}
-        onPress={() => handleModalCountPress(modalCount.id, modalCount.logic, modalCount.sub)}
+        onPress={() => handleModalCountPress(modalCount.code, modalCount.logic, modalCount.sub)}
       />
     ))}
 
@@ -192,7 +192,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
       />
 
       {isSubModalVisible && (
-        modalCounts.find(modalCount => modalCount.id === selectedModalCounts[0])?.sub === 2 ? (
+        modalCounts.find(modalCount => modalCount.code === selectedModalCounts[0])?.sub === 2 ? (
           <SubModal
             isVisible={isSubModalVisible}
             onClose={closeSubModal}
