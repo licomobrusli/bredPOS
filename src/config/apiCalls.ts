@@ -21,7 +21,8 @@ export const fetchCategories = async (categoryCode?: string) => {
         default:
           imagePath = 'https://placekitten.com/200/200';
       }
-      return { id: Number(category.id), code: category.code, imageUrl: imagePath, name: category.name };
+      console.log('Categories:', response.data);
+      return { code: category.code, imageUrl: imagePath, name: category.name };
     });
   } catch (error) {
     throw new Error('Error fetching categories');
@@ -47,7 +48,8 @@ export const fetchServices = async (serviceCode?: string) => {
         default:
           imagePath = 'https://placekitten.com/200/200';
       }
-      return { id: Number(service.id), code: service.code, imageUrl: imagePath, name: service.name };
+      console.log('Services:', response.data);
+      return { code: service.code, imageUrl: imagePath, name: service.name };
     });
   } catch (error) {
     throw new Error('Error fetching services');
@@ -73,6 +75,7 @@ export const fetchModalSelects = async (params: { categoryCode?: string, service
   try {
     const response = await api.get('/modal_selects/', { params });
     return response.data;
+    console.log('Modal Selects:', response.data);
   } catch (error) {
     throw new Error('Error fetching modal selects');
   }

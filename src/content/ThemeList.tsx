@@ -45,7 +45,7 @@ const ThemeList: React.FC<ThemeListProps> = ({
   useEffect(() => {
     // Filter the modal counts based on categoryCode and serviceCode
     if (contextModalCounts) {
-      const filteredModalCounts = contextModalCounts.filter(mc => mc.category_code === (selectedCategory?.id) && mc.service_code === (selectedService?.id));
+      const filteredModalCounts = contextModalCounts.filter(mc => mc.category_code === (selectedCategory?.code) && mc.service_code === (selectedService?.code));
       setModalCounts(filteredModalCounts);
       console.log('Modal Counts:', filteredModalCounts);
     }

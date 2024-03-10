@@ -43,7 +43,7 @@ const CategoryList = () => {
     );
   };
   
-  const keyExtractor = (item: Category | null, index: number) => item ? item.id.toString() : `placeholder-${index}`;
+  const keyExtractor = (item: Category | null, index: number) => item ? item.code.toString() : `placeholder-${index}`;
 
   return (
     <View style={{ flex: 1, backgroundColor: 'black', paddingBottom: cardGridStyle.margin}}>

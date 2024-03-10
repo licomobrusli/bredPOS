@@ -22,7 +22,7 @@ const CategoriesProvider: React.FC<CategoriesProviderProps> = ({ children }) => 
           setCategoriesData(data);
           break;  // Break out of the loop if the fetch is successful.
         } catch (error) {
-          console.error(`Attempt ${attempts + 1} failed with error:`, error);
+          console.error(`CAT Attempt ${attempts + 1} failed with error:`, error);
           attempts++;
           if (attempts === maxAttempts) {
             console.error('Max retry attempts reached. Failing gracefully.');

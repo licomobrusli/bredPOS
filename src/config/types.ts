@@ -2,7 +2,6 @@
 
 export interface Category {
   imageUrl: string;
-  id: number;
   code: string;
   name: string;
   description: string;
@@ -12,7 +11,6 @@ export interface Category {
 
 export interface Service {
   imageUrl: string;
-  id: number;
   code: string;
   name: string;
   description: string;
@@ -35,8 +33,8 @@ export interface ModalCount {
   name: string;
   price: number;
   max_quantity: number;
-  category_code: number;
-  service_code: number;
+  category_code: string;
+  service_code: string;
   iamge_path: string;
   logic: string;
   sub: number

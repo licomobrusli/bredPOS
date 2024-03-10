@@ -22,7 +22,7 @@ const ServicesProvider: React.FC<ServicesProviderProps> = ({ children }) => {
           setServicesData(data);
           break;  // Break out of the loop if the fetch is successful.
         } catch (error) {
-          console.error(`Attempt ${attempts + 1} failed with error:`, error);
+          console.error(`SER Attempt ${attempts + 1} failed with error:`, error);
           attempts++;
           if (attempts === maxAttempts) {
             console.error('Max retry attempts reached. Failing gracefully.');
